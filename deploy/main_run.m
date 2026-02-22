@@ -30,10 +30,12 @@
 %       │ Pv_real_out_2019.mat            │ 2019年度のPV実績出力（補正前）         │
 %       │ Load_2018.mat                   │ 2018年度の電力需要                     │
 %       │ Load_2019.mat                   │ 2019年度の電力需要                     │
-%       │ douteki_lfc_ab.mat              │ LFC容量計算の係数（a, b）              │
-%       │ new_ave_PV.mat                  │ 平均的なPV出力カーブ                   │
-%       │ new_ave_load.mat                │ 平均的な負荷カーブ                     │
 %       │ PVC.mat                         │ PV設備容量                             │
+%       │ approximation_lines/            │ LFC容量計算の近似直線係数フォルダ      │
+%       │   {year}_5/kinnji_data_*_LFC_*%.mat │ 春季（4〜6月）の近似直線 a, b      │
+%       │   {year}_8/kinnji_data_*_LFC_*%.mat │ 夏季（7〜9月）の近似直線 a, b      │
+%       │   {year}_11/kinnji_data_*_LFC_*%.mat│ 秋季（10〜12月）の近似直線 a, b    │
+%       │   {year}_1/kinnji_data_*_LFC_*%.mat │ 冬季（1〜3月）の近似直線 a, b      │
 %       │ time_label.mat                  │ 時刻ラベル（グラフ表示用）             │
 %       └─────────────────────────────────┴────────────────────────────────────────┘
 %
@@ -195,10 +197,12 @@ end
 
 %% =========================================================
 %  Step 6: 動的LFC必要容量の計算（サンプル: 各年の代表日）
-%  入力: input_data/douteki_lfc_ab.mat, new_ave_PV.mat,
-%         new_ave_load.mat
+%  入力: output/PV_forecast_YYYY.mat
+%         output/動的LFC容量決定手法/error_sigma.mat
+%         input_data/approximation_lines/{year}_{month}/kinnji_data_*_LFC_*%.mat
 %  出力: output/動的LFC容量決定手法/LFC_amount_yyyymmdd.mat
-%  注意: ここでは代表日（6月15日）のみ計算。必要に応じて日付を変更すること。
+%  計算式: LFC_t = min{ i | a_i * ε_t^PV + b_i - F0 >= 0 }（F0=95）
+%  注意: ここでは代表日（各季節の15日）のみ計算。必要に応じて日付を変更すること。
 % =========================================================
 
 fprintf('\n------ Step 6: 動的LFC必要容量の計算（代表日） ------\n');
