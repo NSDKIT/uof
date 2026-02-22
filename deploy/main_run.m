@@ -58,7 +58,7 @@
 %  【注意事項】
 %    - Step 4 は処理に時間がかかる（365日×12ヶ月分のファイルを生成するため）
 %    - Step 5 の SIGMA_get1 は外部関数 KAKURITUBU_BUNNPU1 が必要
-%    - 可視化スクリプト（PV_compare, PV_forecast_error_bar_make 等）は
+%    - 可視化スクリプト（viz_compare_forecast_vs_actual, viz_plot_error_bar_by_day 等）は
 %      このスクリプトには含まれていない。必要に応じて個別に実行すること。
 % =========================================================
 
@@ -104,7 +104,7 @@ fprintf('------ Step 1: PV予測出力の生成 ------\n');
 for year = YEARS
     fprintf('  処理中: %d年度 ... ', year);
     try
-        PV_forecast_make(year);
+        step1_generate_pv_forecast(year);
         fprintf('完了\n');
     catch ME
         fprintf('エラー: %s\n', ME.message);
@@ -125,7 +125,7 @@ fprintf('\n------ Step 2: PV実績出力の生成 ------\n');
 for year = YEARS
     fprintf('  処理中: %d年度 ... ', year);
     try
-        PV_make(year);
+        step2_generate_pv_actual(year);
         fprintf('完了\n');
     catch ME
         fprintf('エラー: %s\n', ME.message);
@@ -144,7 +144,7 @@ fprintf('\n------ Step 3: 予測誤差の計算 ------\n');
 for year = YEARS
     fprintf('  処理中: %d年度 ... ', year);
     try
-        PV_forecast_error_make(year);
+        step3_calc_forecast_error(year);
         fprintf('完了\n');
     catch ME
         fprintf('エラー: %s\n', ME.message);
@@ -164,7 +164,7 @@ fprintf('\n------ Step 4: 容量別・日別予測誤差の生成（時間がか
 for year = YEARS
     fprintf('  処理中: %d年度 ... \n', year);
     try
-        PV_forecast_error_PVup_make(year);
+        step4_calc_error_by_capacity(year);
         fprintf('  %d年度 完了\n', year);
     catch ME
         fprintf('  エラー: %s\n', ME.message);
@@ -185,7 +185,7 @@ for year = YEARS
     fprintf('  処理中: %d年度（PV出力帯域別σ、全期間） ... \n', year);
     try
         % mode1=1: PV出力帯域別σ, mode2/mode3: 省略（全期間）
-        SIGMA_get1(year, 1, [], [], PVC_bai);
+        step5_calc_sigma_by_output_band(year, 1, [], [], PVC_bai);
         fprintf('  %d年度 完了\n', year);
     catch ME
         fprintf('  エラー: %s\n', ME.message);
@@ -209,7 +209,7 @@ for year = YEARS
     for month = SAMPLE_MONTHS
         fprintf('  処理中: %d年 %d月%d日 (PV倍率=%.1f) ... ', year, month, SAMPLE_DAY, PVC_bai);
         try
-            douteki_LFC3(year, month, SAMPLE_DAY, PVC_bai);
+            step6_calc_lfc_capacity(year, month, SAMPLE_DAY, PVC_bai);
             fprintf('完了\n');
         catch ME
             fprintf('エラー: %s\n', ME.message);
@@ -236,7 +236,7 @@ fprintf('    動的LFC容量決定手法/\n');
 fprintf('      error_sigma.mat            ← σ計算結果\n');
 fprintf('      LFC_amount_yyyymmdd.mat    ← LFC必要容量\n');
 fprintf('\n【可視化スクリプト（個別実行）】\n');
-fprintf('  >> PV_compare(2018, 6, 1.0)              %% 月別比較グラフ\n');
-fprintf('  >> PV_forecast_error_bar_make(2018, 6, 1) %% 日別誤差棒グラフ\n');
-fprintf('  >> yosoku_seido                           %% 予測精度評価\n');
-fprintf('  >> MAE                                    %% 月別RMSE計算\n');
+fprintf('  >> viz_compare_forecast_vs_actual(2018, 6, 1.0)              %% 月別比較グラフ\n');
+fprintf('  >> viz_plot_error_bar_by_day(2018, 6, 1) %% 日別誤差棒グラフ\n');
+fprintf('  >> eval_forecast_accuracy_boxplot                           %% 予測精度評価\n');
+fprintf('  >> eval_calc_monthly_rmse                                    %% 月別RMSE計算\n');

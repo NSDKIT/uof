@@ -45,23 +45,23 @@ deploy/
 │   ├── 動的LFC容量決定手法/      ← Step 5, 6 の出力
 │   └── 時間粒度_気象分解能別予測誤差/ ← Step 5 (SIGMA_get1) の出力
 │
-├── PV_forecast_make.m           ← Step 1: 予測PV出力の生成
-├── PV_make.m                    ← Step 2: 実績PV出力の生成
-├── PV_forecast_error_make.m     ← Step 3: 予測誤差の計算
-├── PV_forecast_error_PVup_make.m← Step 4: 容量別・日別誤差の生成
-├── SIGMA_get.m                  ← Step 5: σ計算（基本版）
-├── SIGMA_get1.m                 ← Step 5: σ計算（拡張版）
-├── douteki_LFC3.m               ← Step 6: 動的LFC必要容量の計算
+├── step1_generate_pv_forecast.m           ← Step 1: 予測PV出力の生成
+├── step2_generate_pv_actual.m                    ← Step 2: 実績PV出力の生成
+├── step3_calc_forecast_error.m     ← Step 3: 予測誤差の計算
+├── step4_calc_error_by_capacity.m← Step 4: 容量別・日別誤差の生成
+├── step5_calc_sigma_basic.m                  ← Step 5: σ計算（基本版）
+├── step5_calc_sigma_by_output_band.m                 ← Step 5: σ計算（拡張版）
+├── step6_calc_lfc_capacity.m               ← Step 6: 動的LFC必要容量の計算
 │
-├── chose_data.m                 ← ユーティリティ（日付→行番号変換）
-├── mode1_no_sigma.m             ← SIGMA_get の補助スクリプト
-├── mode1_no_sigma1.m            ← SIGMA_get1 の補助スクリプト
+├── util_get_row_index_by_date.m                 ← ユーティリティ（日付→行番号変換）
+├── util_calc_sigma_per_band_basic.m             ← SIGMA_get の補助スクリプト
+├── util_calc_sigma_per_band_extended.m            ← SIGMA_get1 の補助スクリプト
 │
-├── PV_compare.m                 ← 可視化: 予測と実績の比較グラフ
-├── PV_forecast_error_bar_make.m ← 可視化: 日別誤差の棒グラフ
-├── PV_real_form.m               ← 可視化: 特定日のPV実績出力
-├── yosoku_seido.m               ← 評価: 予測精度（箱ひげ図）
-└── MAE.m                        ← 評価: 月別RMSE計算
+├── viz_compare_forecast_vs_actual.m                 ← 可視化: 予測と実績の比較グラフ
+├── viz_plot_error_bar_by_day.m ← 可視化: 日別誤差の棒グラフ
+├── viz_plot_actual_output_by_day.m               ← 可視化: 特定日のPV実績出力
+├── eval_forecast_accuracy_boxplot.m               ← 評価: 予測精度（箱ひげ図）
+└── eval_calc_monthly_rmse.m                        ← 評価: 月別RMSE計算
 ```
 
 ---
@@ -169,19 +169,19 @@ input_data/new_ave_load.mat
 
 ```matlab
 % 2018年6月のPV予測と実績を比較するグラフ
-PV_compare(2018, 6, 1.0)
+viz_compare_forecast_vs_actual(2018, 6, 1.0)
 
 % 2018年6月の日別誤差棒グラフ（基準容量）
-PV_forecast_error_bar_make(2018, 6, 1)
+viz_plot_error_bar_by_day(2018, 6, 1)
 
 % 予測精度の評価（箱ひげ図）
-yosoku_seido
+eval_forecast_accuracy_boxplot
 
 % 月別RMSE計算
-MAE
+eval_calc_monthly_rmse
 
 % 特定日のPV実績出力確認
-PV_real_form(2018)
+viz_plot_actual_output_by_day(2018)
 ```
 
 ---

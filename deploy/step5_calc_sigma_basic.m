@@ -1,5 +1,5 @@
 %% =========================================================
-%  SIGMA_get.m  ―  PV予測誤差の標準偏差(σ)計算（メイン）
+%  step5_calc_sigma_basic.m  ―  PV予測誤差の標準偏差(σ)計算（メイン）
 %  =========================================================
 %
 %  【役割】
@@ -7,8 +7,8 @@
 %    mode パラメータにより、計算条件（期間・PV出力帯域別）を柔軟に切り替え可能。
 %
 %  【実行方法】
-%    >> SIGMA_get(2018, 1, 1, 6, 1.0)   % 2018年・6月・PV出力帯域別σ
-%    >> SIGMA_get(2018, 2, 2, 1, 1.5)   % 2018年・春季・全体σ・PV1.5倍
+%    >> step5_calc_sigma_basic(2018, 1, 1, 6, 1.0)   % 2018年・6月・PV出力帯域別σ
+%    >> step5_calc_sigma_basic(2018, 2, 2, 1, 1.5)   % 2018年・春季・全体σ・PV1.5倍
 %
 %  【パラメータ説明】
 %    ┌─────────┬──────────────────────────────────────────────────────┐
@@ -16,7 +16,7 @@
 %    ├─────────┼──────────────────────────────────────────────────────┤
 %    │ year    │ 対象年（例: 2018）                                   │
 %    │ mode1   │ σの計算方法                                         │
-%    │         │  1 = PV出力の大きさ別にσを計算（mode1_no_sigma使用）│
+%    │         │  1 = PV出力の大きさ別にσを計算（util_calc_sigma_per_band_basic使用）│
 %    │         │  2 = 全体のσを計算（KAKURITUBU_BUNNPU使用）         │
 %    │ mode2   │ 集計期間の選択                                       │
 %    │         │  1 = 月別（mode3で月番号を指定）                     │
@@ -28,8 +28,8 @@
 %    └─────────┴──────────────────────────────────────────────────────┘
 %
 %  【前提条件（先に実行しておくこと）】
-%    1. PV_forecast_make(year)      → PV_forecast_YYYY.mat が存在すること
-%    2. PV_forecast_error_make(year) → ERROR_YYYY.mat が存在すること
+%    1. step1_generate_pv_forecast(year)      → PV_forecast_YYYY.mat が存在すること
+%    2. step3_calc_forecast_error(year) → ERROR_YYYY.mat が存在すること
 %
 %  【入力ファイル】
 %    ERROR_YYYY.mat  / data_YYYY.mat
@@ -44,13 +44,13 @@
 %    ↑ 実行環境に合わせて修正すること。
 %
 %  【依存する関数・スクリプト】
-%    - mode1_no_sigma.m      （mode1=1 のとき内部ループで呼び出し）
+%    - util_calc_sigma_per_band_basic.m      （mode1=1 のとき内部ループで呼び出し）
 %    - KAKURITUBU_BUNNPU.m   （mode1=2 のとき確率分布計算に使用）
 %    - get_color.m           （グラフの色設定）
 %    - sec_time_30min.m      （X軸の時刻ラベル設定）
 % =========================================================
 
-function SIGMA_get(year, mode1, mode2, mode3, PVC_bai)
+function step5_calc_sigma_basic(year, mode1, mode2, mode3, PVC_bai)
 
 close all
 
@@ -92,9 +92,9 @@ S = [];
 all_num = [];
 for i = 1:50
     if mode1 == 1
-        % PV出力帯域別σの計算（補助スクリプト mode1_no_sigma を呼び出し）
-        % → mode1_no_sigma.m が year, i, PVC_bai, ERROR を参照する
-        mode1_no_sigma
+        % PV出力帯域別σの計算（補助スクリプト util_calc_sigma_per_band_basic を呼び出し）
+        % → util_calc_sigma_per_band_basic.m が year, i, PVC_bai, ERROR を参照する
+        util_calc_sigma_per_band_basic
         % 各帯域（〜200, 〜400, ..., 〜1600MW）のσ幅を収集
         S = [S; s_e1-s_s1, s_e2-s_s2, s_e3-s_s3, s_e4-s_s4, ...
                 s_e5-s_s5, s_e6-s_s6, s_e7-s_s7, s_e8-s_s8];

@@ -1,5 +1,5 @@
 %% =========================================================
-%  PV_forecast_make.m  ―  予測PV出力データの生成
+%  step1_generate_pv_forecast.m  ―  予測PV出力データの生成
 %  =========================================================
 %
 %  【役割】
@@ -8,8 +8,8 @@
 %    これはデータ生成チェーンの【Step 1】。
 %
 %  【実行方法】
-%    >> PV_forecast_make(2018)
-%    >> PV_forecast_make(2019)
+%    >> step1_generate_pv_forecast(2018)
+%    >> step1_generate_pv_forecast(2019)
 %
 %  【フォルダ構成の前提】
 %    このスクリプトは deploy/ フォルダをカレントディレクトリとして実行する。
@@ -29,7 +29,7 @@
 %    output/PV_forecast_YYYY.mat  （変数: data_all → 予測PV出力 [MW]）
 %
 %  【次のステップ（このファイルを使う処理）】
-%    → PV_forecast_error_make(year)  （Step 3: 予測誤差の計算）
+%    → step3_calc_forecast_error(year)  （Step 3: 予測誤差の計算）
 %    → PV_compare(year, month, bai)  （可視化）
 %
 %  【計算式】
@@ -39,7 +39,7 @@
 %    - 年度は4月始まり（M = [4:12 1:3]）で処理される。
 % =========================================================
 
-function PV_forecast_make(year)
+function step1_generate_pv_forecast(year)
 
 %% --- データ読み込み（相対パス: input_data フォルダ） ---
 load(fullfile('input_data', ['PV_base_',num2str(year),'.mat']))        % 変数: PV_base  → 各月の基準PV導入量 [MW]

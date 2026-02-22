@@ -1,5 +1,5 @@
 %% =========================================================
-%  SIGMA_get1.m  ―  PV予測誤差の標準偏差(σ)計算（拡張版）
+%  step5_calc_sigma_by_output_band.m  ―  PV予測誤差の標準偏差(σ)計算（拡張版）
 %  =========================================================
 %
 %  【役割】
@@ -14,12 +14,12 @@
 %    ├────────────────────────┼──────────────────┼──────────────────────┤
 %    │ 帯域分割数             │ 8分割            │ 10分割               │
 %    │ 帯域の定義方法         │ 固定値（200MW刻み）│ PVC/5 刻み（可変）  │
-%    │ 補助スクリプト         │ mode1_no_sigma   │ mode1_no_sigma1      │
+%    │ 補助スクリプト         │ util_calc_sigma_per_band_basic   │ util_calc_sigma_per_band_extended      │
 %    │ 中間データの保存       │ なし             │ 時刻断面_i.mat を保存│
 %    └────────────────────────┴──────────────────┴──────────────────────┘
 %
 %  【実行方法】
-%    >> SIGMA_get1(2018, 1, 1, 6, 1.0)
+%    >> step5_calc_sigma_by_output_band(2018, 1, 1, 6, 1.0)
 %
 %  【パラメータ説明】（SIGMA_get.m と同じ）
 %    year    : 対象年
@@ -29,8 +29,8 @@
 %    PVC_bai : PV導入量の倍率
 %
 %  【前提条件（先に実行しておくこと）】
-%    1. PV_forecast_make(year)       → PV_forecast_YYYY.mat が存在すること
-%    2. PV_forecast_error_make(year) → ERROR_YYYY.mat が存在すること
+%    1. step1_generate_pv_forecast(year)       → PV_forecast_YYYY.mat が存在すること
+%    2. step3_calc_forecast_error(year) → ERROR_YYYY.mat が存在すること
 %
 %  【出力】
 %    error_sigma.mat  ← 動的LFC容量決定手法フォルダに保存
@@ -44,11 +44,11 @@
 %    ↑ 実行環境に合わせてすべて修正すること。
 %
 %  【依存する関数・スクリプト】
-%    - mode1_no_sigma1.m     （mode1=1 のとき内部ループで呼び出し）
+%    - util_calc_sigma_per_band_extended.m     （mode1=1 のとき内部ループで呼び出し）
 %    - KAKURITUBU_BUNNPU.m   （mode1=2 のとき使用）
 % =========================================================
 
-function SIGMA_get1(year, mode1, mode2, mode3, PVC_bai)
+function step5_calc_sigma_by_output_band(year, mode1, mode2, mode3, PVC_bai)
 
 close all
 
@@ -93,9 +93,9 @@ S = [];
 all_num = [];
 for i = 1:50
     if mode1 == 1
-        % PV出力帯域別σの計算（補助スクリプト mode1_no_sigma1 を呼び出し）
-        % → mode1_no_sigma1.m が year, i, PVC_bai, ERROR, PVC を参照する
-        mode1_no_sigma1
+        % PV出力帯域別σの計算（補助スクリプト util_calc_sigma_per_band_extended を呼び出し）
+        % → util_calc_sigma_per_band_extended.m が year, i, PVC_bai, ERROR, PVC を参照する
+        util_calc_sigma_per_band_extended
         % 各帯域（10分割）のσを収集
         S = [S; s1, s2, s3, s4, s5, s6, s7, s8, s9, s10];
         all_num = [all_num; l];  % 各帯域のデータ数

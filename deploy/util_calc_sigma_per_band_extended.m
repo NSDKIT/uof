@@ -1,19 +1,19 @@
 %% =========================================================
-%  mode1_no_sigma1.m  ―  PV出力帯域別σ計算（拡張版補助スクリプト）
+%  util_calc_sigma_per_band_extended.m  ―  PV出力帯域別σ計算（拡張版補助スクリプト）
 %  =========================================================
 %
 %  【役割】
 %    SIGMA_get1.m の mode1=1 ループ内から呼び出される補助スクリプト。
-%    mode1_no_sigma.m の拡張版で、帯域を10分割（可変幅）に細分化し、
+%    util_calc_sigma_per_band_basic.m の拡張版で、帯域を10分割（可変幅）に細分化し、
 %    各帯域の誤差データに対して確率分布を計算してσを取得する。
 %
 %  !! 【重要】このスクリプトは単体では実行できない !!
 %    SIGMA_get1.m のワークスペース変数に依存しているため、
 %    必ず SIGMA_get1.m（mode1=1）経由で実行すること。
 %
-%  【mode1_no_sigma.m との主な違い】
+%  【util_calc_sigma_per_band_basic.m との主な違い】
 %    ┌────────────────────────┬──────────────────────┬──────────────────────┐
-%    │ 項目                   │ mode1_no_sigma.m     │ mode1_no_sigma1.m    │
+%    │ 項目                   │ util_calc_sigma_per_band_basic.m     │ util_calc_sigma_per_band_extended.m    │
 %    ├────────────────────────┼──────────────────────┼──────────────────────┤
 %    │ 帯域数                 │ 8                    │ 10                   │
 %    │ 帯域の定義             │ 固定値（200MW刻み）  │ PVC/5 刻み（可変）   │
@@ -59,9 +59,9 @@ global a_day
 
 %% --- 季節区切りの行番号を取得（参考用・現在はコメントアウト） ---
 % 2018年の季節区切りを chose_data で取得
-chose_data(2018,6,30);  sp2=a_day; su1=a_day+1;
-chose_data(2018,9,30);  su2=a_day; au1=a_day+1;
-chose_data(2018,12,31); au2=a_day; wi1=a_day+1; wi2=365;
+util_get_row_index_by_date(2018,6,30);  sp2=a_day; su1=a_day+1;
+util_get_row_index_by_date(2018,9,30);  su2=a_day; au1=a_day+1;
+util_get_row_index_by_date(2018,12,31); au2=a_day; wi1=a_day+1; wi2=365;
 
 %% --- 誤差データの倍率適用 ---
 E = ERROR(:, i) * PVC_bai;

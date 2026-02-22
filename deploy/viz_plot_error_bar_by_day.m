@@ -1,5 +1,5 @@
 %% =========================================================
-%  PV_forecast_error_bar_make.m  ―  日別予測誤差の棒グラフ可視化
+%  viz_plot_error_bar_by_day.m  ―  日別予測誤差の棒グラフ可視化
 %  =========================================================
 %
 %  【役割】
@@ -18,7 +18,7 @@
 %              2列目以降 = 20MW刻みで増加した容量での誤差
 %
 %  【前提条件（先に実行しておくこと）】
-%    PV_forecast_error_PVup_make(year)  → 予測PV出力誤差_YYYY フォルダ内に
+%    step4_calc_error_by_capacity(year)  → 予測PV出力誤差_YYYY フォルダ内に
 %                                         ERRORyyyymmdd.mat が存在すること
 %
 %  【入力ファイル】
@@ -38,7 +38,7 @@
 %    sec_time_30min.m  ← X軸の時刻ラベル設定
 % =========================================================
 
-function PV_forecast_error_bar_make(year, month, num)
+function viz_plot_error_bar_by_day(year, month, num)
 
 %% --- 入力フォルダの設定（相対パス） ---
 err_dir = fullfile('output', '予測PV出力誤差');  % 日別誤差ファイルが格納されたフォルダ

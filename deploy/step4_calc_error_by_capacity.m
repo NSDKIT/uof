@@ -1,5 +1,5 @@
 %% =========================================================
-%  PV_forecast_error_PVup_make.m  ―  容量別・日別予測誤差ファイルの生成
+%  step4_calc_error_by_capacity.m  ―  容量別・日別予測誤差ファイルの生成
 %  =========================================================
 %
 %  【役割】
@@ -9,8 +9,8 @@
 %    将来のPV導入量増加シナリオを見据えた分析に使用する。
 %
 %  【実行方法】
-%    >> PV_forecast_error_PVup_make(2018)
-%    >> PV_forecast_error_PVup_make(2019)
+%    >> step4_calc_error_by_capacity(2018)
+%    >> step4_calc_error_by_capacity(2019)
 %
 %  【フォルダ構成の前提】
 %    このスクリプトは deploy/ フォルダをカレントディレクトリとして実行する。
@@ -18,7 +18,7 @@
 %    出力ファイルは output/予測PV出力誤差/ に保存される。
 %
 %  【前提条件（先に実行しておくこと）】
-%    PV_forecast_error_make(year)  → output/ERROR_YYYY.mat が存在すること
+%    step3_calc_forecast_error(year)  → output/ERROR_YYYY.mat が存在すること
 %
 %  【入力ファイル】
 %    ┌──────────────────────────────┬──────────────────────────────────────┐
@@ -40,10 +40,10 @@
 %    → PV_compare.m                  （予測と実績の比較可視化）
 %
 %  【依存する関数】
-%    chose_data(year, month, day)  ← 同フォルダ内の chose_data.m
+%    util_get_row_index_by_date(year, month, day)  ← 同フォルダ内の chose_data.m
 % =========================================================
 
-function PV_forecast_error_PVup_make(year)
+function step4_calc_error_by_capacity(year)
 
 year1 = year;  % 元の年度を保持（1〜3月処理で year を上書きするため）
 
@@ -80,7 +80,7 @@ for i = 1:12
         ERROR = EEE;
 
         % 日付の行番号を取得
-        chose_data(year1, month, day)
+        util_get_row_index_by_date(year1, month, day)
         global a_day
         d = data(a_day,:);  % d = [年, 月, 日, ...]
 

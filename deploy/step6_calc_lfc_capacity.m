@@ -1,5 +1,5 @@
 %% =========================================================
-%  douteki_LFC3.m  ―  動的LFC必要容量の計算
+%  step6_calc_lfc_capacity.m  ―  動的LFC必要容量の計算
 %  =========================================================
 %
 %  【役割】
@@ -7,8 +7,8 @@
 %    30分ごとに計算し、.mat ファイルとして保存する。
 %
 %  【実行方法】
-%    >> douteki_LFC3(2018, 6, 15, 1.0)   % 2018年6月15日・基準PV導入量
-%    >> douteki_LFC3(2018, 8, 1, 1.5)    % 2018年8月1日・PV1.5倍
+%    >> step6_calc_lfc_capacity(2018, 6, 15, 1.0)   % 2018年6月15日・基準PV導入量
+%    >> step6_calc_lfc_capacity(2018, 8, 1, 1.5)    % 2018年8月1日・PV1.5倍
 %
 %  【フォルダ構成の前提】
 %    このスクリプトは deploy/ フォルダをカレントディレクトリとして実行する。
@@ -44,7 +44,7 @@
 %    → output/動的LFC容量決定手法/ フォルダ内のシミュレーションスクリプト
 % =========================================================
 
-function douteki_LFC3(year, month, day, PV_bai)
+function step6_calc_lfc_capacity(year, month, day, PV_bai)
 
 %% --- LFC係数の読み込み（相対パス: input_data フォルダ） ---
 load(fullfile('input_data', 'douteki_lfc_ab.mat'))
@@ -56,7 +56,7 @@ load(fullfile('input_data', 'new_ave_load.mat'))     % 変数: new_ave_load → 
 
 %% --- 平均カーブを使用（特定日のデータは現在コメントアウト中） ---
 % 特定日のデータを使う場合は以下をコメントアウト解除:
-% chose_data(year, month, day)
+% util_get_row_index_by_date(year, month, day)
 % global a_day
 % PV_f = data_all(a_day,:);
 PV_f = new_ave_PV;    % 平均PV出力カーブを使用

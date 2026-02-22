@@ -1,5 +1,5 @@
 %% =========================================================
-%  chose_data.m  ―  日付から通算行番号を取得するユーティリティ
+%  util_get_row_index_by_date.m  ―  日付から通算行番号を取得するユーティリティ
 %  =========================================================
 %
 %  【役割】
@@ -8,13 +8,13 @@
 %    単体では使用せず、他のスクリプトから補助的に呼び出されるユーティリティ。
 %
 %  【実行方法】（直接呼び出す場合）
-%    >> chose_data(2018, 6, 15)
+%    >> util_get_row_index_by_date(2018, 6, 15)
 %    >> disp(a_day)  % ベースワークスペースに a_day が作成される
 %
 %  【呼び出し元スクリプト】
 %    - PV_compare.m
 %    - PV_forecast_error_PVup_make.m
-%    - mode1_no_sigma1.m
+%    - util_calc_sigma_per_band_extended.m
 %
 %  【フォルダ構成の前提】
 %    このスクリプトは deploy/ フォルダをカレントディレクトリとして実行する。
@@ -32,7 +32,7 @@
 %    - 同月・同日が複数行ある場合、最初の行番号が返される（b(1)）。
 % =========================================================
 
-function chose_data(year, month, day)
+function util_get_row_index_by_date(year, month, day)
 
 %% --- データ読み込み（相対パス: input_data フォルダ） ---
 load(fullfile('input_data', ['data_',num2str(year),'.mat']))

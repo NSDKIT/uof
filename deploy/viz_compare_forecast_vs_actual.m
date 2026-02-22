@@ -1,5 +1,5 @@
 %% =========================================================
-%  PV_compare.m  ―  PV予測出力と実績出力の月別比較グラフ
+%  viz_compare_forecast_vs_actual.m  ―  PV予測出力と実績出力の月別比較グラフ
 %  =========================================================
 %
 %  【役割】
@@ -17,9 +17,9 @@
 %    PV_bai  : PV導入量の倍率（例: 1.0=基準, 1.5=1.5倍）
 %
 %  【前提条件（先に実行しておくこと）】
-%    1. PV_forecast_make(year)              → PV_forecast_YYYY.mat が存在すること
-%    2. PV_make(year)                       → PV_YYYY.mat が存在すること
-%    3. PV_forecast_error_PVup_make(year)   → 予測PV出力誤差_YYYY フォルダ内に
+%    1. step1_generate_pv_forecast(year)              → PV_forecast_YYYY.mat が存在すること
+%    2. step2_generate_pv_actual(year)                       → PV_YYYY.mat が存在すること
+%    3. step4_calc_error_by_capacity(year)   → 予測PV出力誤差_YYYY フォルダ内に
 %                                             ERRORyyyymmdd.mat が存在すること
 %
 %  【入力ファイル】
@@ -44,11 +44,11 @@
 %    ↑ 実行環境に合わせて修正すること。
 %
 %  【依存する関数】
-%    chose_data(year, month, day)  ← 同フォルダ内の chose_data.m
+%    util_get_row_index_by_date(year, month, day)  ← 同フォルダ内の chose_data.m
 %    sec_time_30min.m              ← X軸の時刻ラベル設定
 % =========================================================
 
-function PV_compare(year, month, PV_bai)
+function viz_compare_forecast_vs_actual(year, month, PV_bai)
 
 close all
 
@@ -81,10 +81,10 @@ end
 
 %% --- 負荷データの読み込みと当月分の抽出 ---
 load(fullfile('input_data', ['Load_',num2str(year),'.mat']))  % 変数: data_all → 電力需要
-chose_data(year, month, 1)
+util_get_row_index_by_date(year, month, 1)
 global a_day
 d1 = a_day;
-chose_data(year, month, L_D)
+util_get_row_index_by_date(year, month, L_D)
 global a_day
 d2 = a_day;
 L_f = data_all(d1:d2,:);  % 当月の負荷データ

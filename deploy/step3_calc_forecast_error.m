@@ -1,5 +1,5 @@
 %% =========================================================
-%  PV_forecast_error_make.m  ―  基準PV導入量での予測誤差の計算
+%  step3_calc_forecast_error.m  ―  基準PV導入量での予測誤差の計算
 %  =========================================================
 %
 %  【役割】
@@ -9,12 +9,12 @@
 %    ここで生成される ERROR_YYYY.mat が、以降の全分析の基礎となる。
 %
 %  【実行方法】
-%    >> PV_forecast_error_make(2018)   % 2018年度分を生成
-%    >> PV_forecast_error_make(2019)   % 2019年度分を生成
+%    >> step3_calc_forecast_error(2018)   % 2018年度分を生成
+%    >> step3_calc_forecast_error(2019)   % 2019年度分を生成
 %
 %  【前提条件（先に実行しておくこと）】
-%    1. PV_forecast_make(year)  → PV_forecast_YYYY.mat が存在すること
-%    2. PV_make(year)           → PV_YYYY.mat が存在すること
+%    1. step1_generate_pv_forecast(year)  → PV_forecast_YYYY.mat が存在すること
+%    2. step2_generate_pv_actual(year)           → PV_YYYY.mat が存在すること
 %
 %  【入力ファイル（事前に同フォルダへ配置すること）】
 %    ┌──────────────────────────┬──────────────────────────────────────┐
@@ -34,14 +34,14 @@
 %  【次のステップ（このファイルを使う処理）】
 %    → PV_forecast_error_PVup_make.m  （容量別・日別誤差の生成）
 %    → SIGMA_get.m / SIGMA_get1.m     （σ計算）
-%    → mode1_no_sigma.m               （帯域別σ計算・補助スクリプト）
+%    → util_calc_sigma_per_band_basic.m               （帯域別σ計算・補助スクリプト）
 %
 %  【注意事項】
 %    - 2018年は365日、2019年は366日（うるう年）として処理される。
 %    - 誤差の符号は「予測 > 実績」のとき正（予測が過大）。
 % =========================================================
 
-function PV_forecast_error_make(year)
+function step3_calc_forecast_error(year)
 
 %% --- 日数の設定 ---
 if year == 2018
