@@ -110,7 +110,6 @@ for i = 1:50
         else
             util_fit_normal_distribution(i, (ERROR(row,i)), 'b', [-15:0.01:15], [], [])
         end
-        global sigma_s sigma_e
         S = [S; sigma_s, sigma_e];
     end
 end

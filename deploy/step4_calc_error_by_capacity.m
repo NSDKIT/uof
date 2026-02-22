@@ -80,8 +80,7 @@ for i = 1:12
         ERROR = EEE;
 
         % 日付の行番号を取得
-        util_get_row_index_by_date(year1, month, day)
-        global a_day
+        a_day = util_get_row_index_by_date(year1, month, day);
         d = data(a_day,:);  % d = [年, 月, 日, ...]
 
         % 1〜3月は翌年扱い（4月始まり年度のため）

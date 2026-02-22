@@ -55,13 +55,12 @@ load(fullfile('output', ['PV_forecast_',num2str(year),'.mat']));  % 変数: data
 load(fullfile('input_data', 'PVC.mat'))                              % 変数: PVC → PV設備容量 [MW]
 data_all = data_all * PVC_bai;               % PV導入量倍率を適用
 data = data_all(:, i);                       % 時間断面 i の予測出力（365日分）
-global a_day
 
 %% --- 季節区切りの行番号を取得（参考用・現在はコメントアウト） ---
 % 2018年の季節区切りを chose_data で取得
-util_get_row_index_by_date(2018,6,30);  sp2=a_day; su1=a_day+1;
-util_get_row_index_by_date(2018,9,30);  su2=a_day; au1=a_day+1;
-util_get_row_index_by_date(2018,12,31); au2=a_day; wi1=a_day+1; wi2=365;
+sp2 = util_get_row_index_by_date(2018,6,30); su1=sp2+1;
+su2 = util_get_row_index_by_date(2018,9,30); au1=su2+1;
+au2 = util_get_row_index_by_date(2018,12,31); wi1=au2+1; wi2=365;
 
 %% --- 誤差データの倍率適用 ---
 E = ERROR(:, i) * PVC_bai;
@@ -137,7 +136,6 @@ l = [e_l1, e_l2, e_l3, e_l4, e_l5, e_l6, e_l7, e_l8, e_l9, e_l10];
 
 %% --- 各帯域のσを計算（KAKURITUBU_BUNNPU1 を呼び出し） ---
 % データが空または1点の場合は σ=0 として処理する
-global s1 s2 s3 s4 s5 s6 s7 s8 s9 s10
 load(fullfile('input_data', 'time_label.mat'))
 close all
 
@@ -150,12 +148,15 @@ for band_idx = 1:10
     if isempty(e_data) || numel(e_data) == 1
         eval(sprintf('s%d = 0;', band_idx));
     else
-        util_fit_normal_distribution_extended(1, e_data, 'b', [-15:0.01:15], [], 1)
-        global pd
-        mu = pd.mu;
-        sigma = pd.sigma;
+        util_fit_normal_distribution_extended([], e_data, 'b', [-15:0.01:15], [], 1);
+        pd_local = fitdist(sort(e_data(:)), 'Normal');
+        mu = pd_local.mu;
+        sigma = pd_local.sigma;
         eval(sprintf('s%d = max([abs(mu+sigma), abs(mu-sigma)]);', band_idx));
     end
 end
 
-% → s1〜s10 が SIGMA_get1.m のワークスペースに返される
+% → s1〜s10 を呼び出し元のワークスペースに返す
+for band_idx = 1:10
+    assignin('caller', sprintf('s%d', band_idx), eval(sprintf('s%d', band_idx)));
+end

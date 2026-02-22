@@ -89,7 +89,6 @@ sigma1_e = find(x_pdf==(fix(sigma_e)))+(sigma_e-fix(sigma_e))*100;
 area(x_pdf(sigma1_s:sigma1_e),y(sigma1_s:sigma1_e),'FaceColor',color,'EdgeColor',color,'FaceAlpha',.1)
 end
 %% 正規分布
-global sigma_s sigma_e
 pd = fitdist(data,'Normal');
 % pd.mu=0;
 %% 確率密度関数
@@ -146,4 +145,14 @@ area(x_pdf(sigma1_s:sigma1_e),y(sigma1_s:sigma1_e),'FaceColor',color,'EdgeColor'
 % sigma_data_s = x_pdf(sigma1_s);
 % sigma_data_e = x_pdf(sigma1_e);
 end
+% sigma_s, sigma_e を計算して呼び出し元のワークスペースに返す
+if ~exist('sigma_num', 'var') || isempty(sigma_num)
+    sigma_s = round(pd.mu - pd.sigma, 2);
+    sigma_e = round(pd.mu + pd.sigma, 2);
+else
+    sigma_s = round(pd.mu - sigma_num * pd.sigma, 2);
+    sigma_e = round(pd.mu + sigma_num * pd.sigma, 2);
+end
+assignin('caller', 'sigma_s', sigma_s);
+assignin('caller', 'sigma_e', sigma_e);
 end

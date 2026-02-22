@@ -43,7 +43,6 @@ data=reshape(data,[X*Y,1]);
 data = sort(data);
 x_pdf = sort(data);
 %% 正規分布
-global sigma_s sigma_e pd
 pd = fitdist(data,'Normal'); % Gammaもある
 %% 確率密度関数
 y = pdf(pd,x_pdf);
@@ -111,4 +110,15 @@ if isempty(fignum) == 0
     % sigma_data_e = x_pdf(sigma1_e);
     end
 end
+% sigma_s, sigma_e, pd を呼び出し元のワークスペースに返す
+if ~exist('sigma_num', 'var') || isempty(sigma_num)
+    sigma_s = round(pd.mu - pd.sigma, 2);
+    sigma_e = round(pd.mu + pd.sigma, 2);
+else
+    sigma_s = round(pd.mu - sigma_num * pd.sigma, 2);
+    sigma_e = round(pd.mu + sigma_num * pd.sigma, 2);
+end
+assignin('caller', 'sigma_s', sigma_s);
+assignin('caller', 'sigma_e', sigma_e);
+assignin('caller', 'pd', pd);
 end

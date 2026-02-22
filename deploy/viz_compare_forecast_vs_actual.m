@@ -81,16 +81,11 @@ end
 
 %% --- 負荷データの読み込みと当月分の抽出 ---
 load(fullfile('input_data', ['Load_',num2str(year),'.mat']))  % 変数: data_all → 電力需要
-util_get_row_index_by_date(year, month, 1)
-global a_day
-d1 = a_day;
-util_get_row_index_by_date(year, month, L_D)
-global a_day
-d2 = a_day;
+d1 = util_get_row_index_by_date(year, month, 1);
+d2 = util_get_row_index_by_date(year, month, L_D);
 L_f = data_all(d1:d2,:);  % 当月の負荷データ
 
 %% --- 日ごとにサブプロットを描画 ---
-global aa
 aa = [];
 for day = 1:L_D
     % 日別の誤差ファイルを読み込む（output/予測PV出力誤差/ フォルダ内）

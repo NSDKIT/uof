@@ -108,35 +108,31 @@ load(fullfile('input_data', 'time_label.mat'))  % 変数: time_label → 時刻�
 close all
 
 util_fit_normal_distribution(1, E1, 'b', [-15:0.01:15], [], 1)
-global sigma_s sigma_e
 s_s1 = sigma_s; s_e1 = sigma_e;
 
 util_fit_normal_distribution(2, E2, 'b', [-15:0.01:15], [], 1)
-global sigma_s sigma_e
 s_s2 = sigma_s; s_e2 = sigma_e;
 
 util_fit_normal_distribution(3, E3, 'b', [-15:0.01:15], [], 1)
-global sigma_s sigma_e
 s_s3 = sigma_s; s_e3 = sigma_e;
 
 util_fit_normal_distribution(4, E4, 'b', [-15:0.01:15], [], 1)
-global sigma_s sigma_e
 s_s4 = sigma_s; s_e4 = sigma_e;
 
 util_fit_normal_distribution(5, E5, 'b', [-15:0.01:15], [], 1)
-global sigma_s sigma_e
 s_s5 = sigma_s; s_e5 = sigma_e;
 
 util_fit_normal_distribution(5, E6, 'b', [-15:0.01:15], [], 1)
-global sigma_s sigma_e
 s_s6 = sigma_s; s_e6 = sigma_e;
 
 util_fit_normal_distribution(5, E7, 'b', [-15:0.01:15], [], 1)
-global sigma_s sigma_e
 s_s7 = sigma_s; s_e7 = sigma_e;
 
 util_fit_normal_distribution(5, E8, 'b', [-15:0.01:15], [], 1)
-global sigma_s sigma_e
 s_s8 = sigma_s; s_e8 = sigma_e;
 
-% → s_s1〜s_e8 が SIGMA_get.m のワークスペースに返される
+% → s_s1〜s_e8 を呼び出し元のワークスペースに返す
+for band_idx = 1:8
+    assignin('caller', sprintf('s_s%d', band_idx), eval(sprintf('s_s%d', band_idx)));
+    assignin('caller', sprintf('s_e%d', band_idx), eval(sprintf('s_e%d', band_idx)));
+end

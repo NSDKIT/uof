@@ -54,9 +54,8 @@ load(fullfile('input_data', ['data_',num2str(year),'.mat']))         % 変数: d
 % 結果はグローバル変数 DATA に格納される。
 data_all = [];
 for i = 1:min(size(Pv_real_out))
-    util_downsample_to_30min(Pv_real_out(i,:), 1440, 30)  % 1440分データを30分間隔に間引き
-    global DATA
-    data_all = [data_all; DATA];         % 間引き結果を日ごとに積み上げ
+    [row_data, ~] = util_downsample_to_30min(Pv_real_out(i,:), 1440, 30);  % 1440分データを30分間隔に間引き
+    data_all = [data_all; row_data];         % 間引き結果を日ごとに積み上げ
 end
 
 %% --- 出力ファイルへ保存 ---

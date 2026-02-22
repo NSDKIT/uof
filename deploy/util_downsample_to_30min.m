@@ -5,17 +5,18 @@
 %  【役割】
 %    1分間隔（1440点/日）のPV実績出力データを、
 %    30分間隔（48点/日）にダウンサンプリングする。
-%    各区間の平均値を計算し、グローバル変数 DATA に格納する。
+%    各区間の平均値を計算して戻り値として返す。
+%    グローバル変数を使わず、どの環境でも安全に動作する。
 %
 %  【呼び出し方法】
-%    util_downsample_to_30min(data, T, TT)
+%    [DATA, Time] = util_downsample_to_30min(data, T, TT)
 %
 %  【引数】
 %    data : 1日分の1分間隔データ（1×1440 または 1440×1 の配列）
 %    T    : 入力データの総点数（通常 1440）
 %    TT   : 出力したい区間数（通常 30 ※ 1440/30 = 48点に変換）
 %
-%  【出力（グローバル変数）】
+%  【戻り値】
 %    DATA : 間引き後のデータ（1×48 の配列，30分間隔）
 %    Time : 各区間内の非ゼロデータの割合（1800分割り）
 %
@@ -23,17 +24,14 @@
 %    step2_generate_pv_actual.m  ― PV実績出力データの生成
 %
 %  【注意事項】
-%    - グローバル変数 DATA, Time を使用する。
-%      呼び出し前に global DATA Time の宣言が必要。
 %    - T/TT が整数になるように T と TT を設定すること（例: T=1440, TT=30）。
 % =========================================================
 
-function util_downsample_to_30min(data,T,TT)
+function [DATA, Time] = util_downsample_to_30min(data, T, TT)
 % T:全体の行数
 % TT:求めたい行数
 T1 = T/TT;
 time0 = (data~=0);
-global DATA Time
 DATA = [];
 Time = [];
 for t = 1:T1
