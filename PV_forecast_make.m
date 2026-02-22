@@ -1,44 +1,67 @@
-%% PV_forecast_make.m
-% # 役割
-% 気象情報(日射量予測など)からPVの「予測出力」を計算し、`.mat`ファイルとして保存します。
-% このスクリプトは、予測誤差分析の最初のステップです。
+%% =========================================================
+%  PV_forecast_make.m  ―  PV予測出力データの生成
+%  =========================================================
 %
-% # 実行方法
+%  【役割】
+%    気象情報（日射量予測）と設備情報（基準PV導入量・性能係数）から
+%    PVの「予測出力」を計算し、.mat ファイルとして保存する。
+%    このスクリプトは予測誤差分析チェーンの【最初のステップ】。
 %
-% ```matlab
-% PV_forecast_make(year)
-% % (例: PV_forecast_make(2018))
-% ```
+%  【実行方法】
+%    >> PV_forecast_make(2018)   % 2018年度分を生成
+%    >> PV_forecast_make(2019)   % 2019年度分を生成
 %
-% # 入力
+%  【入力ファイル（事前に同フォルダへ配置すること）】
+%    ┌──────────────────────────┬──────────────────────────────────────┐
+%    │ ファイル名               │ 内容                                 │
+%    ├──────────────────────────┼──────────────────────────────────────┤
+%    │ data_YYYY.mat            │ 日付・時刻の基本配列（月ごとの行番号取得に使用）│
+%    │ PV_base_YYYY.mat         │ 各月の基準PV導入量 [MW]              │
+%    │ PR_YYYY.mat              │ 各月のシステム性能係数（PR値）       │
+%    │ Radiation_fcst_YYYY.mat  │ 各月の予測日射量 [W/m²]             │
+%    └──────────────────────────┴──────────────────────────────────────┘
 %
-% - `data_YYYY.mat`: 日付や時刻などの基本データ
-% - `PV_base_YYYY.mat`: 基準となるPV導入量データ
-% - `PR_YYYY.mat`: 性能係数(Performance Ratio)データ
-% - `Radiation_fcst_YYYY.mat`: 日射量予測データ
+%  【出力ファイル】
+%    PV_forecast_YYYY.mat  ← 変数 data_all に予測出力 [MW] を格納
 %
-% # 出力
+%  【次のステップ（このファイルを使う処理）】
+%    → PV_make.m                （実績出力の生成）
+%    → PV_forecast_error_make.m （予測誤差の計算）
+%    → yosoku_seido.m / MAE.m   （精度評価）
+%    → SIGMA_get.m              （σ計算）
 %
-% - `PV_forecast_YYYY.mat`: 計算されたPV予測出力データ
+%  【計算式】
+%    予測PV出力 = 予測日射量 × PR値 × 基準PV導入量 / 1000
 %
-% # 次のステップ
-%
-% このスクリプトで生成されたファイルは、`PV_make.m` や `PV_forecast_error_make.m` で使用されます。
+%  【注意事項】
+%    - 年度は4月始まり（M = [4:12 1:3]）で処理される。
+%    - 1月〜3月は「前年度」として data 配列に含まれる点に注意。
+% =========================================================
 
 function PV_forecast_make(year)
-%% 予測日射量→予測PV出力へ変換(2018,2019済)
-load(['PV_base_',num2str(year),'.mat'])        % 各年，各月の基準PV導入量
-load(['PR_',num2str(year),'.mat'])             % 各年，各月のシステム出力係数
-load(['Radiation_fcst_',num2str(year),'.mat']) % 各年，各月の予測日射量
-load(['data_',num2str(year),'.mat'])           % 日付の選択を行うための配列
-M = [4:12 1:3];
+
+%% --- データ読み込み ---
+load(['PV_base_',num2str(year),'.mat'])        % 変数: PV_base  → 各月の基準PV導入量 [MW]
+load(['PR_',num2str(year),'.mat'])             % 変数: PR_value → 各月のシステム性能係数
+load(['Radiation_fcst_',num2str(year),'.mat']) % 変数: data_all → 予測日射量 [W/m²]（月×時間断面）
+load(['data_',num2str(year),'.mat'])           % 変数: data     → 日付配列 [年, 月, 日, ...]
+
+%% --- 月順序の定義（4月始まり） ---
+M = [4:12 1:3];  % 4月〜3月の順で12ヶ月分処理
+
+%% --- 月ごとに予測PV出力を計算 ---
 PV_f = [];
 for i = 1:12
     month = M(i);
-    a = find(data(:,2)==month);                % 月毎に行番号取得
-    b = data_all(a,:);                         % 月毎に日射量抽出
-    PV_f = [PV_f;b*PR_value(i)*PV_base(i,3)/1000]; % 予測PV出力＝予測日射量×システム出力係数×基準PV導入量
+    a = find(data(:,2)==month);                    % 当月の行番号を取得
+    b = data_all(a,:);                             % 当月の予測日射量を抽出
+    % 予測PV出力 [MW] = 日射量 × PR値 × 基準導入量 / 1000
+    PV_f = [PV_f; b * PR_value(i) * PV_base(i,3) / 1000];
 end
+
+%% --- 出力ファイルへ保存 ---
 data_all = PV_f;
-save(['PV_forecast_',num2str(year),'.mat'],'data_all')
+save(['PV_forecast_',num2str(year),'.mat'], 'data_all')
+% → 保存先: PV_forecast_YYYY.mat（変数名: data_all）
+
 end
