@@ -33,7 +33,7 @@
 %    2. 間引き結果（グローバル変数 DATA）を data_all に積み上げる
 %
 %  【依存する外部関数】
-%    Mabiki(data, 入力点数, 出力点数)  ← このリポジトリ外の関数
+%    util_downsample_to_30min(data, 入力点数, 出力点数)  ← このリポジトリ外の関数
 %      → 実行前に MATLAB パスに追加されていることを確認すること
 %
 %  【注意事項】
@@ -54,7 +54,7 @@ load(fullfile('input_data', ['data_',num2str(year),'.mat']))         % 変数: d
 % 結果はグローバル変数 DATA に格納される。
 data_all = [];
 for i = 1:min(size(Pv_real_out))
-    Mabiki(Pv_real_out(i,:), 1440, 30)  % 1440分データを30分間隔に間引き
+    util_downsample_to_30min(Pv_real_out(i,:), 1440, 30)  % 1440分データを30分間隔に間引き
     global DATA
     data_all = [data_all; DATA];         % 間引き結果を日ごとに積み上げ
 end

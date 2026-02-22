@@ -45,7 +45,7 @@
 %
 %  【依存する関数】
 %    util_get_row_index_by_date(year, month, day)  ← 同フォルダ内の chose_data.m
-%    sec_time_30min.m              ← X軸の時刻ラベル設定
+%    util_set_xaxis_time_labels.m              ← X軸の時刻ラベル設定
 % =========================================================
 
 function viz_compare_forecast_vs_actual(year, month, PV_bai)
@@ -104,7 +104,7 @@ for day = 1:L_D
     plot(PV_o(day,:), 'r')   % 実績出力（赤）
     title([num2str(day),'日'])
     ylim([0 1000])
-    sec_time_30min  % X軸を30分間隔の時刻ラベルに設定
+    util_set_xaxis_time_labels  % X軸を30分間隔の時刻ラベルに設定
 
     % 各日の最大値を記録（予測・実績の最大値比較用）
     aa = [aa; max(PV_f(day,:)), max(PV_o(day,:))];

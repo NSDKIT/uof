@@ -46,7 +46,7 @@
 %    l      : 各帯域のデータ数配列 [e_l1, ..., e_l10]
 %
 %  【依存する関数】
-%    KAKURITUBU_BUNNPU1(fig番号, 誤差データ, 色, x軸範囲, [], フラグ)
+%    util_fit_normal_distribution_extended(fig番号, 誤差データ, 色, x軸範囲, [], フラグ)
 %      → グローバル変数 pd（正規分布オブジェクト）に mu, sigma を返す
 % =========================================================
 
@@ -150,7 +150,7 @@ for band_idx = 1:10
     if isempty(e_data) || numel(e_data) == 1
         eval(sprintf('s%d = 0;', band_idx));
     else
-        KAKURITUBU_BUNNPU1(1, e_data, 'b', [-15:0.01:15], [], 1)
+        util_fit_normal_distribution_extended(1, e_data, 'b', [-15:0.01:15], [], 1)
         global pd
         mu = pd.mu;
         sigma = pd.sigma;

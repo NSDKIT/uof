@@ -35,7 +35,7 @@
 %    ↑ 実行環境に合わせて修正すること。
 %
 %  【依存する関数】
-%    sec_time_30min.m  ← X軸の時刻ラベル設定
+%    util_set_xaxis_time_labels.m  ← X軸の時刻ラベル設定
 % =========================================================
 
 function viz_plot_error_bar_by_day(year, month, num)
@@ -78,6 +78,6 @@ end
 %% --- 月平均の誤差棒グラフを描画 ---
 ERROR_M = mean(ERROR_M');  % 各時間断面の月平均を計算
 figure, bar(ERROR_M)
-sec_time_30min  % X軸を30分間隔の時刻ラベルに設定
+util_set_xaxis_time_labels  % X軸を30分間隔の時刻ラベルに設定
 
 end

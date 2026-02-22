@@ -46,8 +46,8 @@
 %  【依存する関数・スクリプト】
 %    - util_calc_sigma_per_band_basic.m      （mode1=1 のとき内部ループで呼び出し）
 %    - KAKURITUBU_BUNNPU.m   （mode1=2 のとき確率分布計算に使用）
-%    - get_color.m           （グラフの色設定）
-%    - sec_time_30min.m      （X軸の時刻ラベル設定）
+%    - util_get_plot_colors.m           （グラフの色設定）
+%    - util_set_xaxis_time_labels.m      （X軸の時刻ラベル設定）
 % =========================================================
 
 function step5_calc_sigma_basic(year, mode1, mode2, mode3, PVC_bai)
@@ -101,10 +101,10 @@ for i = 1:50
     else
         if ~exist('mode2', 'var') || isempty(mode2)
             % 全期間（365日分）の確率分布を計算
-            KAKURITUBU_BUNNPU(i, (ERROR(:,i)), 'b', [-15:0.01:15], [], [])
+            util_fit_normal_distribution(i, (ERROR(:,i)), 'b', [-15:0.01:15], [], [])
         else
             % 指定した月・季節の確率分布を計算
-            KAKURITUBU_BUNNPU(i, (ERROR(row,i)), 'b', [-15:0.01:15], [], [])
+            util_fit_normal_distribution(i, (ERROR(row,i)), 'b', [-15:0.01:15], [], [])
         end
         global sigma_s sigma_e
         S = [S; sigma_s, sigma_e];
@@ -115,7 +115,7 @@ end
 if mode1 == 1
     figure('Name','予測PV出力の大きさでσを比較')
     hold on
-    get_color
+    util_get_plot_colors
     for i = 1:8
         plot(S(:,i), 'Color', color(i,:))
     end
@@ -128,7 +128,7 @@ else
     bar(S(:,2), 'r')
     ylim([-4 4])
 end
-sec_time_30min  % X軸を30分間隔の時刻ラベルに設定
+util_set_xaxis_time_labels  % X軸を30分間隔の時刻ラベルに設定
 
 %% --- 結果の保存（相対パス: output/動的LFC容量決定手法/ フォルダ） ---
 out_dir = fullfile('output', '動的LFC容量決定手法');

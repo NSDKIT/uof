@@ -106,9 +106,9 @@ for i = 1:50
         % → 保存先: output/時間粒度_気象分解能別予測誤差/データ/PV*倍/時刻断面_i.mat
     else
         if ~exist('mode2', 'var') || isempty(mode2)
-            KAKURITUBU_BUNNPU(i, (ERROR(:,i)), 'b', [-15:0.01:15], [], [])
+            util_fit_normal_distribution(i, (ERROR(:,i)), 'b', [-15:0.01:15], [], [])
         else
-            KAKURITUBU_BUNNPU(i, (ERROR(row,i)), 'b', [-15:0.01:15], [], [])
+            util_fit_normal_distribution(i, (ERROR(row,i)), 'b', [-15:0.01:15], [], [])
         end
         global sigma_s sigma_e
         S = [S; sigma_s, sigma_e];

@@ -38,11 +38,11 @@
 %       └─────────────────────────────────┴────────────────────────────────────────┘
 %
 %    3. 外部関数が MATLABパス上に存在することを確認すること:
-%       - Mabiki(data, n)          ← PV実績データのダウンサンプリング
-%       - KAKURITUBU_BUNNPU(...)   ← 確率分布計算（σ取得）
-%       - KAKURITUBU_BUNNPU1(...)  ← 確率分布計算（拡張版）
-%       - sec_time_30min           ← X軸の時刻ラベル設定
-%       - get_color                ← グラフの色設定
+%       - util_downsample_to_30min(data, n)          ← PV実績データのダウンサンプリング
+%       - util_fit_normal_distribution(...)   ← 確率分布計算（σ取得）
+%       - util_fit_normal_distribution_extended(...)  ← 確率分布計算（拡張版）
+%       - util_set_xaxis_time_labels           ← X軸の時刻ラベル設定
+%       - util_get_plot_colors                ← グラフの色設定
 %
 %  【実行方法】
 %    >> main_run
@@ -57,7 +57,7 @@
 %
 %  【注意事項】
 %    - Step 4 は処理に時間がかかる（365日×12ヶ月分のファイルを生成するため）
-%    - Step 5 の SIGMA_get1 は外部関数 KAKURITUBU_BUNNPU1 が必要
+%    - Step 5 の SIGMA_get1 は外部関数 util_fit_normal_distribution_extended が必要
 %    - 可視化スクリプト（viz_compare_forecast_vs_actual, viz_plot_error_bar_by_day 等）は
 %      このスクリプトには含まれていない。必要に応じて個別に実行すること。
 % =========================================================
@@ -177,7 +177,7 @@ end
 %  入力: output/ERROR_YYYY.mat, input_data/data_YYYY.mat,
 %         output/PV_forecast_YYYY.mat
 %  出力: output/動的LFC容量決定手法/error_sigma.mat
-%  注意: 外部関数 KAKURITUBU_BUNNPU1 が必要
+%  注意: 外部関数 util_fit_normal_distribution_extended が必要
 % =========================================================
 
 fprintf('\n------ Step 5: σ計算 ------\n');
