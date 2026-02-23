@@ -124,15 +124,39 @@ for meth_num = meth_num_list
                     end
                 end
                 
-                if ~isempty(missing_files)
-                    fprintf(\'  [ERROR] 以下の必須入力ファイルが見つかりません。\n\');
+if ~isempty(missing_files)
+                    fprintf(\\'  [WARN]  必須入力ファイルが不足しています。前処理を実行します...\\n\\');
                     for i = 1:length(missing_files)
-                        fprintf(\'    - %s\n\', missing_files{i});
+                        fprintf(\\'    - 不足ファイル: %s\\n\\', missing_files{i});
                     end
-                    fprintf(\'  [INFO]  前処理スクリプト（PV実出力作成/, 予測PV出力作成/, 需要実績・予測作成/）を実行して、\n\');
-                    fprintf(\'          基本データ/ フォルダに.matファイルを生成してください。\n\');
-                    fprintf(\'  [SKIP]  このケースをスキップします。\n\');
-                    continue;
+
+                    % lfc の値に応じて実行する前処理スクリプトを決定
+                    if lfc >= 100
+                        fprintf(\\'  [INFO]  非AGCモード (lfc=%d) のため、通常版の前処理を実行します。\\n\\', lfc);
+                        pv_script_path      = fullfile(ROOT_DIR, \\'PV実出力作成\\', \\'new_get_PV300_day.m\\');
+                        pvf_script_path     = fullfile(ROOT_DIR, \\'予測PV出力作成\\', \\'make_PVF_year.m\\');
+                        load_script_path    = fullfile(ROOT_DIR, \\'需要実績・予測作成\\', \\'make_load.m\\');
+                    else
+                        fprintf(\\'  [INFO]  AGCモード (lfc=%d) のため、AGC版の前処理を実行します。\\n\\', lfc);
+                        pv_script_path      = fullfile(ROOT_DIR, \\'PV実出力作成\\', \\'new_get_PV300_day_for_agc.m\\');
+                        pvf_script_path     = fullfile(ROOT_DIR, \\'予測PV出力作成\\', \\'make_PVF_year_for_agc.m\\');
+                        load_script_path    = fullfile(ROOT_DIR, \\'需要実績・予測作成\\', \\'make_load.m\\'); % make_load.m 内部で lfc を見て分岐する
+                    end
+
+                    try
+                        fprintf(\\'  [RUN]   需要データを作成中...\\n\\');
+                        run(load_script_path);
+                        fprintf(\\'  [RUN]   PV予測データを作成中...\\n\\');
+                        run(pvf_script_path);
+                        fprintf(\\'  [RUN]   PV実績データを作成中...\\n\\');
+                        run(pv_script_path);
+                        fprintf(\\'  [SUCCESS] 前処理が完了しました。シミュレーションを続行します。\\n\\');
+                    catch ME_preprocess
+                        fprintf(\\'  [ERROR] 前処理の実行中にエラーが発生しました: %s\\n\\', ME_preprocess.message);
+                        fprintf(\\'  [INFO]  前処理に必要な手動データ（Excel, CSV等）が配置されているか確認してください。\\n\\');
+                        fprintf(\\'  [SKIP]  このケースをスキップします。\\n\\');
+                        continue;
+                    end
                 end
                 % --- チェックここまで ---
 
