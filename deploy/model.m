@@ -16,14 +16,6 @@
 %      カレントディレクトリに設定する
 %   3. コマンドウィンドウで  model  と入力して Enter を押す
 %
-% 【フォルダ構成】
-%   model.m           ← このファイル（ルートに置く）
-%   new_dataload.m    ← データ読み込みサブスクリリプト
-%   基本データ/       ← PV・需要の入力データ（.mat）
-%   UC立案/MATLAB/    ← 起動停止計画（UC）の最適化スクリプト
-%   運用/             ← Simulink モデルと初期設定スクリプト群
-%   results/          ← シミュレーション結果の保存先（自動生成）
-%
 % =========================================================================
 
 %% ── 初期化 ──────────────────────────────────────────────────────────────
@@ -113,17 +105,48 @@ for meth_num = meth_num_list
 
                 %% ── [1/5] 基本データの読み込み ──────────────────────────
                 fprintf(\'  [1/5] 基本データを読み込み中...\n\');
+                
+                % --- 入力ファイルの存在チェック ---
+                required_files = {
+                    fullfile(ROOT_DIR, \'基本データ\', [\'PV_base_\', num2str(y), \'.mat\']),
+                    fullfile(ROOT_DIR, \'基本データ\', [\'PR_\', num2str(y), \'.mat\']),
+                    fullfile(ROOT_DIR, \'基本データ\', [\'MSM_bai_\', num2str(y), \'.mat\']),
+                    fullfile(ROOT_DIR, \'基本データ\', \'irr_fore_data.mat\'),
+                    fullfile(ROOT_DIR, \'基本データ\', \'D_1sec.mat\'),
+                    fullfile(ROOT_DIR, \'基本データ\', \'D_30min.mat\'),
+                    fullfile(ROOT_DIR, \'基本データ\', \'irr_mea_data.mat\')
+                };
+                
+                missing_files = {};
+                for i = 1:length(required_files)
+                    if ~exist(required_files{i}, \'file\')
+                        missing_files{end+1} = required_files{i};
+                    end
+                end
+                
+                if ~isempty(missing_files)
+                    fprintf(\'  [ERROR] 以下の必須入力ファイルが見つかりません。\n\');
+                    for i = 1:length(missing_files)
+                        fprintf(\'    - %s\n\', missing_files{i});
+                    end
+                    fprintf(\'  [INFO]  前処理スクリプト（PV実出力作成/, 予測PV出力作成/, 需要実績・予測作成/）を実行して、\n\');
+                    fprintf(\'          基本データ/ フォルダに.matファイルを生成してください。\n\');
+                    fprintf(\'  [SKIP]  このケースをスキップします。\n\');
+                    continue;
+                end
+                % --- チェックここまで ---
+
                 try
-                    load(fullfile(ROOT_DIR, \'基本データ\', [\'PV_base_\', num2str(y), \'.mat\']));
-                    PV_base = [PV_base(end-2:end,3)\', PV_base(1:end-3,3)\'];
-                    load(fullfile(ROOT_DIR, \'基本データ\', [\'PR_\', num2str(y), \'.mat\']));
-                    load(fullfile(ROOT_DIR, \'基本データ\', [\'MSM_bai_\', num2str(y), \'.mat\']));
-                    load(fullfile(ROOT_DIR, \'基本データ\', \'irr_fore_data.mat\'));
-                    load(fullfile(ROOT_DIR, \'基本データ\', \'D_1sec.mat\'));
-                    load(fullfile(ROOT_DIR, \'基本データ\', \'D_30min.mat\'));
-                    load(fullfile(ROOT_DIR, \'基本データ\', \'irr_mea_data.mat\'));
+                    load(required_files{1}); % PV_base
+                    PV_base = [PV_base(end-2:end,3)\\'', PV_base(1:end-3,3)\\''];
+                    load(required_files{2}); % PR
+                    load(required_files{3}); % MSM_bai
+                    load(required_files{4}); % irr_fore_data
+                    load(required_files{5}); % D_1sec
+                    load(required_files{6}); % D_30min
+                    load(required_files{7}); % irr_mea_data
                 catch ME_load
-                    fprintf(\'  [ERROR] 基本データの読み込みに失敗: %s\n\', ME_load.message);
+                    fprintf(\'  [ERROR] 基本データの読み込み中に予期せぬエラーが発生: %s\n\', ME_load.message);
                     continue;
                 end
 
@@ -159,7 +182,7 @@ for meth_num = meth_num_list
                         save(fullfile(ROOT_DIR, \'demand_30min.mat\'), \'demand_30min\');
                         PVF_30min = [PVF(1:1800:end), 0];
                         save(fullfile(ROOT_DIR, \'PVF_30min.mat\'), \'PVF_30min\');
-                        PV_1sec = [nan; PV_real_Output(2,:)\'];
+                        PV_1sec = [nan; PV_real_Output(2,:)\\''];
                         save(fullfile(ROOT_DIR, \'PV_1sec.mat\'), \'PV_1sec\');
                         fprintf(\'  [INFO] 特殊日(DN=91)のデータを上書きしました。\n\');
                     catch
