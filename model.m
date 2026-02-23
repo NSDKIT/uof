@@ -1,0 +1,445 @@
+clear
+cd C:\Users\PowerSystemLab\Desktop\01_研究資料\05_実行ファイル\program\全体実行
+% 必要なパスを追加
+addpath(genpath('C:\Users\PowerSystemLab\Desktop\01_研究資料\01_matlab_mytool'))
+%% 2018年度既設PV容量
+start_date = datetime(2019, 4, 1);
+end_date = datetime(2020, 3, 31);
+date_range = start_date:end_date;
+date_strings = datestr(date_range, 'yyyymmdd');
+save('date_strings.mat','date_strings')
+error_ox = 0; % 0:予測誤差無（実測=予測），1:予測誤差有（実測≠予測）
+save('error_ox.mat','error_ox')
+% %% 確認事項
+% % 発電計画ツールは閉じているか。
+% % 気象庁からのデータ(Z__C_RJTD_yyyymmddT9700_MSM_GPV_Rjp_Lsurf_FH16-33_grib2.bin)をダウンロードしたか。
+% % 前日予測は「前日の初期時刻 06:00(UTC)のデータ３つ（時間間隔（00~15,16~33,34~39））」をダウンロード。
+% % ex) [year month day]=[2018 4 1]を選択した場合
+% %     気象庁のデータで「2018/4/1 09:00」~「2018/4/3 08:30」までの予測データが得られる。
+% %     「4/2 00:00~23:30」の時間帯，つまり 2018/4/2 のシミュレーションを行う。
+% %% モード選択
+% mode = 1; % 1: 従来手法
+%           % 2: 線形手法
+%           % 3: 統計手法
+%           % 4: 機械学習手法
+meth=1;save('method.mat','meth')
+% YYYYMMDD='20190630';
+for meth_num = 2
+    save('meth_num.mat','meth_num')
+% % if error_ox==0 % 予測誤差がないケースは，出力レベルの大きさでケース分け
+% %     YYYYMMDD = ['20190623';'20191022';...
+% %         '20190917';'20190905';...
+% %         '20191213';'20200116'];
+% % elseif error_ox==1 % 予測誤差があるケースは，誤差レベルの大きさでケース分け
+% %     YYYYMMDD=['20190623';'20191213';'20191022';...
+% %         '20190917';'20190930';'20190905';...
+% %         '20200220';'20200129';'20200116'];
+% % end
+% if meth_num == 4
+%     YYYYMMDD = ['20190630';'20200220';'20191128']; % 28?
+% else
+%     YYYYMMDD = ['20200220';'20191128']; % 20190828も追加
+% end
+% YYYYMMDD = '20190630';
+
+% start_date = datetime(2020, 1, 1);
+% end_date   = datetime(2020, 3, 31);
+% date_range = start_date:end_date;
+% YYYYMMDD   = datestr(date_range, 'yyyymmdd');
+
+YYYYMMDD = ['20190828'];
+
+save YYYYMMDD.mat YYYYMMDD
+% % 追加検証 %
+% sigma_set_PVC=[5,2,4900;2,3,5100;4,3,4900;5,3,5300;5,3,5500];
+% save('sigma_set_PVC.mat','sigma_set_PVC')
+% for k = 1:size(sigma_set_PVC,1)
+% load('sigma_set_PVC.mat')
+% for sigma = 2
+sigma=2;
+    save('sigma.mat','sigma')
+    % if sigma==1
+    %     D_R=25:30;
+    % else
+    %     D_R=1:30;
+    % end
+    save data_set1.mat
+    for iii = 1:size(YYYYMMDD,1)
+        load('data_set1.mat')
+    % for day = 31
+    day_l = str2num(YYYYMMDD(iii,7:8));
+        if iii == 3
+            M_R = 2:5;
+        else
+            M_R = 1:5;
+        end
+        
+        save data_set2.mat
+            for mode = 1 % 1:片面, 2:両面東, 3:両面西, 4:片面一軸, 4:両面一軸
+                lfc = 8;
+                load('data_set2.mat')
+
+            save('lfclfc.mat','lfc')
+            save('mode.mat','mode')
+            load('sigma.mat')
+            %% 年月日の設定・保存
+            %% データ選択
+            year_l = str2num(YYYYMMDD(iii,1:4));
+            month_l = str2num(YYYYMMDD(iii,5:6));
+
+            load('date_strings.mat')
+            YYYY=str2num(date_strings(:,1:4))==year_l;
+            MM=str2num(date_strings(:,5:6))==month_l;
+            DD=str2num(date_strings(:,7:8))==day_l;
+            
+            DN=find(YYYY.*MM.*DD);
+
+            save('YMD.mat','year_l','month_l','day_l')
+            new_dataload
+        %% シミュレーション実行開始
+           % PVC = 1100+40-120;
+%             PVC = 1140-120;
+            hantei = 1;
+            % while hantei == 1
+            %     PVC = PVC+120;
+            % if sigma == 3
+            %     if mode == 1
+            %         PV_R = 5100:4160:13420;
+            %     elseif mode == 2
+            %         PV_R = 5100:4160:13420;
+            %     elseif mode == 3
+            %         PV_R = 5100:4160:13420;
+            %     elseif mode == 4
+            %         PV_R = 5100:4160:13420;
+            %     elseif mode == 5
+            %         PV_R = 5100:4160:13420;
+            %     end
+            % elseif sigma == 2
+            %     if mode == 1
+            %         PV_R = 5100:4160:13420;
+            %     elseif mode == 2
+            %         PV_R = 5100:4160:13420;
+            %     elseif mode == 3
+            %         PV_R = 5100:4160:13420;
+            %     elseif mode == 4
+            %         PV_R = 5100:4160:13420;
+            %     elseif mode == 5
+            %         PV_R = 5100:4160:13420;
+            %     end
+            % elseif sigma == 1
+            %     if day == 18
+            %         if mode==5
+            %             PV_R = 13420;
+            %         else
+            %             PV_R = 5100:4160:13420;
+            %         end
+            %     else
+            %         PV_R = 5100:4160:13420;
+            %     end
+            % end
+            % if meth_num == 4
+            %     if iii == 1
+            %         PV_R = 2360+420:420:8660;
+            %     else
+            %         PV_R = 1100:420:8660;
+            %     end
+            % else
+            %     PV_R = 1100:420:8660;
+            % end
+            save data_set3.mat
+            for PVC = 5300
+                save('PVC.mat','PVC')
+                load('data_set3.mat')
+
+                if year_l==2020
+                    y=year_l-1;
+                else
+                    y=year_l;
+                end
+                %% 既設PV容量
+                load(['基本データ/PV_base_',num2str(y),'.mat'])
+                PV_base=[PV_base(end-2:end,3)',PV_base(1:end-3,3)'];
+                %% システム出力係数
+                load(['基本データ/PR_',num2str(y),'.mat'])
+                %% MSMの倍数係数
+                load(['基本データ/MSM_bai_',num2str(y),'.mat'])
+                %% 日射量の抽出
+                % cd 予測PV出力作成
+                load('基本データ/irr_fore_data.mat')
+
+                n_l=[1,mode];
+
+                PVF_30min_al=irr_fore_data(24*((DN-1)-1)+1:24*(DN-1),n_l(1))*MSM_bai(month_l)*PR(month_l)*PV_base(month_l)/1000;
+                PVF_30min_new=irr_fore_data(24*((DN-1)-1)+1:24*(DN-1),n_l(2))*MSM_bai(month_l)*PR(month_l)*PV_base(month_l)/1000;
+                PV_al=1100;
+                PVF_30min=PVF_30min_al*PV_al/PV_base(month_l)+PVF_30min_new*(PVC-PV_al)/PV_base(month_l);
+                x = 1:24;xq_1min = 1:1/2:24;
+                PVF_30min = [interp1(x,PVF_30min,xq_1min),0,0,0];
+                PVF_30min(isnan(PVF_30min))=0;
+                save PVF_30min.mat PVF_30min
+
+                % make_PVF_year
+                % make_PVF_year_for_agc
+                % cd ..
+                %% 需要作成
+                % load('YMD.mat');load('PVC.mat')
+                load('基本データ/D_1sec.mat')
+                load('基本データ/D_30min.mat')
+                % cd 需要実績・予測作成
+                demand_1sec=D_1sec(DN,:)-500;   % 一般水力分を減算(-500)
+                demand_30min=D_30min(DN,:)-500; % 一般水力分を減算(-500)
+                save demand_30min.mat demand_30min    
+                save demand_1sec.mat demand_1sec
+                % cd ..
+                %% PV作成load('基本データ/irr_mea_data.mat')
+                  load('基本データ/irr_mea_data.mat')
+                    n_l=[1,mode];
+    
+                    PV_1sec_al=irr_mea_data(86401*(DN-1):86401*DN,n_l(1))*PR(month_l)*PV_base(month_l)/1000;
+                    PV_1sec_new=irr_mea_data(86401*(DN-1):86401*DN,n_l(2))*PR(month_l)*PV_base(month_l)/1000;
+                    PV_al=1100;
+                    PV_1sec=PV_1sec_al*PV_al/PV_base(month_l)+PV_1sec_new*(PVC-PV_al)/PV_base(month_l);
+                    
+                save PV_1sec.mat PV_1sec
+
+                if DN == 91
+                    % 応急処置
+                    load(['H:\解析結果\IEEJ_B\data\20190630\method1\PV_',num2str(PVC),'.mat'],'load_input','PVF','PV_real_Output')
+                    
+                    demand_1sec = [load_input,load_input(end)*ones(1,3599)];
+                    save demand_1sec.mat demand_1sec
+                    demand_30min = demand_1sec(1:1800:end);
+                    save demand_30min.mat demand_30min    
+
+                    PVF_30min = [PVF(1:1800:end),0];
+                    save PVF_30min.mat PVF_30min
+                    PV_1sec = [nan;PV_real_Output(2,:)'];;
+                    save PV_1sec.mat PV_1sec
+                end
+                %% 発電起動停止計画への書き込み
+                % PV予測,需要予測
+                lfc = load('lfclfc.mat');
+                lfc = lfc.lfc;
+                cd UC立案
+                % -- Excel --
+%                 if lfc > 10
+%                     pvwrite(1,lfc)
+%                 else
+%                     pvwrite(0,lfc)
+%                 end
+                % -- matlab --
+                % 不要
+                % LFC容量
+                load('../YMD.mat')
+                load('../PVC.mat')
+%                 load(['../PV_base_',num2str(year),'.mat'])
+                %% PV出力によって予測誤差を算出し，LFC容量を作成
+%                 if lfc == 14
+%                     load('sigma.mat')
+%                     if sigma >= 4
+%                         sigma = sigma -4;
+%                         save('sigma.mat','sigma')
+%                         statical_machine
+%                         sigma = sigma +4;
+%                         save('sigma.mat','sigma')
+%                     else
+%                         %% 機械学習によるLFC容量
+%                         if day == 31
+%                             write_LFC(1,5,lfc,5,PVC/PVC_range(1),year,11,1,sigma)
+%                         else
+%                             write_LFC(1,5,lfc,5,PVC/PVC_range(1),year,month,day,sigma)
+%                         end
+%                     end
+%                 elseif lfc == 13
+%                     %% 線形関係のLFC容量
+%                     cd('予測PV出力誤差')
+%                     douteki_LFC3(year,month,day,PVC/PVC_range(1))
+%                     write_LFC(1,5,lfc,5,[],year,month,day)
+%                 elseif lfc == 12
+%                     %% 統計による誤差に対するLFC容量
+%                     SIGMA_get1(2018,1,[],[],PVC/PVC_range(1))
+%                     if month < 4
+%                         lfc_make_01(year+1,month,day,95,2)
+%                     else
+%                         lfc_make_01(year,month,day,95,2)
+%                     end
+%                     write_LFC(1,5,lfc,5,[],year,month,day)
+%                 elseif lfc == 11
+%                     %% 絶対誤差に対するLFC容量
+%                     if month < 4
+%                         lfc_make_01(year+1,month,day,95,1)
+%                     else
+%                         lfc_make_01(year,month,day,95,1)
+%                     end
+%                     write_LFC(1,5,lfc,5,(PVC-PVC_range(1))/20+1,year,month,day)
+%                 elseif lfc == 15
+%                     load('new_ave_PV.mat')
+%                     write_LFC_test(1,5,lfc,5,(PVC-PVC_range(1))/20+1,year,month,day,0,new_ave_PV)
+%                 elseif lfc >= 100
+%                     %% 新発電機構成, 統計を使用
+%                     SIGMA_get1(2018,1,[],[],PVC/PVC_range(1))
+%                     if month < 4
+%                         lfc_make_01(year+1,month,day,95,2)
+%                     else
+%                         lfc_make_01(year,month,day,95,2)
+%                     end
+%                     write_LFC(1,5,lfc,5,[],year,month,day)
+%                 else
+                    % -- Excel --
+%                     write_LFC(0,5,lfc,5,(PVC-PV_base(month))/20+1,day)
+                    % -- MATLAB --
+                    cd('../UC立案/MATLAB')
+                    try
+                        new_optimization
+                        % easy_optimization
+                    catch ME
+                    end
+                    
+                    copyfile('*.csv','../../運用')
+                    cd ../..
+                    % for lfc = 1*10 % 319行目のendを有効にする
+                    %     save('lfclfc.mat','lfc')
+                    if exist('ME')==0
+        %                 end
+                    % -- Excel --
+        %                 movefile('*.csv','../運用')
+        %                 movefile('運転停止時間違反.xlsx','../運用')
+        %                 movefile('速度違反.xlsx','../運用')
+        %                 movefile('予備力違反.xlsx','../運用')
+        %                 cd ..
+                 %%
+                     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                    % initset.m シミュレーション初期条件計算 実行プログラム
+                    %% 以下両年度共通
+                     cd 運用
+                     make_csv               %Load.csv/PV_Out.csvの作成  他エリア需要の作り方
+                     clear
+                     disp('initset実行')
+                     initset_dataload        % シミュレーション時間等の設定、発電計画データ、標準データの読込み
+                     initset_inertia         % 慣性モデルにおける設定値
+                     initset_trfpP           % 連系線潮流算出モデルにおける設定値
+                     initset_lfc             % LFCモデルの初期値設定値
+                     initset_edc             % EDCモデルの設定値と初期値計算
+                     initset_thermals        % 汽力プラントモデル・GTCCプラントモデルの初期値計算
+        %                  initset_conhydros       % 定速揚水発電プラントモデルの初期値計算
+        %                  initset_vahydros        % 可変速揚水発電機モデルの初期値計算
+                     initset_otherarea       % 他エリアモデルの初期値設定
+                    %% 実測データと予測データの比較
+                    load('../lfclfc.mat')
+                    P_F = struct('PV_Forecast',PV_Forecast);
+                    PVF = P_F.PV_Forecast(2,:);
+                    L_F = struct('load_forecast_input',load_forecast_input);
+                    LOF = L_F.load_forecast_input(2,:);
+                    save('FO.mat','PVF','LOF')
+                    P_M = struct('PV_Out',PV_Out);
+                    PV_MAX = max(P_M.PV_Out(2,:));
+                    save('PV_MAX.mat','PV_MAX')
+                    % ppp=PV_Out(2,:);
+                    % ppp(~isfinite(ppp))=0;
+                    % PV_Out(2,:)=ppp*lfc/10; % 表記はlfcだが，PV実出力の割合を変化させるために用いる変数としている（2023年8月10日現在）
+                    lowpass_PV
+                    PV_real_Output=PV_Out;
+                    save PV_real_Output.mat PV_real_Output
+                    %% Simulinkの実行
+                    try
+                        if lfc >= 100
+                            open_system('Hydro_load.slx')
+                            sim('Hydro_load.slx')
+                        else
+                            open_system('AGC30_PVcut.slx')
+                            sim('AGC30_PVcut.slx')
+                        end
+                    catch ME
+                    end
+                    disp('シミュレーション終了')
+                    M = load('inertia_input.mat');
+                    inertia_input = M.inertia_input;
+                    FO = load('FO.mat');
+                    PVF = FO.PVF;
+                    LOF = FO.LOF;
+                    G_Out_UC = get_GOUT('G_Out.csv');
+                    LFC_up = get_LFC_updown('G_up_plan_limit.csv');
+                    LFC_down = get_LFC_updown('G_down_plan_limit.csv');
+                    g_c_o_s = struct('g_const_out_sum',g_const_out_sum);
+                    g_const_out_sum = g_c_o_s.g_const_out_sum(2,:);
+                    %% 制約違反の判定
+        %                 onoff_ihan=get_ihan('運転停止時間違反.xlsx');
+        %                 speed_ihan=get_ihan('速度違反.xlsx');
+        %                 reserved_ihan=get_ihan('予備力違反.xlsx');
+        %                 reserved_ihan=reserved_ihan(1:3,:);
+                    LFC_t=get_Gupplanlimittime('G_up_plan_limit_time.csv');
+                    cd ..
+                    load('YMD.mat')
+                    load('PVC.mat');
+                    load('Reserved_power.mat')
+                    
+                    %%
+                    load('sigma.mat')
+                    load('mode.mat')
+                    load('meth_num.mat')
+                    if mode == 1
+                        filename = ['nSigma_',num2str(sigma),'_Method_',num2str(meth_num),'_PVcapacity_',num2str(PVC),'_',num2str(year_l),'-',num2str(month_l),'-',num2str(day_l),'.mat'];
+                    elseif mode == 2
+                        filename = ['E_Sigma_',num2str(sigma),'_Method_',num2str(meth_num),'_PVcapacity_',num2str(PVC),'_',num2str(year_l),'-',num2str(month_l),'-',num2str(day_l),'.mat'];
+                    elseif mode == 3
+                        filename = ['W_Sigma_',num2str(sigma),'_Method_',num2str(meth_num),'_PVcapacity_',num2str(PVC),'_',num2str(year_l),'-',num2str(month_l),'-',num2str(day_l),'.mat'];
+                    elseif mode == 4
+                        filename = ['T_Sigma_',num2str(sigma),'_Method_',num2str(meth_num),'_PVcapacity_',num2str(PVC),'_',num2str(year_l),'-',num2str(month_l),'-',num2str(day_l),'.mat'];
+                    elseif mode == 5
+                        filename = ['T_V_Sigma_',num2str(sigma),'_Method_',num2str(meth_num),'_PVcapacity_',num2str(PVC),'_',num2str(year_l),'-',num2str(month_l),'-',num2str(day_l),'.mat'];
+                    end
+                    LFC = load('UC立案\LFC.mat');
+                    % cd E:\02_データ保存
+                    cd H:\NSD_results
+                    inertia_input = inertia_input(2,:);
+                    load_forecast_input = load_forecast_input(2,:);
+                    load_input = load_input(2,:);
+                    PV_Forecast = PV_Forecast(2,:);
+                    PV_Out = PV_Out(2,:);
+                    load('C:\Users\PowerSystemLab\Desktop\01_研究資料\05_実行ファイル\program\全体実行\UC立案\MATLAB\最適化データバックアップ (更新)\data_time50.mat')
+                    %% 保存
+    %                 dfout(1:300)=0;
+                    % AGC30_PVcut model: add PV_real_Output, PV_Surplus
+                    save(filename,'PV_CUR','LFC_t','Reserved_power','PV_real_Output','LFC_up','LFC_down','PV_MAX','G_Out_UC','g_const_out_sum','load_forecast_input','PV_Forecast','Oil_Output','Coal_Output','Combine_Output','LOF','PVF','dpout','load_input','dfout','TieLineLoadout','LFC_Output','EDC_Output','PV_Out','LFC','inertia_input')
+                    % save(filename,'PV_CUR','LFC_t','Reserved_power','PV_real_Output','PV_Surplus','LFC_up','LFC_down','PV_MAX','G_Out_UC','g_const_out_sum','load_forecast_input','PV_Forecast','Oil_Output','Coal_Output','Combine_Output','LOF','PVF','dpout','load_input','dfout','TieLineLoadout','LFC_Output','EDC_Output','PV_Out','LFC','inertia_input')
+                    cd C:\Users\PowerSystemLab\Desktop\01_研究資料\05_実行ファイル\program\全体実行
+    %                 dfout = round((dfout),2);
+    %                 F_stay(dfout(3600*4:3600*20))
+    %                 global aaa aaaa
+    %                 aaa = (aaa>=95);
+    %                 aaaa = (aaaa==100);
+    %                 hantei = aaa*aaaa;
+                    else
+                        load(fullfile('UC立案','MATLAB','最適化データバックアップ (更新)',['data_time',num2str(time_out-1),'.mat']))
+                        load('lfclfc.mat');
+                        load('YMD.mat')
+                        load('PVC.mat');
+                        load('sigma.mat')
+                        load('mode.mat')
+                        load('meth_num.mat')
+                        if mode == 1
+                            filename = ['nSigma_',num2str(sigma),'_Method_',num2str(meth_num),'_PVcapacity_',num2str(PVC),'_',num2str(year_l),'-',num2str(month_l),'-',num2str(day_l),'.mat'];
+                        elseif mode == 2
+                            filename = ['E_Sigma_',num2str(sigma),'_Method_',num2str(meth_num),'_PVcapacity_',num2str(PVC),'_',num2str(year_l),'-',num2str(month_l),'-',num2str(day_l),'.mat'];
+                        elseif mode == 3
+                            filename = ['W_Sigma_',num2str(sigma),'_Method_',num2str(meth_num),'_PVcapacity_',num2str(PVC),'_',num2str(year_l),'-',num2str(month_l),'-',num2str(day_l),'.mat'];
+                        elseif mode == 4
+                            filename = ['T_Sigma_',num2str(sigma),'_Method_',num2str(meth_num),'_PVcapacity_',num2str(PVC),'_',num2str(year_l),'-',num2str(month_l),'-',num2str(day_l),'.mat'];
+                        elseif mode == 5
+                            filename = ['T_V_Sigma_',num2str(sigma),'_Method_',num2str(meth_num),'_PVcapacity_',num2str(PVC),'_',num2str(year_l),'-',num2str(month_l),'-',num2str(day_l),'.mat'];
+                        end
+                        % cd E:\02_データ保存
+                        cd H:\NSD_results
+                        % save(filename,'time_out','ME','UC_planning','Balancing_EDC_LFC','EDC_reserved_plus','EDC_reserved_minus','LFC_reserved_up','LFC_reserved_down','PV_CUR','L_C_t')
+                        save(filename,'time_out','ME','UC_planning','Balancing_EDC_LFC','EDC_reserved_plus','LFC_reserved_up','LFC_reserved_up','EDC_reserved_plus')
+                        cd C:\Users\PowerSystemLab\Desktop\01_研究資料\05_実行ファイル\program\全体実行
+                    end
+                    clear
+                    % end
+                end
+            end
+        % end
+    end
+end
+% end
+% end
