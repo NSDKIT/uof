@@ -1,4 +1,18 @@
-%% 蟷ｴ譛域律繧帝∈謚�
+%% 【重要】実行前の準備
+% このスクリプトを実行する前に、以下の準備が必要です。
+% 
+% 1. 気象庁MSM気象モデルのGPVデータ（.bin）をダウンロードします。
+%    - ダウンロード先: https://www.jmbsc.or.jp/jp/online/file/f-online1.html
+%    - 対象: MSM 地上 1時間毎
+% 
+% 2. ダウンロードしたデータを配置するフォルダを決め、そのパスを環境変数に設定します。
+%    - 例: setenv("MSM_DATA_DIR", "C:\msm_data")
+% 
+% 3. wgrib2（.binファイル読み込みツール）をインストールし、そのパスを環境変数に設定します。
+%    - 例: setenv("WGRIB2_DIR", "C:\wgrib2")
+
+%% 予測PV出力作成
+% 蟷ｴ譛域律繧帝∈謚
 if year == 2018
     E_D = [31,28,31,30,31,30,31,31,30,31,30,31];
 elseif year == 2019
@@ -21,9 +35,9 @@ if Month > 3
 else
     Year = year+1;
 end
-%% .bin繝輔ぃ繧､繝ｫ蜿門ｾ�
+%% .bin繝輔ぃ繧､繝ｫ蜿門ｾ
 search1
-%% 蜷�繧ｨ繝ｪ繧｢縺ｮ豌ｴ蟷ｳ髱｢蜈ｨ螟ｩ譌･蟆�驥丞叙蠕�
+%% 蜷繧ｨ繝ｪ繧｢縺ｮ豌ｴ蟷ｳ髱｢蜈ｨ螟ｩ譌･蟆驥丞叙蠕
 TDBTDB
 irr_forecast=irr_forecast(2:end,:);
 data = irr_forecast;
@@ -35,20 +49,20 @@ for j = 1:2
 %     elseif j == 2       % 窶ｻ
 %         data=data;      % 窶ｻ
 %     end
-%% PV髱｢譌･蟆�驥上∈螟画鋤
+%% PV髱｢譌･蟆驥上∈螟画鋤
 MSM_change_for_agc
-%% 譌｢險ｭPV螳ｹ驥�
-load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/PV_base_',num2str(Year),'.mat'])
-PV_base=[PV_base(end-2:end,3)',PV_base(1:end-3,3)'];
-%% 繧ｷ繧ｹ繝�繝�蜃ｺ蜉帑ｿよ焚
-load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/PR_',num2str(Year),'.mat'])
+%% 譌｢險ｭPV螳ｹ驥
+load(["../蝓ｺ譛ｬ繝繝ｼ繧ｿ/PV_base_",num2str(Year),".mat"])
+PV_base=[PV_base(end-2:end,3)",PV_base(1:end-3,3)"];
+%% 繧ｷ繧ｹ繝繝蜃ｺ蜉帑ｿよ焚
+load(["../蝓ｺ譛ｬ繝繝ｼ繧ｿ/PR_",num2str(Year),".mat"])
 %% MSM縺ｮ蛟肴焚菫よ焚
-load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/MSM_bai_',num2str(Year),'.mat'])
-%% PV髱｢譌･蟆�蠑ｷ蠎ｦ縺九ｉPV莠域ｸｬ蜃ｺ蜉帙∈螟画鋤
+load(["../蝓ｺ譛ｬ繝繝ｼ繧ｿ/MSM_bai_",num2str(Year),".mat"])
+%% PV髱｢譌･蟆蠑ｷ蠎ｦ縺九ｉPV莠域ｸｬ蜃ｺ蜉帙∈螟画鋤
 l=size(IRR.sum);
 IRR.sum = [IRR.sum;zeros(2,l(2))];
-load('../PVC.mat')
-load('../mode.mat')
+load("../PVC.mat")
+load("../mode.mat")
 %%%%%%%%%%%%% all change %%%%%%%%%%%%%
 % if mode == 1
 %     PVF_30min=IRR.sum*MSM_bai(Month)*PR(Month)*PV_base(Month)/1000;
