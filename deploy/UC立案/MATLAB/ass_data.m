@@ -4,8 +4,8 @@
 	lfc=8;
     lfc=lfc/100;
 % -- 予測PV出力，予測需要の読み込み (hour×1 行列) --
-    load('../../PVF_30min.mat') % PVF_30min
-    load('../../demand_30min.mat') % demand_30min
+    load(fullfile(ROOT_DIR, 'PVF_30min.mat')) % PVF_30min
+    load(fullfile(ROOT_DIR, 'demand_30min.mat')) % demand_30min
 % -- 定格出力，最小出力の読み込み --
     rate_min
 % -- 燃料費係数(a,b,c)の読み込み --

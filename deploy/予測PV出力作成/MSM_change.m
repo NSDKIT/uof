@@ -27,7 +27,7 @@ t=[1:24]-0.5;
 jisa = [9*ones(1,4),9-12];
 % data = sum(data')/1000;
 data0 = data; % 窶ｻ AGC30逕ｨ螟画峩轤ｹ
-A_R=1;
+A_R=1:17;
 for area = A_R
     data = data0(:,area)'*24/1000;
     hantei = max(data0(:,area));
@@ -130,16 +130,14 @@ for area = A_R
             if mode == 2
                 irr = [irr(:,1),irr(:,2)*0.7+irr(:,3)];
             elseif mode == 3
-                irr = [irr(1:end-1,1),irr(1:end-1,2)*0.7+irr(1:end-1,3)];
-                irr = [zeros(1,2);irr];
+                irr = [irr(:,1),irr(:,2)+irr(:,3)*0.7];
             end
         elseif mode == 4 || mode == 5
         end
         irr(irr<=0)=0;
         irr = irr/24*1000;
         s=size(irr);
-        irr=[irr(1:end,:)];
-%         irr=[irr(2:end,:);zeros(1,s(2))]; % not AGC30 model
+        irr=[irr(2:end,:);zeros(1,s(2))];
         %% 縺ｾ縺ｨ繧�
         IRR.sum = IRR.sum+irr;
     else

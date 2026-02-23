@@ -65,4 +65,4 @@ for DD=1:length(date_range)
     msm_data=[msm_data;d3(1:48,:)];
 end
 save msm_data.mat msm_data
-save('../irr_fore_data.mat','irr_fore_data')
+save(fullfile(ROOT_DIR, '基本データ', 'irr_fore_data.mat'), 'irr_fore_data')

@@ -1,4 +1,21 @@
-p=pwd;
-cd('E:\01_遐皮ｩｶ雉�譁兔00_AGC30\隱ｲ鬘圭16B髮ｻ蜉幃怙邨ｦ蜻ｨ豕｢謨ｰ繧ｷ繝溘Η繝ｬ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ讓呎ｺ冶ｧ｣譫舌Δ繝�繝ｫ隗｣譫蝉ｾ矩｡碁寔\隗｣譫蝉ｾ矩｡碁寔\07 讓呎ｺ悶ョ繝ｼ繧ｿ\02 螟ｪ髯ｽ蜈臥匱髮ｻ繝�繝ｼ繧ｿ')
-PV=get_PVstandard('PV_繝ｩ繝ｳ繝励ム繧ｦ繝ｳ.xlsx');
+%% 【重要】実行前の準備
+% このスクリプトを実行する前に、以下のファイルを準備する必要があります。
+%
+% 必要なファイル:
+%   - PV_ランプダウン.xlsx  （AGC30用PVランプダウンデータ）
+%
+% 配置先:
+%   ROOT_DIR/PV実出力作成/AGC_データ/ フォルダに配置してください。
+%
+% また、get_PVstandard 関数が MATLAB パス上に存在する必要があります。
+%% AGC30用PVデータ読み込み
+p = pwd;
+% AGCデータフォルダのパス（ROOT_DIR は model.m で設定される）
+agc_data_dir = fullfile(ROOT_DIR, 'PV実出力作成', 'AGC_データ');
+if ~exist(agc_data_dir, 'dir')
+    mkdir(agc_data_dir);
+    warning('[AGC_kaisei] AGCデータフォルダが存在しません: %s\n  PV_ランプダウン.xlsx を配置してください。', agc_data_dir);
+end
+cd(agc_data_dir);
+PV = get_PVstandard('PV_ランプダウン.xlsx');
 cd(p)

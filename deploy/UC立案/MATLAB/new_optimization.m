@@ -14,8 +14,8 @@ end
 % close all
 % run('二次調整力算定手法\analysis_error.m')
 % clearvars -except ME EDC_reserved_plus EDC_reserved_minus LFC_reserved_up LFC_reserved_down
-load('../../demand_30min.mat') % demand_30min
-load('../../PVF_30min.mat') % PVF_30min8888
+load(fullfile(ROOT_DIR, 'demand_30min.mat')) % demand_30min
+load(fullfile(ROOT_DIR, 'PVF_30min.mat')) % PVF_30min8888
 
 %% 機械学習
 PVF_data  = PVF_30min';cd(fullfile(\'二次調整力算定手法\', \'機械学習\', \'ガウス過程回帰モデル\'));% 説明可能でないAI %%%
@@ -417,9 +417,9 @@ while time < hour
     end
 end
 load(['最適化データバックアップ (更新)\data_time',num2str(50),'.mat'])
-load('../../PVF_30min.mat') % PVF_30min
+load(fullfile(ROOT_DIR, 'PVF_30min.mat')) % PVF_30min
 PVF_30min=PVF_30min';
-load('../../demand_30min.mat') % demand_30min
+load(fullfile(ROOT_DIR, 'demand_30min.mat')) % demand_30min
 demand_30min=demand_30min';
 rate_min
 output_speed=[3;3;12.5;3;5;5;15;28;10;28;20]*30;
@@ -503,7 +503,7 @@ writematrix(L_C_t,'G_up_plan_limit_time.csv')
 
 Reserved_power=Balancing_EDC_LFC;
 save Reserved_power.mat Reserved_power
-copyfile('Reserved_power.mat','../..')
+copyfile('Reserved_power.mat', ROOT_DIR)
 
 % -- plot --
 % figure,bar([PVF_30min,UC_planning_30min],1,'stacked')

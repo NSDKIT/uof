@@ -31,17 +31,17 @@ data = irr_forecast;
 MSM_change
 % MSM_change_for_agc
 %% 譌｢險ｭPV螳ｹ驥�
-load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/PV_base_',num2str(Year),'.mat'])
+load(fullfile(ROOT_DIR, '基本データ', ['PV_base_',num2str(Year),'.mat']))
 PV_base=[PV_base(end-2:end,3)',PV_base(1:end-3,3)'];
 %% 繧ｷ繧ｹ繝�繝�蜃ｺ蜉帑ｿよ焚
-load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/PR_',num2str(Year),'.mat'])
+load(fullfile(ROOT_DIR, '基本データ', ['PR_',num2str(Year),'.mat']))
 %% MSM縺ｮ蛟肴焚菫よ焚
-load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/MSM_bai_',num2str(Year),'.mat'])
+load(fullfile(ROOT_DIR, '基本データ', ['MSM_bai_',num2str(Year),'.mat']))
 %% PV髱｢譌･蟆�蠑ｷ蠎ｦ縺九ｉPV莠域ｸｬ蜃ｺ蜉帙∈螟画鋤
 l=size(IRR.sum);
 IRR.sum = [IRR.sum;zeros(2,l(2))];
-load('../PVC.mat')
-load('../mode.mat')
+load(fullfile(ROOT_DIR, 'PVC.mat'))
+load(fullfile(ROOT_DIR, 'mode.mat'))
 %%%%%%%%%%%%% all change %%%%%%%%%%%%%
 % if mode == 1
 %     PVF_30min=IRR.sum*MSM_bai(Month)*PR(Month)*PV_base(Month)/1000;

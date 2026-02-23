@@ -1,4 +1,4 @@
-load('..\..\..\..\..\meth_num.mat')
+load(fullfile(ROOT_DIR, 'meth_num.mat'))
 switch meth_num
     case 1
         % 所要調整力算出用
@@ -45,7 +45,7 @@ switch meth_num
                     'VariableNames',{'t','DEMF_train','PVOF_train','X1','X3','X4'});
         end
         [yPred, yStd] = predict(gprMdl, eva_data);
-        load('..\..\..\..\..\sigma.mat')
+        load(fullfile(ROOT_DIR, 'sigma.mat'))
         RES=yPred+sigma*yStd;
 end
 % figure(64);hold on;plot(RES)

@@ -17,5 +17,5 @@ for DD = 1:length(date_strings)-1
     D_30min(DD,:)=demand_30min';
 end
 
-save('../D_1sec.mat','D_1sec')
-save('../D_30min.mat','D_30min')
+save(fullfile(ROOT_DIR, '基本データ', 'D_1sec.mat'), 'D_1sec')
+save(fullfile(ROOT_DIR, '基本データ', 'D_30min.mat'), 'D_30min')

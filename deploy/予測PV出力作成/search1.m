@@ -10,7 +10,7 @@ else
     NAME1 = [num2str(Year),'-',num2str(Month)];
     NAME2 = ['GRIB_',num2str(Year),num2str(Month)];
 end
-load('../TT.mat')
+load(fullfile(ROOT_DIR, 'TT.mat'))
 if Day < 10
     NAME_a = [NAME1,'-0',num2str(Day)];
 else

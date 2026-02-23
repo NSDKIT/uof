@@ -7,10 +7,10 @@ else
     Year = year+1;
 end
 %% 譌｢險ｭPV螳ｹ驥�
-load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/PV_base_',num2str(Year),'.mat'])
+load(fullfile(ROOT_DIR, '基本データ', ['PV_base_',num2str(Year),'.mat']))
 PV_base=[PV_base(end-2:end,3)',PV_base(1:end-3,3)'];
 %% 繧ｷ繧ｹ繝�繝�蜃ｺ蜉帑ｿよ焚
-load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/PR_',num2str(Year),'.mat'])
+load(fullfile(ROOT_DIR, '基本データ', ['PR_',num2str(Year),'.mat']))
 % 譌･逡ｪ蜿ｷ
 clear day month year
 t_target = datetime(Year,Month,Day);day_num = day(t_target); %隗｣譫仙ｯｾ雎｡譌･縺ｮ譌･莉倡分蜿ｷ繧貞叙蠕�
@@ -41,8 +41,8 @@ jisa = [9*ones(1,4),9-12];
 %     data(1:length(pv300),area)=pv300;
 % end
 % data = sum(data')/1000; % W竍談W
-cd ../..
-load('../mode.mat')
+cd(ROOT_DIR)
+load(fullfile(ROOT_DIR, 'mode.mat'))
 if mode == 1
     MODE = 1;
 elseif mode == 2 || mode == 3
@@ -50,7 +50,7 @@ elseif mode == 2 || mode == 3
 elseif mode == 4 || mode == 5
     MODE = [1,4];
 end
-load('../PVC.mat')
+load(fullfile(ROOT_DIR, 'PVC.mat'))
 for area = 1:17
     %% PV300縺ｮ蜿門ｾ�
     data = zeros(1,86400);
@@ -129,7 +129,7 @@ for area = 1:17
             % 蜿榊ｰ�謌仙��
             I_sanran = Hbar.*0.3.*(1-cos(deg2rad(kaku)))/2;
             I_sanran(I_sanran<=0)=0;
-            load('../mode.mat')
+            load(fullfile(ROOT_DIR, 'mode.mat'))
             if mode == 5
                 I_d=I_d*1.3;
                 I_sanran=I_sanran*1.3;
@@ -159,7 +159,7 @@ for area = 1:17
         irr = [irr,I'];
     end
     load('short_f.mat')
-    load('../mode.mat')
+    load(fullfile(ROOT_DIR, 'mode.mat'))
     if mode == 1
         irr(:,1)=irr(:,1)+short_f;
     elseif mode == 2 || mode == 3
@@ -191,7 +191,7 @@ end
 IRR.sum = IRR.sum/17;
 %% PV髱｢譌･蟆�蠑ｷ蠎ｦ縺九ｉPV蜃ｺ蜉帙∈螟画鋤
 %%%%%%%%%%%%% all change %%%%%%%%%%%%%
-% load('../mode.mat')
+% load(fullfile(ROOT_DIR, 'mode.mat'))
 % if mode == 1
 %     PV_1sec = IRR.sum*PR(Month)*PV_base(Month)/1000;
 % else

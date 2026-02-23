@@ -5,7 +5,7 @@
 load('ido_keido.mat')
 disp('日射量予測算出')
 % load('xyz.mat')
-cd ../wgrib2_ok
+cd(WGRIB2_DIR)  % wgrib2.exe が置かれているフォルダに移動
 %% 開始
 %% コマンドの作成('wgrib2.exe -match "DSWRF:surface:" Z__C_RJTD_yyyymmdd060000_MSM_GPV_Rjp_Lsurf_FH16-33_grib2.bin -lon 135.13 36.04 -last grib.csv -nl_out grib.csv')
 %% 自動
@@ -136,8 +136,8 @@ save PVdata.mat data %ave
 %     movefile(filename{k}, newfilename{k});
 % end
 %% ファイルの移動
-copyfile PVdata.mat ../../05_実行ファイル
-cd ../../02_msm_wgirb2/wgrib2_ok
+% copyfile PVdata.mat ../../05_実行ファイル  % 旧パス（不使用）
+cd(WGRIB2_DIR)  % wgrib2.exe が置かれているフォルダに移動
 % movefile *PV ../../03_日射量予測
 delete(file_c(end-8:end))
 delete(file_z(end-8:end))

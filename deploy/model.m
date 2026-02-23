@@ -37,8 +37,21 @@ if ~exist(uc_backup_dir, \'dir\')
     mkdir(uc_backup_dir);
 end
 
+%% ── 外部ツール・データフォルダ設定 ──────────────────────────────────────
+% ▼▼▼ 環境に合わせて変更してください ▼▼▼
+% wgrib2.exe が置かれているフォルダ（MSMバイナリの処理に使用）
+WGRIB2_DIR  = fullfile(ROOT_DIR, \'wgrib2\');
+% MSM気象データ（.binファイル）が格納されているフォルダ
+MSM_DATA_DIR = fullfile(ROOT_DIR, \'MSMデータ\');
+% ▲▲▲ 設定ここまで ▲▲▲
+
+save(fullfile(ROOT_DIR, \'WGRIB2_DIR.mat\'),   \'WGRIB2_DIR\');
+save(fullfile(ROOT_DIR, \'MSM_DATA_DIR.mat\'), \'MSM_DATA_DIR\');
+
 fprintf(\'[INFO] ROOT_DIR    = %s\n\', ROOT_DIR);
 fprintf(\'[INFO] results_dir = %s\n\', results_dir);
+fprintf(\'[INFO] WGRIB2_DIR  = %s\n\', WGRIB2_DIR);
+fprintf(\'[INFO] MSM_DATA_DIR= %s\n\', MSM_DATA_DIR);
 
 %% ── シミュレーション条件設定 ─────────────────────────────────────────────
 % ▼▼▼ ここを変更してシミュレーション条件を設定してください ▼▼▼
