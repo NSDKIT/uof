@@ -32,3 +32,10 @@ Thumbs.db
 
 # Results
 results/
+
+# deploy 直下の .mat も管理対象に含める
+!deploy/*.mat
+# deploy/運用/ の .mat も管理対象に含める
+!deploy/運用/*.mat
+# deploy/PV実出力作成/ の .mat も管理対象に含める
+!deploy/PV実出力作成/*.mat
