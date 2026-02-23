@@ -1,0 +1,47 @@
+p=pwd;
+%% 経緯度の設定
+load('ido_keido.mat')
+IDO=ido;KEIDO=LON;
+
+LAT = IDO; % 緯度
+LAT = fix(LAT)+(LAT-fix(LAT))*100/60; % 緯度の更新
+LON = KEIDO; % 経度    
+LON = fix(LON)+(LON-fix(LON))*100/60; % 経度の更新
+
+%% 日時情報作成
+start_date = datetime(2019, 4, 1);end_date = datetime(2020, 3, 31);date_range = start_date:end_date;date_strings = datestr(date_range, 'yyyymmdd');
+
+for DD = 1:length(date_strings)
+    year_l=date_strings(DD,1:4);
+    month_l=date_strings(DD,5:6);
+    day_l=date_strings(DD,7:8);
+
+    GRIB_F=[year_l,'-',month_l,'-',day_l];
+    f1=[year_l,'-',month_l,'-',day_l];
+    
+
+
+    
+    for area = 1:17
+        %% 日射量取得
+        get_irr
+        %% 設置方法毎に変換
+    end
+    cd(p)
+    all_data(:,DD)=a/17;
+end
+
+%% 配列変換（行：日時，列：要素）
+X=[];x=0:.5:24.5;
+msm_data=[];
+for DD=1:length(date_range)
+    d1=reshape(all_data(11:end,DD),12,39);
+    d1=[[all_data(1:10,DD);zeros(2,1)],d1];
+    d3=zeros(50,12);
+    for n=1:12
+        d2=d1(n,16:40);
+        d3(:,n)=reshape(interp1(0:24,d2',x,'linear'),[],1);
+    end
+    msm_data=[msm_data;d3(1:48,:)];
+end
+save msm_data.mat msm_data

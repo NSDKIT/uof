@@ -1,0 +1,112 @@
+load('Itijiku_irr.mat')
+load('Itijiku_nishou.mat')
+if Month < 4
+    month_num = Month+9;
+else
+    month_num = Month-3;
+end
+%% モード説明
+% m:1-片面南向き30度
+% m:2-片面東90度
+% m:3-片面西90度
+% ⇒ここから両面東・西の日射量算出
+% m:4-片面一軸追尾
+% m:5-地球上の反対地点における一軸追尾
+% ⇒ここから両面一軸追尾の日射量算出
+%% パラメータ設定
+% 緯度(モードによって不変)
+FAI = [36.064,36.5613,36.6953];
+% 経度設定時に5×3配列を作成し，モードに対応する
+KEIDO = [136.2194,136.6562,137.2113]; % 経度
+KEIDO = [KEIDO.*ones(4,3);KEIDO-180];
+% 傾斜角設定時に3×3配列を作成し，モードに対応する(一軸追尾は傾斜角関係なし)
+keisha_kaku = [30;90;90]; % 2行目は両面東・西(m:2,3)
+% 方角設定時に3×3配列を作成し，モードに対応する(一軸追尾は方角関係なし)
+hougaku = [0;90;270]; % 2行目は両面東(m:2)，3行目は両面西(m:3)
+% 時刻断面
+t = 1:24;
+% UTCに対する時差設定時に5×3配列を作成し，モードに対応する
+JISA = [9*ones(4,1);9-12];
+%% 実行
+Irr = [];
+load('mode.mat')
+if mode == 1
+    % 実測値の加工の必要なし
+elseif mode == 2
+    MODE = [1,2,3];
+    make_irr_each_set
+    Irr_keisha30 = Irr(1,:);
+    Irr_target = Irr(2,:)+Irr(3,:)*0.7;
+elseif mode == 3
+    MODE = [1,2,3];
+    make_irr_each_set
+    Irr_keisha30 = Irr(1,:);
+    Irr_target = Irr(2,:)*0.7+Irr(3,:);
+elseif mode == 4
+    MODE = [1,4];
+    make_irr_each_set
+    Irr_keisha30 = Irr(1,:);
+    Irr_target = Irr(2,:);
+elseif mode == 5
+    MODE = [1,4,5];
+    make_irr_each_set
+    Irr_keisha30 = Irr(1,:);
+    Irr_target = Irr(2,:)+Irr(2,:)*0.2;
+end
+if mode == 1
+else
+    %% 1時間値
+    pv_tuibi_form = Irr_target./Irr_keisha30;
+    pv_tuibi_form = fillmissing(pv_tuibi_form,'constant',0);
+    pv_tuibi_form(~isfinite(pv_tuibi_form))=0;
+    for dtime = 1:2
+        if dtime == 1
+            %% 30分値
+            x = 1:1:24;xq_30min = 1:1/2:24;v=pv_tuibi_form;
+            pv_tuibi_form = interp1(x,v,xq_30min);
+            x = 1:1:24;xq_30min = 1:1/2:24;v=Irr_target;
+            Irr_target = interp1(x,v,xq_30min);
+            x = 1:1:24;xq_30min = 1:1/2:24;v=Irr_keisha30;
+            Irr_keisha30 = interp1(x,v,xq_30min);
+            %% 補正(立ち上がり)
+            h1_num = (find(Irr_target~=0)-1);
+            % h1_num = find((abs(pv_tuibi_form(1:end-1)-pv_tuibi_form(2:end)))~=0)+1;
+            h0_num = (find(Irr_keisha30~=0)-1);
+
+            x = [h1_num(1),h0_num(1)+2];dx = h1_num(1):1:h0_num(1)+2;v=[pv_tuibi_form(h1_num(1)),pv_tuibi_form(h0_num(1)+2)];
+            irr_line_up = interp1(x,v,dx);
+
+            x = [h0_num(end),h1_num(end)+2];dx = h0_num(end):h1_num(end)+2;v=[pv_tuibi_form(h0_num(end)),pv_tuibi_form(h1_num(end)+2)];
+            irr_line_down = interp1(x,v,dx);
+
+    %         figure,plot(pv_tuibi_form)
+            pv_tuibi_form(h1_num(1):h0_num(1)+2) = irr_line_up;
+            pv_tuibi_form(h0_num(end):h1_num(end)+2) = irr_line_down;
+            hold on
+    %         plot(pv_tuibi_form)
+    %         yyaxis right;plot(Irr.tuibi);plot(Irr.keisha30)
+            pv_tuibi_form_30min = pv_tuibi_form;
+        elseif dtime == 2
+            %% 60秒値
+            x = 1:1/2:24;xq_30min = 1:1/60:24;v=pv_tuibi_form;
+            pv_tuibi_form = interp1(x,v,xq_30min);
+            x = 1:1/2:24;xq_30min = 1:1/60:24;v=Irr_target;
+            Irr_target = interp1(x,v,xq_30min);
+            x = 1:1/2:24;xq_30min = 1:1/60:24;v=Irr_keisha30;
+            Irr_keisha30 = interp1(x,v,xq_30min);
+            %% 補正(立ち上がり)
+            h1_num = (find(Irr_target~=0)-1);
+            % h1_num = find((abs(pv_tuibi_form(1:end-1)-pv_tuibi_form(2:end)))~=0)+1;
+            h0_num = (find(Irr_keisha30~=0)-1);
+
+            x = [h1_num(1),h0_num(1)+60];dx = h1_num(1):1:h0_num(1)+60;v=[pv_tuibi_form(h1_num(1)),pv_tuibi_form(h0_num(1)+60)];
+            irr_line_up = interp1(x,v,dx);
+
+            x = [h0_num(end)-60+2,h1_num(end)];dx = h0_num(end)-60+2:h1_num(end);v=[pv_tuibi_form(h0_num(end)-60+2),pv_tuibi_form(h1_num(end))];
+            irr_line_down = interp1(x,v,dx);
+
+            pv_tuibi_form(h1_num(1):h0_num(1)+60) = irr_line_up;
+            pv_tuibi_form(h0_num(end)-60+2:h1_num(end)) = irr_line_down;
+        end    
+    end
+end
