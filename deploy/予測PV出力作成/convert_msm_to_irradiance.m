@@ -13,7 +13,7 @@ else
     month_num=Month-3;
 end
 %% 邱ｯ蠎ｦ邨悟ｺｦ縺ｮ蜿門ｾ�
-load('ido_keido.mat')
+load(fullfile(ROOT_DIR, 'ido_keido.mat'))
 IDO = ido;KEIDO = keido;
 IRR.sum=0;
 %% 繝代Λ繝｡繝ｼ繧ｿ險ｭ螳�
@@ -108,7 +108,7 @@ for area = A_R
                 % 蜿榊ｰ�謌仙��
                 I_sanran = Hbar.*0.3.*(1-cos(deg2rad(kaku)))/2;
                 I_sanran(I_sanran<=0)=0;
-                load(fullfile(ROOT_DIR, 'mode.mat'))
+                % mode変数はループ先頭（行37）でロード済み
                 if mode == 5
                     I_d=I_d*1.3;
                     I_sanran=I_sanran*1.3;
@@ -123,7 +123,7 @@ for area = A_R
             I(I<=0)=0;
             irr = [irr,I'];
         end
-        load(fullfile(ROOT_DIR, 'mode.mat'))
+        % mode変数はループ先頭（行37）でロード済み
         if mode == 1
             irr(:,1)=irr(:,1);
         elseif mode == 2 || mode == 3

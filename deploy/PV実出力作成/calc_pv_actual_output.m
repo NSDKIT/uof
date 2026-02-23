@@ -22,7 +22,7 @@ else
 end
 cd PV300\1遘貞�､
 %% 邱ｯ蠎ｦ邨悟ｺｦ縺ｮ蜿門ｾ�
-load('ido_keido.mat')
+load(fullfile(ROOT_DIR, 'ido_keido.mat'))
 IDO = ido;KEIDO = keido;
 IRR.sum=0;
 %% 繝代Λ繝｡繝ｼ繧ｿ險ｭ螳�
@@ -129,7 +129,7 @@ for area = 1:17
             % 蜿榊ｰ�謌仙��
             I_sanran = Hbar.*0.3.*(1-cos(deg2rad(kaku)))/2;
             I_sanran(I_sanran<=0)=0;
-            load(fullfile(ROOT_DIR, 'mode.mat'))
+            % mode変数はファイル冒頭（行45）でロード済み
             if mode == 5
                 I_d=I_d*1.3;
                 I_sanran=I_sanran*1.3;
@@ -159,7 +159,7 @@ for area = 1:17
         irr = [irr,I'];
     end
     load('short_f.mat')
-    load(fullfile(ROOT_DIR, 'mode.mat'))
+    % mode変数はファイル冒頭（行45）でロード済み
     if mode == 1
         irr(:,1)=irr(:,1)+short_f;
     elseif mode == 2 || mode == 3

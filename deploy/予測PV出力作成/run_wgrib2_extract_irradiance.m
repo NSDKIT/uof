@@ -2,7 +2,7 @@
 % シミュレーションをしたい年月日の「Z__C・・・」ファイルが16個(初期時間：8つ × 予報時間：2つ = 16)あるか確認
 % 年月日・位置の選択・変更
 % IK = import_lat_lon('ido_keido.xlsx');
-load('ido_keido.mat')
+load(fullfile(ROOT_DIR, 'ido_keido.mat'))
 disp('日射量予測算出')
 % load('xyz.mat')
 cd(WGRIB2_DIR)  % wgrib2.exe が置かれているフォルダに移動
@@ -38,7 +38,7 @@ end
 file_c = 'wgrib2.exe -match "DSWRF:surface:" 00-15.bin';
 file_z = 'wgrib2.exe -match "DSWRF:surface:" 16-33.bin';
 file_l = 'wgrib2.exe -match "DSWRF:surface:" 34-39.bin';
-% load('ido_keido.mat')
+% load(fullfile(ROOT_DIR, 'ido_keido.mat'))
 IDO=ido;KEIDO=keido;
 irr_forecast=[];
 for area = 1:17

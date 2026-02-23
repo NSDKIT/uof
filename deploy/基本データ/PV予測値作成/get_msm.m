@@ -1,6 +1,6 @@
 clear;p=pwd;
 %% 邨檎ｷｯ蠎ｦ縺ｮ險ｭ螳�
-load('ido_keido.mat')
+load(fullfile(ROOT_DIR, 'ido_keido.mat'))
 IDO=ido;KEIDO=keido;
 
 LAT = IDO; % 邱ｯ蠎ｦ
