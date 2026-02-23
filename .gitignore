@@ -39,3 +39,9 @@ results/
 !deploy/運用/*.mat
 # deploy/PV実出力作成/ の .mat も管理対象に含める
 !deploy/PV実出力作成/*.mat
+
+# deploy/wgrib2/ の全ファイルを管理対象に含める（wgrib2.exe・DLL・スクリプト）
+!deploy/wgrib2/
+!deploy/wgrib2/*
+# deploy/UC立案/MATLAB/二次調整力算定手法/機械学習/ガウス過程回帰モデル/ の .mat を管理対象に含める
+!deploy/UC立案/MATLAB/二次調整力算定手法/機械学習/ガウス過程回帰モデル/*.mat
