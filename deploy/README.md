@@ -32,8 +32,8 @@
 ```
 deploy/
 ├── model.m                  ← ★ メインスクリプト（これを実行する）
-├── new_dataload.m            ← データ読み込みサブスクリプト
-├── mdl_eval_all_time.m       ← GPR モデル評価スクリプト
+├── setup_fixed_params.m            ← データ読み込みサブスクリプト
+├── calc_reserve_capacity.m       ← GPR モデル評価スクリプト
 ├── README.md                 ← このファイル
 │
 ├── 基本データ/               ← 入力データ（.mat）
@@ -46,11 +46,11 @@ deploy/
 │   └── irr_mea_data.mat      ← 実測日射量データ ※要別途入手（容量大）
 │
 ├── UC立案/MATLAB/            ← 起動停止計画（UC）最適化スクリプト群
-│   ├── new_optimization.m    ← UC計算メインスクリプト
-│   ├── ass_data.m            ← 発電機データ読み込み
+│   ├── run_unit_commitment.m    ← UC計算メインスクリプト
+│   ├── load_uc_input_data.m            ← 発電機データ読み込み
 │   ├── execute_UC.m          ← LP最適化実行
-│   ├── make_kumiawase.m      ← 発電機組み合わせ生成
-│   ├── check_onoff_time.m    ← 起動停止時間制約チェック
+│   ├── gen_unit_combinations.m      ← 発電機組み合わせ生成
+│   ├── check_startup_shutdown_time.m    ← 起動停止時間制約チェック
 │   ├── rate_min.m            ← 発電機出力制約 ※要別途入手
 │   ├── *.csv                 ← 発電機パラメータCSV（テンプレート）
 │   └── 二次調整力算定手法/
@@ -62,15 +62,15 @@ deploy/
 │
 ├── 運用/                     ← Simulink モデルと初期設定スクリプト群
 │   ├── AGC30_PVcut.slx       ← ★ Simulink メインモデル
-│   ├── make_csv.m            ← 入力CSVファイル生成
-│   ├── initset_dataload.m    ← 入力.matファイル生成
-│   ├── initset_lfc.m         ← LFC モデルパラメータ設定
-│   ├── initset_edc.m         ← EDC モデル初期値計算
-│   ├── initset_thermals.m    ← 火力・GTCCモデル設定
-│   ├── initset_inertia.m     ← 慣性モデル設定
-│   ├── initset_trfpP.m       ← 連系線潮流モデル設定
-│   ├── initset_otherarea.m   ← 他エリアモデル設定
-│   ├── lowpass_PV.m          ← PV出力ローパスフィルタ処理
+│   ├── build_simulink_input_csv.m            ← 入力CSVファイル生成
+│   ├── init_simulation_data.m    ← 入力.matファイル生成
+│   ├── init_lfc_model.m         ← LFC モデルパラメータ設定
+│   ├── init_edc_model.m         ← EDC モデル初期値計算
+│   ├── init_thermal_model.m    ← 火力・GTCCモデル設定
+│   ├── init_inertia_model.m     ← 慣性モデル設定
+│   ├── init_tieline_model.m       ← 連系線潮流モデル設定
+│   ├── init_other_area_model.m   ← 他エリアモデル設定
+│   ├── apply_pv_lowpass_filter.m          ← PV出力ローパスフィルタ処理
 │   └── 定数.xlsx             ← 発電機定数データ
 │
 └── results/                  ← シミュレーション結果の保存先（自動生成）
@@ -150,7 +150,7 @@ lfc           = 8;             % LFC 制御パラメータ (100以上で非AGC�
 model.m
  ├─ [1/5] 基本データ読み込み（基本データ/）
  ├─ [2/5] PV予測・実績・需要データ計算
- ├─ [3/5] UC計算（UC立案/MATLAB/new_optimization.m）
+ ├─ [3/5] UC計算（UC立案/MATLAB/run_unit_commitment.m）
  │         └─ ガウス過程回帰 → 二次調整力算定 → LP最適化 → CSV出力
  ├─ [4/5] Simulink シミュレーション（運用/AGC30_PVcut.slx）
  │         └─ initset_*.m でパラメータ設定 → sim() 実行

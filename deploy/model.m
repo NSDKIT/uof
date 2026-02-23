@@ -97,7 +97,7 @@ for meth_num = meth_num_list
 
         save(fullfile(ROOT_DIR, \'YMD.mat\'), \'year_l\', \'month_l\', \'day_l\', \'DN\');
 
-        new_dataload;
+        setup_fixed_params;
 
         for mode = mode_list
             save(fullfile(ROOT_DIR, \'mode.mat\'), \'mode\');
@@ -146,14 +146,14 @@ if ~isempty(missing_files)
                     % lfc の値に応じて実行する前処理スクリプトを決定
                     if lfc >= 100
                         fprintf(\\'  [INFO]  非AGCモード (lfc=%d) のため、通常版の前処理を実行します。\\n\\', lfc);
-                        pv_script_path      = fullfile(ROOT_DIR, \\'PV実出力作成\\', \\'new_get_PV300_day.m\\');
-                        pvf_script_path     = fullfile(ROOT_DIR, \\'予測PV出力作成\\', \\'make_PVF_year.m\\');
-                        load_script_path    = fullfile(ROOT_DIR, \\'需要実績・予測作成\\', \\'make_load.m\\');
+                        pv_script_path      = fullfile(ROOT_DIR, \\'PV実出力作成\\', \\'calc_pv_actual_output.m\\');
+                        pvf_script_path     = fullfile(ROOT_DIR, \\'予測PV出力作成\\', \\'calc_pv_forecast_year.m\\');
+                        load_script_path    = fullfile(ROOT_DIR, \\'需要実績・予測作成\\', \\'calc_demand.m\\');
                     else
                         fprintf(\\'  [INFO]  AGCモード (lfc=%d) のため、AGC版の前処理を実行します。\\n\\', lfc);
-                        pv_script_path      = fullfile(ROOT_DIR, \\'PV実出力作成\\', \\'new_get_PV300_day_for_agc.m\\');
-                        pvf_script_path     = fullfile(ROOT_DIR, \\'予測PV出力作成\\', \\'make_PVF_year_for_agc.m\\');
-                        load_script_path    = fullfile(ROOT_DIR, \\'需要実績・予測作成\\', \\'make_load.m\\'); % make_load.m 内部で lfc を見て分岐する
+                        pv_script_path      = fullfile(ROOT_DIR, \\'PV実出力作成\\', \\'calc_pv_actual_output_agc.m\\');
+                        pvf_script_path     = fullfile(ROOT_DIR, \\'予測PV出力作成\\', \\'calc_pv_forecast_year_agc.m\\');
+                        load_script_path    = fullfile(ROOT_DIR, \\'需要実績・予測作成\\', \\'calc_demand.m\\'); % calc_demand.m 内部で lfc を見て分岐する
                     end
 
                     try
@@ -232,7 +232,7 @@ if ~isempty(missing_files)
                 cd(fullfile(ROOT_DIR, \'UC立案\', \'MATLAB\'));
                 uc_success = false;
                 try
-                    new_optimization;
+                    run_unit_commitment;
                     uc_success = true;
                 catch ME_uc
                     fprintf(\'  [ERROR] UC計算中にエラー: %s\n\', ME_uc.message);
@@ -250,10 +250,10 @@ if ~isempty(missing_files)
                 fprintf(\'  [4/5] Simulink シミュレーションを実行中...\n\');
                 cd(fullfile(ROOT_DIR, \'運用\'));
                 try
-                    make_csv;
+                    build_simulink_input_csv;
                     fprintf(\'       モデルパラメータを初期化中...\n\');
-                    initset_dataload; initset_inertia; initset_trfpP; initset_lfc;
-                    initset_edc; initset_thermals; initset_otherarea;
+                    init_simulation_data; init_inertia_model; init_tieline_model; init_lfc_model;
+                    init_edc_model; init_thermal_model; init_other_area_model;
 
                     P_F = struct(\'PV_Forecast\', PV_Forecast);
                     PVF = P_F.PV_Forecast(2, :);
@@ -265,7 +265,7 @@ if ~isempty(missing_files)
                     PV_MAX = max(P_M.PV_Out(2, :));
                     save(fullfile(ROOT_DIR, \'PV_MAX.mat\'), \'PV_MAX\');
 
-                    lowpass_PV;
+                    apply_pv_lowpass_filter;
                     PV_real_Output = PV_Out;
                     save(fullfile(ROOT_DIR, \'PV_real_Output.mat\'), \'PV_real_Output\');
 
@@ -281,12 +281,12 @@ if ~isempty(missing_files)
                     PVF = FO.PVF; LOF = FO.LOF;
                     LFC_data = load(fullfile(ROOT_DIR, \'UC立案\', \'LFC.mat\'));
 
-                    G_Out_UC = get_GOUT(\'G_Out.csv\');
-                    LFC_up   = get_LFC_updown(\'G_up_plan_limit.csv\');
-                    LFC_down = get_LFC_updown(\'G_down_plan_limit.csv\');
+                    G_Out_UC = import_generator_output(\'G_Out.csv\');
+                    LFC_up   = import_lfc_updown_limit(\'G_up_plan_limit.csv\');
+                    LFC_down = import_lfc_updown_limit(\'G_down_plan_limit.csv\');
                     g_c_o_s  = struct(\'g_const_out_sum\', g_const_out_sum);
                     g_const_out_sum = g_c_o_s.g_const_out_sum(2, :);
-                    LFC_t    = get_Gupplanlimittime(\'G_up_plan_limit_time.csv\');
+                    LFC_t    = import_lfc_up_limit_time(\'G_up_plan_limit_time.csv\');
 
                     inertia_input = inertia_input(2, :);
                     load_forecast_input = load_forecast_input(2, :);

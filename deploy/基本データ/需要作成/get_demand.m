@@ -11,7 +11,7 @@ for DD = 1:length(date_strings)-1
     month=str2num(date_strings(DD,5:6));
     day=str2num(date_strings(DD,7:8));
 
-    Load_origin2019
+    build_demand_data_2019
 
     D_1sec(DD,:)=demand_1sec;
     D_30min(DD,:)=demand_30min';
