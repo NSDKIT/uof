@@ -1,0 +1,25 @@
+close all
+load('JuneDataMSM.mat')
+load('JuneDataSystem.mat')
+
+t = 1:48;
+DATA = [DEMAND,PVOUT,MSM_ALL0,LFCUSE];
+DATA = DATA(sort(reshape(t+[48:48:48*28]',[],1)),:);
+
+R = corrcoef(DATA);
+
+% Calculate MIC
+max_bins = 20;  % Consider up to 20 bins for grid
+for i = 1:size(DATA,2)
+    for j = 1:size(DATA,2)
+        mic(i,j) = CalculateMic(DATA(:,i), DATA(:,j), max_bins);
+    end
+end
+figure,plot(DATA(:,2))
+
+figure,plot(abs(R(:,end)),'bo-')
+hold on;plot(mic(:,end),'ro-')
+
+figure,scatter(DATA(:,2),DATA(:,end),'o','LineWidth',6,'MarkerEdgeColor','b','MarkerFaceColor','b');
+hold on;
+plot(DATA(:,2),DATA(:,end),'bo')
