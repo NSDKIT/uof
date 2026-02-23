@@ -20,6 +20,15 @@ Thumbs.db
 # 学習データ（所要調整力）の .mat は管理対象に含める
 !UC立案/MATLAB/二次調整力算定手法/**/*.mat
 !UC立案/MATLAB/二次調整力算定手法/*.mat
+# deploy フォルダ内の学習データ .mat も管理対象に含める
+!deploy/UC立案/MATLAB/二次調整力算定手法/**/*.mat
+!deploy/UC立案/MATLAB/二次調整力算定手法/*.mat
+# deploy フォルダ内の基本データ .mat も管理対象に含める
+!deploy/基本データ/*.mat
+# deploy フォルダ内の CSV / xlsx も管理対象に含める
+!deploy/**/*.csv
+!deploy/**/*.xlsx
+!deploy/UC立案/MATLAB/*.mat
 
 # Results
 results/
