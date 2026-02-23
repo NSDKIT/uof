@@ -17,6 +17,9 @@ Thumbs.db
 *.csv
 *.xlsx
 !/運用/定数.xlsx
+# 学習データ（所要調整力）の .mat は管理対象に含める
+!UC立案/MATLAB/二次調整力算定手法/**/*.mat
+!UC立案/MATLAB/二次調整力算定手法/*.mat
 
 # Results
 results/
