@@ -1,30 +1,30 @@
-%% デバッグ用スクリプト - 最適化処理のエラー詳細を確認
+%% 繝�繝舌ャ繧ｰ逕ｨ繧ｹ繧ｯ繝ｪ繝励ヨ - 譛�驕ｩ蛹門�ｦ逅�縺ｮ繧ｨ繝ｩ繝ｼ隧ｳ邏ｰ繧堤｢ｺ隱�
 clear; clc;
 
-% 作業ディレクトリに移動
-cd('C:\Users\PowerSystemLab\Desktop\01_研究資料\05_実行ファイル\program\全体実行')
+% 菴懈･ｭ繝�繧｣繝ｬ繧ｯ繝医Μ縺ｫ遘ｻ蜍�
+cd('C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔05_螳溯｡後ヵ繧｡繧､繝ｫ\program\蜈ｨ菴灘ｮ溯｡�')
 
-% 必要なパスを追加
-addpath(genpath('C:\Users\PowerSystemLab\Desktop\01_研究資料\01_matlab_mytool'))
-fprintf('MATLABパスに01_matlab_mytoolを追加しました\n');
+% 蠢�隕√↑繝代せ繧定ｿｽ蜉�
+addpath(genpath('C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔01_matlab_mytool'))
+fprintf('MATLAB繝代せ縺ｫ01_matlab_mytool繧定ｿｽ蜉�縺励∪縺励◆\n');
 
-% 日付設定
+% 譌･莉倩ｨｭ螳�
 year_l = 2019;
 month_l = 8;
 day_l = 28;
 save('YMD.mat','year_l','month_l','day_l')
 
-% 必要な設定
+% 蠢�隕√↑險ｭ螳�
 error_ox = 0;
 save('error_ox.mat','error_ox')
 
-meth_num = 2;  % 線形手法
+meth_num = 2;  % 邱壼ｽ｢謇区ｳ�
 save('meth_num.mat','meth_num')
 
 sigma = 2;
 save('sigma.mat','sigma')
 
-mode = 1;  % 片面
+mode = 1;  % 迚�髱｢
 save('mode.mat','mode')
 
 lfc = 8;
@@ -33,39 +33,39 @@ save('lfclfc.mat','lfc')
 PVC = 5300;
 save('PVC.mat','PVC')
 
-% 日付文字列の作成
+% 譌･莉俶枚蟄怜�励�ｮ菴懈��
 start_date = datetime(2019, 4, 1);
 end_date = datetime(2020, 3, 31);
 date_range = start_date:end_date;
 date_strings = datestr(date_range, 'yyyymmdd');
 save('date_strings.mat','date_strings')
 
-% DNの計算
+% DN縺ｮ險育ｮ�
 YYYY = str2num(date_strings(:,1:4))==year_l;
 MM = str2num(date_strings(:,5:6))==month_l;
 DD = str2num(date_strings(:,7:8))==day_l;
 DN = find(YYYY.*MM.*DD);
 
-fprintf('DN = %d (日付インデックス)\n', DN);
+fprintf('DN = %d (譌･莉倥う繝ｳ繝�繝�繧ｯ繧ｹ)\n', DN);
 
-% データの準備
+% 繝�繝ｼ繧ｿ縺ｮ貅門ｙ
 if year_l==2020
     y=year_l-1;
 else
     y=year_l;
 end
 
-fprintf('基本データの読み込み中...\n');
-load(['基本データ/PV_base_',num2str(y),'.mat'])
+fprintf('蝓ｺ譛ｬ繝�繝ｼ繧ｿ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ荳ｭ...\n');
+load(['蝓ｺ譛ｬ繝�繝ｼ繧ｿ/PV_base_',num2str(y),'.mat'])
 PV_base=[PV_base(end-2:end,3)',PV_base(1:end-3,3)'];
-load(['基本データ/PR_',num2str(y),'.mat'])
-load(['基本データ/MSM_bai_',num2str(y),'.mat'])
-load('基本データ/irr_fore_data.mat')
-load('基本データ/D_1sec.mat')
-load('基本データ/D_30min.mat')
-load('基本データ/irr_mea_data.mat')
+load(['蝓ｺ譛ｬ繝�繝ｼ繧ｿ/PR_',num2str(y),'.mat'])
+load(['蝓ｺ譛ｬ繝�繝ｼ繧ｿ/MSM_bai_',num2str(y),'.mat'])
+load('蝓ｺ譛ｬ繝�繝ｼ繧ｿ/irr_fore_data.mat')
+load('蝓ｺ譛ｬ繝�繝ｼ繧ｿ/D_1sec.mat')
+load('蝓ｺ譛ｬ繝�繝ｼ繧ｿ/D_30min.mat')
+load('蝓ｺ譛ｬ繝�繝ｼ繧ｿ/irr_mea_data.mat')
 
-fprintf('予測PV出力の作成中...\n');
+fprintf('莠域ｸｬPV蜃ｺ蜉帙�ｮ菴懈�蝉ｸｭ...\n');
 n_l=[1,mode];
 PVF_30min_al=irr_fore_data(24*((DN-1)-1)+1:24*(DN-1),n_l(1))*MSM_bai(month_l)*PR(month_l)*PV_base(month_l)/1000;
 PVF_30min_new=irr_fore_data(24*((DN-1)-1)+1:24*(DN-1),n_l(2))*MSM_bai(month_l)*PR(month_l)*PV_base(month_l)/1000;
@@ -77,38 +77,38 @@ PVF_30min = [interp1(x,PVF_30min,xq_1min),0,0,0];
 PVF_30min(isnan(PVF_30min))=0;
 save('PVF_30min.mat','PVF_30min')
 
-fprintf('需要データの作成中...\n');
+fprintf('髴�隕√ョ繝ｼ繧ｿ縺ｮ菴懈�蝉ｸｭ...\n');
 demand_1sec=D_1sec(DN,:)-500;
 demand_30min=D_30min(DN,:)-500;
 save('demand_30min.mat','demand_30min')
 save('demand_1sec.mat','demand_1sec')
 
-fprintf('PV実出力データの作成中...\n');
+fprintf('PV螳溷�ｺ蜉帙ョ繝ｼ繧ｿ縺ｮ菴懈�蝉ｸｭ...\n');
 PV_1sec_al=irr_mea_data(86401*(DN-1):86401*DN,n_l(1))*PR(month_l)*PV_base(month_l)/1000;
 PV_1sec_new=irr_mea_data(86401*(DN-1):86401*DN,n_l(2))*PR(month_l)*PV_base(month_l)/1000;
 PV_1sec=PV_1sec_al*PV_al/PV_base(month_l)+PV_1sec_new*(PVC-PV_al)/PV_base(month_l);
 save('PV_1sec.mat','PV_1sec')
 
-fprintf('\n最適化処理を実行中...\n');
-cd('UC立案/MATLAB')
+fprintf('\n譛�驕ｩ蛹門�ｦ逅�繧貞ｮ溯｡御ｸｭ...\n');
+cd('UC遶区｡�/MATLAB')
 
 try
-    % 最適化を実行
+    % 譛�驕ｩ蛹悶ｒ螳溯｡�
     new_optimization
-    fprintf('\n✓ 最適化が正常に完了しました！\n');
+    fprintf('\n笨� 譛�驕ｩ蛹悶′豁｣蟶ｸ縺ｫ螳御ｺ�縺励∪縺励◆�ｼ―n');
 catch ME
-    fprintf('\n✗ エラーが発生しました:\n');
-    fprintf('エラーメッセージ: %s\n', ME.message);
-    fprintf('\nエラー発生場所:\n');
+    fprintf('\n笨� 繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺ｾ縺励◆:\n');
+    fprintf('繧ｨ繝ｩ繝ｼ繝｡繝�繧ｻ繝ｼ繧ｸ: %s\n', ME.message);
+    fprintf('\n繧ｨ繝ｩ繝ｼ逋ｺ逕溷�ｴ謇�:\n');
     for k = 1:length(ME.stack)
-        fprintf('  %s (行 %d)\n', ME.stack(k).name, ME.stack(k).line);
+        fprintf('  %s (陦� %d)\n', ME.stack(k).name, ME.stack(k).line);
     end
 
-    % 詳細なエラー情報
-    fprintf('\nエラーの詳細:\n');
-    fprintf('  識別子: %s\n', ME.identifier);
+    % 隧ｳ邏ｰ縺ｪ繧ｨ繝ｩ繝ｼ諠�蝣ｱ
+    fprintf('\n繧ｨ繝ｩ繝ｼ縺ｮ隧ｳ邏ｰ:\n');
+    fprintf('  隴伜挨蟄�: %s\n', ME.identifier);
     if ~isempty(ME.cause)
-        fprintf('  原因:\n');
+        fprintf('  蜴溷屏:\n');
         for c = 1:length(ME.cause)
             fprintf('    - %s\n', ME.cause{c}.message);
         end
@@ -116,4 +116,4 @@ catch ME
 end
 
 cd('../../')
-fprintf('\n完了\n');
+fprintf('\n螳御ｺ�\n');

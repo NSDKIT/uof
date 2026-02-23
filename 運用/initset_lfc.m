@@ -1,32 +1,35 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% iniset_lfc.m LFC���f��(LFC�v�Z)�ɂ����鏉���ݒ�
-% �y���̃v���O�����Ŏ��{���邱�Ɓz
-%�@�ELFC�̌v�Z�����̐ݒ�
+% iniset_lfc.m LFCモデル(LFC計算)における初期設定
+% 【このプログラムで実施すること】
+%　・LFCの計算条件の設定
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% �������d���d�@�̑Ώې��̒�`
- AGCNum_L = 30;  % Simulink��ł�LFC�M���̒[�q�����`
+%% 自動給電発電機の対象数の定義
+% このスクリプトは、負荷周波数制御(LFC)モデルの初期設定を行います。
+% 自エリアおよび他エリアのLFC計算に関する各種パラメータ（系統定数、ゲイン、不感帯など）を設定します。
 
-%% LFC�v�Z�ɂ����鋤�ʐݒ�
- LFC_cycle = 5.0;          %LFC�������(s)
+ AGCNum_L = 30;  % Simulink上でのLFC信号の端子数を定義
 
-%% ���G���A��LFC�v�Z�Ɋւ��鏉���ݒ�
- K_A = 0.1;                %�n���萔[%MW/Hz]
- AL_A = 0.3;               %�������W����
- XAR_A = 10.0;             %AR�s����[MW]�E�E�ETBC�̎��Ɏg�p
- KP_A = 1.0;               %���Q�C��
- KI_A = 0.003;             %�ϕ��Q�C��
- RA_A = G_speed';          %�o�͕ω����x[MW/m]
- XF_A = 0.00;              %��F�s����[Hz]�E�E�EFFC�̎��Ɏg�p
+%% LFC計算における共通設定
+ LFC_cycle = 5.0;          %LFC制御周期(s)
+
+%% 自エリアのLFC計算に関する初期設定
+ K_A = 0.1;                %系統定数[%MW/Hz]
+ AL_A = 0.3;               %平滑化係数α
+ XAR_A = 10.0;             %AR不感帯[MW]・・・TBCの時に使用
+ KP_A = 1.0;               %比例ゲイン
+ KI_A = 0.003;             %積分ゲイン
+ RA_A = G_speed';          %出力変化速度[MW/m]
+ XF_A = 0.00;              %ΔF不感帯[Hz]・・・FFCの時に使用
 
  
-%% ���G���A��LFC�v�Z�Ɋւ��鏉���ݒ�
- K_B = 0.1;                %�n���萔[%MW/Hz]
- AL_B = 0.3;               %�������W��
- XAR_B = 10.0;             %AR�s����[MW]�E�E�ETBC�̎��Ɏg�p
- KP_B = 1.0;               %���Q�C��
- KI_B = 0.003;            %�ϕ��Q�C��
- RA_B = 96.0;              %�o�͕ω����x[MW/m]
- PMAX_B = 360.0;           %LFC����l[MW]
- PMIN_B = -360.0;          %LFC�����l[MW]
- XF_B = 0.00;              %��F�s����[Hz]�E�E�EFFC�̎��Ɏg�p
+%% 他エリアのLFC計算に関する初期設定
+ K_B = 0.1;                %系統定数[%MW/Hz]
+ AL_B = 0.3;               %平滑化係数
+ XAR_B = 10.0;             %AR不感帯[MW]・・・TBCの時に使用
+ KP_B = 1.0;               %比例ゲイン
+ KI_B = 0.003;            %積分ゲイン
+ RA_B = 96.0;              %出力変化速度[MW/m]
+ PMAX_B = 360.0;           %LFC上限値[MW]
+ PMIN_B = -360.0;          %LFC下限値[MW]
+ XF_B = 0.00;              %ΔF不感帯[Hz]・・・FFCの時に使用

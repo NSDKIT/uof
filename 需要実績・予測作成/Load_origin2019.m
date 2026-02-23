@@ -1,60 +1,60 @@
-pl_ox = 0; % ƒvƒƒbƒg—L–³ŒW”
+pl_ox = 0; % ãƒ—ãƒ­ãƒƒãƒˆæœ‰ç„¡ä¿‚æ•°
 Year = year;Month = month;Day = day;
 clear day
-% %% –k—¤ƒGƒŠƒAPVo—ÍÀ‘ª’l‚Ì’Šo
-Demand_real=csv_tieline_PV2019('–k—¤RŒ³2019');
+% %% åŒ—é™¸ã‚¨ãƒªã‚¢PVå‡ºåŠ›å®Ÿæ¸¬å€¤ã®æŠ½å‡º
+Demand_real=csv_tieline_PV2019('åŒ—é™¸å±±å…ƒ2019');
 Demand_real=table2array(Demand_real(2:end,3));
 Demand_real(isnan(Demand_real))=[];
-%% “ú•t”Ô†‚Ìæ“¾
+%% æ—¥ä»˜ç•ªå·ã®å–å¾—
 t_target = datetime(Year,Month,Day);dn = day(t_target,'dayofyear');
-t_331 = datetime(Year,3,31);dn_331 = day(t_331,'dayofyear'); %3Œ31“ú‚Ì“ú•t”Ô†‚ğæ“¾
+t_331 = datetime(Year,3,31);dn_331 = day(t_331,'dayofyear'); %3æœˆ31æ—¥ã®æ—¥ä»˜ç•ªå·ã‚’å–å¾—
 if Month==3 && Day==31
     dn=length(date_strings);
 elseif dn > 90
-    dn = dn - dn_331; %‰ğÍ‘ÎÛ“ú‚Ì“ú•t”Ô†‚ğæ“¾
+    dn = dn - dn_331; %è§£æå¯¾è±¡æ—¥ã®æ—¥ä»˜ç•ªå·ã‚’å–å¾—
 else
-    t_1231 = datetime(Year,12,31);dn_1231 = day(t_1231,'dayofyear'); %12Œ31“ú‚Ì“ú•t”Ô†‚ğæ“¾
-    dn = dn_1231-dn_331+dn; %‰ğÍ‘ÎÛ“ú‚Ì“ú•t”Ô†‚ğæ“¾
+    t_1231 = datetime(Year,12,31);dn_1231 = day(t_1231,'dayofyear'); %12æœˆ31æ—¥ã®æ—¥ä»˜ç•ªå·ã‚’å–å¾—
+    dn = dn_1231-dn_331+dn; %è§£æå¯¾è±¡æ—¥ã®æ—¥ä»˜ç•ªå·ã‚’å–å¾—
 end
 
-%% ‰ğÍ‘ÎÛ“ú‚Ìù—vÀÑ’l‚Ìæ“¾
+%% è§£æå¯¾è±¡æ—¥ã®éœ€è¦å®Ÿç¸¾å€¤ã®å–å¾—
 Demand_own=Demand_real(1440*(dn-1)+1:1440*dn+60,:);
-Demand_30=Demand_real(1440*(dn-1)+1:1440*(dn)+61,:); %Œã30•ª•½‹Ï’l—p‚Ìƒf[ƒ^’Šo
+Demand_30=Demand_real(1440*(dn-1)+1:1440*(dn)+61,:); %å¾Œ30åˆ†å¹³å‡å€¤ç”¨ã®ãƒ‡ãƒ¼ã‚¿æŠ½å‡º
 Demand_own=reshape(Demand_own,[1,length(Demand_own)]);
 Demand_30=reshape(Demand_30,[1,length(Demand_30)]);
-%% 30•ª•½‹Ï’lì¬
+%% 30åˆ†å¹³å‡å€¤ä½œæˆ
 A30 = Demand_30(1);
 for i = 1:49
     a30 = mean(Demand_30(30*(i-1)+1:30*i));
     A30 = [A30;a30];
 end
-%% À‘ª’l‚ÌŠg’£
-for n = 1:2 % 1‰ñ–Ú: —v‘f”‚ğŠg’£‚µ‚½‚ÉCÀ‘ªƒf[ƒ^‚ªŒ¸­‚·‚é‚©‚çC‚»‚Ì‚ÌÅ‘å’l‚ğæ“¾
-            % 2‰ñ–Ú: —v‘f”‚ğŠg’£‚µ‚½‚ÌÅ‘å’l‚©‚çCÀƒf[ƒ^‚Æ“¯‚¶‹K–Í‚É’è””{‚µ‚ÄC—v‘f”‚ğŠg’£‚·‚é
-    %% ‚‘¬ƒt[ƒŠƒG•ÏŠ·‚É‚æ‚èƒt[ƒŠƒGŒW”Zo
+%% å®Ÿæ¸¬å€¤ã®æ‹¡å¼µ
+for n = 1:2 % 1å›ç›®: è¦ç´ æ•°ã‚’æ‹¡å¼µã—ãŸæ™‚ã«ï¼Œå®Ÿæ¸¬ãƒ‡ãƒ¼ã‚¿ãŒæ¸›å°‘ã™ã‚‹ã‹ã‚‰ï¼Œãã®æ™‚ã®æœ€å¤§å€¤ã‚’å–å¾—
+            % 2å›ç›®: è¦ç´ æ•°ã‚’æ‹¡å¼µã—ãŸæ™‚ã®æœ€å¤§å€¤ã‹ã‚‰ï¼Œå®Ÿãƒ‡ãƒ¼ã‚¿ã¨åŒã˜è¦æ¨¡ã«å®šæ•°å€ã—ã¦ï¼Œè¦ç´ æ•°ã‚’æ‹¡å¼µã™ã‚‹
+    %% é«˜é€Ÿãƒ•ãƒ¼ãƒªã‚¨å¤‰æ›ã«ã‚ˆã‚Šãƒ•ãƒ¼ãƒªã‚¨ä¿‚æ•°ç®—å‡º
     if n == 1
         fft_BiE=fft(Demand_own);
     elseif n == 2
         fft_BiE=fft(Demand_own*max(Demand_own)/max(row));
     end
     n=length(Demand_own);
-    %% ü”g”—Ìˆæ‚Å‚ÌƒŠƒjƒAƒXƒyƒNƒgƒ‹Cƒpƒ[ƒXƒyƒNƒgƒ‹Zo
-    powerBiE_L = (abs(fft_BiE(1:floor(n/2)))); %ƒŠƒjƒAƒXƒyƒNƒgƒ‹
-    powerBiE_A = (abs(fft_BiE(1:floor(n/2)))).^2; %À‘ªƒf[ƒ^‚Ìƒpƒ[ƒXƒyƒNƒgƒ‹
-    %% üŠú”z—ñ‚Ìì¬
-    maxfreq=1/120;freq=(1:n/2)/(n/2)*maxfreq; %”¼•ª‚Ìü”g”
-    period1 = 1./freq; %”¼•ª‚ÌüŠú
-    %% À‘ª’l‚Ìƒt[ƒŠƒGŒW”‚ÌŠg’£
-    N=60*60*24+1800*2; %sec*min*day 1“ú‚Ì•b”
-    T =60;      %60sec, ƒTƒ“ƒvƒŠƒ“ƒOüŠú
-    All_BiE=zeros(N,1); %‹ó‚Ì”z—ñ
-    All_BiE(1:N/(2*T))=fft_BiE(1:length(fft_BiE)/2); %À‘ªƒf[ƒ^‘ã“ü
-    All_BiE(length(All_BiE)-(N/(2*T))+1:end)=fft_BiE(length(fft_BiE)/2+1:end); %À‘ªƒf[ƒ^‘ã“ü
-    %% ÀÑ’l‚Ìì¬(‹tƒt[ƒŠƒG•ÏŠ·)
+    %% å‘¨æ³¢æ•°é ˜åŸŸã§ã®ãƒªãƒ‹ã‚¢ã‚¹ãƒšã‚¯ãƒˆãƒ«ï¼Œãƒ‘ãƒ¯ãƒ¼ã‚¹ãƒšã‚¯ãƒˆãƒ«ç®—å‡º
+    powerBiE_L = (abs(fft_BiE(1:floor(n/2)))); %ãƒªãƒ‹ã‚¢ã‚¹ãƒšã‚¯ãƒˆãƒ«
+    powerBiE_A = (abs(fft_BiE(1:floor(n/2)))).^2; %å®Ÿæ¸¬ãƒ‡ãƒ¼ã‚¿ã®ãƒ‘ãƒ¯ãƒ¼ã‚¹ãƒšã‚¯ãƒˆãƒ«
+    %% å‘¨æœŸé…åˆ—ã®ä½œæˆ
+    maxfreq=1/120;freq=(1:n/2)/(n/2)*maxfreq; %åŠåˆ†ã®å‘¨æ³¢æ•°
+    period1 = 1./freq; %åŠåˆ†ã®å‘¨æœŸ
+    %% å®Ÿæ¸¬å€¤ã®ãƒ•ãƒ¼ãƒªã‚¨ä¿‚æ•°ã®æ‹¡å¼µ
+    N=60*60*24+1800*2; %sec*min*day 1æ—¥ã®ç§’æ•°
+    T =60;      %60sec, ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°å‘¨æœŸ
+    All_BiE=zeros(N,1); %ç©ºã®é…åˆ—
+    All_BiE(1:N/(2*T))=fft_BiE(1:length(fft_BiE)/2); %å®Ÿæ¸¬ãƒ‡ãƒ¼ã‚¿ä»£å…¥
+    All_BiE(length(All_BiE)-(N/(2*T))+1:end)=fft_BiE(length(fft_BiE)/2+1:end); %å®Ÿæ¸¬ãƒ‡ãƒ¼ã‚¿ä»£å…¥
+    %% å®Ÿç¸¾å€¤ã®ä½œæˆ(é€†ãƒ•ãƒ¼ãƒªã‚¨å¤‰æ›)
     row = real(ifft(All_BiE));
     row = reshape(row,[1,length(row)]);
 end
-%% ‹ß—’¼üì¬
+%% è¿‘ä¼¼ç›´ç·šä½œæˆ
 % new_re_PS(row,[],[])
 % num = (period1>=10^((20.8)/10)).*(period1<10^((30.8)/10));
 % ne_liner(1,[period1(find(num==1))',...
@@ -62,17 +62,17 @@ end
 %     'b',[1,10^4],[1,10^8])
 % % ne_liner(1,log10([period1(find(num==1))',powerBiE_A(find(num==1))']),'b',[1,10^4],[1,10^8])
 % a1 = line.a;b1 = line.b;
-% % ƒvƒƒbƒg‚ÅŠm”F
+% % ãƒ—ãƒ­ãƒƒãƒˆã§ç¢ºèª
 % if pl_ox == 1
 %     figure,loglog(period1,powerBiE_A)
 %     hold on
 %     loglog(10^(b1)*[1:1000].^(a1))
 % end
-% %% ƒzƒƒCƒgƒCƒYì¬
+% %% ãƒ›ãƒ¯ã‚¤ãƒˆã‚¤ã‚ºä½œæˆ
 % rng('default');rng(1);r=rand(1,86400+1800*2)*100;
 % new_re_PS(r,[],[])
-% %% ‹ß—’¼üì¬
-% % À‘ª’l‚Æ‹ß‚¢üŠú(60•b‚©‚ç120•b‚Ü‚Å)‚Å‹ß—’¼ü‚ğæ‚é
+% %% è¿‘ä¼¼ç›´ç·šä½œæˆ
+% % å®Ÿæ¸¬å€¤ã¨è¿‘ã„å‘¨æœŸ(60ç§’ã‹ã‚‰120ç§’ã¾ã§)ã§è¿‘ä¼¼ç›´ç·šã‚’å–ã‚‹
 % num = (period1<10^((20.8)/10)).*(period1>=10^0.4);
 % ne_liner(1,[period1(find(num==1))',...
 %     powerBiE_A(find(num==1))'])
@@ -81,23 +81,23 @@ end
 % 
 % demand_white
 % 
-% % Ø•Ğ‚ğXV‚µ‚ÄCÄ“x‹ß—’¼üì¬
+% % åˆ‡ç‰‡ã‚’æ›´æ–°ã—ã¦ï¼Œå†åº¦è¿‘ä¼¼ç›´ç·šä½œæˆ
 % P = powerBiE_A.*60.^(log10(a1-a2)).*(10^(log10(b1-b2)));
 % ne_liner(1,[period1(find(num==1))',P(find(num==1))'])
 % a2 = line.a;b2 = line.b;
-%% ’ZüŠú•Ï“®‚ğl—¶‚µ‚½PVo—Í‚Ìì¬
+%% çŸ­å‘¨æœŸå¤‰å‹•ã‚’è€ƒæ…®ã—ãŸPVå‡ºåŠ›ã®ä½œæˆ
 demand_1sec = row;
 % demand_1sec = white+row;
 demand_1sec(demand_1sec<0.001) = 0;
-% ƒvƒƒbƒg‚ÅŠm”F
+% ãƒ—ãƒ­ãƒƒãƒˆã§ç¢ºèª
 if pl_ox == 1
     re_PS(demand_1sec,[],[])
     figure,plot(demand_1sec);hold on;plot(row)
 end
-% ù—v—\‘ªì¬(ŠÔˆø‚«Fload_forecast_30min)
+% éœ€è¦äºˆæ¸¬ä½œæˆ(é–“å¼•ãï¼šload_forecast_30min)
 demand_30min = demand_1sec(1);
 for t =  1:49
-    demand_30min = [demand_30min;mean(demand_1sec(1800*t-900:1800*t+900))]; %1•bƒf[ƒ^‚Ì”z—ñ(30•ª‘‹’Šo)
+    demand_30min = [demand_30min;mean(demand_1sec(1800*t-900:1800*t+900))]; %1ç§’ãƒ‡ãƒ¼ã‚¿ã®é…åˆ—(30åˆ†çª“æŠ½å‡º)
 end
 save demand_30min.mat demand_30min    
 save demand_1sec.mat demand_1sec

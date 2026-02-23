@@ -36,7 +36,7 @@ for dd=1:30
     Combine_Output=X_Combine;
     dfout=X_dfout;
     
-    % 実運用断面
+    % 螳滄°逕ｨ譁ｭ髱｢
     time_start=one_time*(dd-1)+1;
     t=time_start:time_start+one_time-1;
 
@@ -53,7 +53,7 @@ for dd=1:30
     % plot(t,load_input,'k','LineWidth',2)
     % ML=max([ML,load_input]);
     % 
-    % % 系統周波数偏差
+    % % 邉ｻ邨ｱ蜻ｨ豕｢謨ｰ蛛丞ｷｮ
     % figure(2);hold on
     % dfout(1:3600)=0;
     % dfout(end-3601:end)=0;
@@ -63,7 +63,7 @@ for dd=1:30
     % figure(21);hold on
     % bar(dd,length(find(abs(dfout)>.2))./length(dfout)*100)
     % 
-    % % 予測誤差と調整力幅
+    % % 莠域ｸｬ隱､蟾ｮ縺ｨ隱ｿ謨ｴ蜉帛ｹ�
     % rate_ERR_RES=(PVF-PV_real_Output(2,:))./[sum(Reserved_power(1,[1,3]));reshape(sum(Reserved_power(1:48,[1,3])').*ones(1800,48),[],1)]';
     % if isempty(find(rate_ERR_RES>1))==0
     %     line_color='r';
@@ -75,7 +75,7 @@ for dd=1:30
     % % plot(t,(PVF-PV_real_Output(2,:))./LOF*100)
     % % plot(t,[sum(Reserved_power(1,[1,3]));reshape(sum(Reserved_power(1:48,[1,3])').*ones(1800,48),[],1)]./LOF'*100)
     % 
-    % % 計画断面
+    % % 險育判譁ｭ髱｢
     % time_start=one_time_30min*(dd-1)+1;
     % t=time_start:time_start+one_time_30min-1;
     % 
@@ -85,5 +85,5 @@ for dd=1:30
 end
 figure(2);yline(.2);yline(-.2);gfigure
 
-% 1カ月の逸脱確立
+% 1繧ｫ譛医�ｮ騾ｸ閼ｱ遒ｺ遶�
 length(find(abs(D_FRE)>.2))./length(D_FRE)*100

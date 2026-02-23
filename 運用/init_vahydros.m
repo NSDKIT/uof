@@ -1,33 +1,33 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% init_vahydros.m  ‰Â•Ï‘¬—g…”­“d‹@ƒ‚ƒfƒ‹‚Ì‰Šú’lŒvZ
-% y‚±‚ÌƒvƒƒOƒ‰ƒ€‚ÅÀ{‚·‚é‚±‚Æz
-%@E‰Â•Ï‘¬—g…”­“d‹@ƒ‚ƒfƒ‹‚Ì‰Šú’lŒvZ
+% init_vahydros.m  å¯å¤‰é€Ÿæšæ°´ç™ºé›»æ©Ÿãƒ¢ãƒ‡ãƒ«ã®åˆæœŸå€¤è¨ˆç®—
+% ã€ã“ã®ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§å®Ÿæ–½ã™ã‚‹ã“ã¨ã€‘
+%ã€€ãƒ»å¯å¤‰é€Ÿæšæ°´ç™ºé›»æ©Ÿãƒ¢ãƒ‡ãƒ«ã®åˆæœŸå€¤è¨ˆç®—
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%% ‰Â•Ï‘¬—g…”­“d‹@ƒ‚ƒfƒ‹‚Ì‰Šú’lŒvZ
+%% å¯å¤‰é€Ÿæšæ°´ç™ºé›»æ©Ÿãƒ¢ãƒ‡ãƒ«ã®åˆæœŸå€¤è¨ˆç®—
 
-for i=1:length(TY_VA) % •¡”‹@‘Î‰
+for i=1:length(TY_VA) % è¤‡æ•°æ©Ÿå¯¾å¿œ
 
-    % —LŒø“d—Íw—ß‰Šú’l‚ğ”­“dŒv‰æ’l‚Ö
-    PG_INIT_VA(i) = PMWD_EDC0(1,30) / GMW_VA(i); % —LŒø“d—Íw—ßi”­“dE—g…ƒTƒuƒVƒXƒeƒ€“à‚Å‚ÍPU’lj
+    % æœ‰åŠ¹é›»åŠ›æŒ‡ä»¤åˆæœŸå€¤ã‚’ç™ºé›»è¨ˆç”»å€¤ã¸
+    PG_INIT_VA(i) = PMWD_EDC0(1,30) / GMW_VA(i); % æœ‰åŠ¹é›»åŠ›æŒ‡ä»¤ï¼ˆç™ºé›»ãƒ»æšæ°´ã‚µãƒ–ã‚·ã‚¹ãƒ†ãƒ å†…ã§ã¯PUå€¤ï¼‰
     
-    % ‰^“]ƒ‚[ƒhi”­“dŒv‰æ’l‚Ì³•‰j‚É‰‚¶‚½—LŒø“d—Íw—ß‚Ì‰Šú’l”ÍˆÍ§–ñ
+    % é‹è»¢ãƒ¢ãƒ¼ãƒ‰ï¼ˆç™ºé›»è¨ˆç”»å€¤ã®æ­£è² ï¼‰ã«å¿œã˜ãŸæœ‰åŠ¹é›»åŠ›æŒ‡ä»¤ã®åˆæœŸå€¤ç¯„å›²åˆ¶ç´„
     
-    if (PMWD_EDC0(1,30) >= 0) % ”­“d‰^“]
+    if (PMWD_EDC0(1,30) >= 0) % ç™ºé›»é‹è»¢
         PG_INIT_VA(i) = max(PG_INIT_VA(i), L_MWD_GN_VA(i));
         PG_INIT_VA(i) = min(PG_INIT_VA(i), U_MWD_GN_VA(i));
-    else %—g…‰^“]
+    else %æšæ°´é‹è»¢
         PG_INIT_VA(i) = max(PG_INIT_VA(i), L_MWD_PM_VA(i));
         PG_INIT_VA(i) = min(PG_INIT_VA(i), U_MWD_PM_VA(i));
     end
     
-    % ”­“d‰^“]ƒ‚ƒfƒ‹‰Šú’l
+    % ç™ºé›»é‹è»¢ãƒ¢ãƒ‡ãƒ«åˆæœŸå€¤
     
     N_GN_INIT_VA(i) = interp1(FX_N_GN_VA, FY_N_GN_VA, PG_INIT_VA(i), 'linear', 'extrap');
     Y_GN_INIT_VA(i) = interp1(FX_Y_GN_VA, FY_Y_GN_VA, PG_INIT_VA(i), 'linear', 'extrap');
     
-    % —g…‰^“]
+    % æšæ°´é‹è»¢
 
     N_PM_INIT_VA(i) = interp1(FX_N_PM_VA, FY_N_PM_VA, PG_INIT_VA(i), 'linear', 'extrap');
     Y_PM_INIT_VA(i) = interp1(FX_Y_PM_VA, FY_Y_PM_VA, PG_INIT_VA(i), 'linear', 'extrap');

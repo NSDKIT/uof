@@ -7,12 +7,12 @@ file2='16-33.bin';
 file3='34-39.bin';
 
 copyfile(fullfile(GRIB_F,file1),...
-    'C:\Users\PowerSystemLab\Desktop\01_研究資料\02_msm_wgirb2\wgrib2_ok');
+    'C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔02_msm_wgirb2\wgrib2_ok');
 copyfile(fullfile(GRIB_F,file2),...
-    'C:\Users\PowerSystemLab\Desktop\01_研究資料\02_msm_wgirb2\wgrib2_ok');
+    'C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔02_msm_wgirb2\wgrib2_ok');
 copyfile(fullfile(GRIB_F,file3),...
-    'C:\Users\PowerSystemLab\Desktop\01_研究資料\02_msm_wgirb2\wgrib2_ok');
-cd 'C:\Users\PowerSystemLab\Desktop\01_研究資料\02_msm_wgirb2\wgrib2_ok'
+    'C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔02_msm_wgirb2\wgrib2_ok');
+cd 'C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔02_msm_wgirb2\wgrib2_ok'
 file1=['wgrib2.exe ',file1,' ',loc,' -last grib.csv -nl_out grib.csv'];
 file2=['wgrib2.exe ',file2,' ',loc,' -last grib.csv -nl_out grib.csv'];
 file3=['wgrib2.exe ',file3,' ',loc,' -last grib.csv -nl_out grib.csv'];
@@ -31,7 +31,7 @@ a_l3(l1+l2+1:l1+l2+l3)=data3;
 
 a=a+a_l1+a_l2+a_l3;
 
-%% 日射量は設置方法毎に変換
+%% 譌･蟆�驥上�ｯ險ｭ鄂ｮ譁ｹ豕墓ｯ弱↓螟画鋤
 irr_data_ori=a_l1+a_l2+a_l3;
 
 irr_data=reshape(irr_data_ori(11:end),12,39);

@@ -1,4 +1,4 @@
-%% 年月日を選択
+%% 蟷ｴ譛域律繧帝∈謚�
 if year == 2018
     E_D = [31,28,31,30,31,30,31,31,30,31,30,31];
 elseif year == 2019
@@ -21,23 +21,23 @@ if Month > 3
 else
     Year = year+1;
 end
-%% .binファイル取得
+%% .bin繝輔ぃ繧､繝ｫ蜿門ｾ�
 search1
-%% 各エリアの水平面全天日射量取得
+%% 蜷�繧ｨ繝ｪ繧｢縺ｮ豌ｴ蟷ｳ髱｢蜈ｨ螟ｩ譌･蟆�驥丞叙蠕�
 TDBTDB
 irr_forecast=irr_forecast(2:end,:);
 data = irr_forecast;
-%% PV面日射量へ変換
+%% PV髱｢譌･蟆�驥上∈螟画鋤
 MSM_change
 % MSM_change_for_agc
-%% 既設PV容量
-load(['../基本データ/PV_base_',num2str(Year),'.mat'])
+%% 譌｢險ｭPV螳ｹ驥�
+load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/PV_base_',num2str(Year),'.mat'])
 PV_base=[PV_base(end-2:end,3)',PV_base(1:end-3,3)'];
-%% システム出力係数
-load(['../基本データ/PR_',num2str(Year),'.mat'])
-%% MSMの倍数係数
-load(['../基本データ/MSM_bai_',num2str(Year),'.mat'])
-%% PV面日射強度からPV予測出力へ変換
+%% 繧ｷ繧ｹ繝�繝�蜃ｺ蜉帑ｿよ焚
+load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/PR_',num2str(Year),'.mat'])
+%% MSM縺ｮ蛟肴焚菫よ焚
+load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/MSM_bai_',num2str(Year),'.mat'])
+%% PV髱｢譌･蟆�蠑ｷ蠎ｦ縺九ｉPV莠域ｸｬ蜃ｺ蜉帙∈螟画鋤
 l=size(IRR.sum);
 IRR.sum = [IRR.sum;zeros(2,l(2))];
 load('../PVC.mat')

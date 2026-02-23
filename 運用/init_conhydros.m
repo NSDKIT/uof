@@ -1,17 +1,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% init_conhydros.m  ’è‘¬—g…”­“dƒvƒ‰ƒ“ƒgƒ‚ƒfƒ‹‚Ì‰Šú’lŒvŽZ
-% y‚±‚ÌƒvƒƒOƒ‰ƒ€‚ÅŽÀŽ{‚·‚é‚±‚Æz
-%@E’è‘¬—g…”­“dƒvƒ‰ƒ“ƒgƒ‚ƒfƒ‹‚Ì‰Šú’lŒvŽZ
+% init_conhydros.m  å®šé€Ÿæšæ°´ç™ºé›»ãƒ—ãƒ©ãƒ³ãƒˆãƒ¢ãƒ‡ãƒ«ã®åˆæœŸå€¤è¨ˆç®—
+% ã€ã“ã®ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§å®Ÿæ–½ã™ã‚‹ã“ã¨ã€‘
+%ã€€ãƒ»å®šé€Ÿæšæ°´ç™ºé›»ãƒ—ãƒ©ãƒ³ãƒˆãƒ¢ãƒ‡ãƒ«ã®åˆæœŸå€¤è¨ˆç®—
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%% ’è‘¬—g…”­“dƒvƒ‰ƒ“ƒgƒ‚ƒfƒ‹‚Ì‰Šú’lŒvŽZ
-% •Ï”‰Šú‰»
- MW0_WT = zeros(1,2);  % ‰Šúo—Í[MW]
+%% å®šé€Ÿæšæ°´ç™ºé›»ãƒ—ãƒ©ãƒ³ãƒˆãƒ¢ãƒ‡ãƒ«ã®åˆæœŸå€¤è¨ˆç®—
+% å¤‰æ•°åˆæœŸåŒ–
+ MW0_WT = zeros(1,2);  % åˆæœŸå‡ºåŠ›[MW]
 
-% iniset_edc.m‚Å“™ƒ‰ƒ€ƒ_–@‚É‚æ‚è‹‚ß‚½Œv‰æo—Í‚ð‰Šú’l‚Æ‚·‚é
+% iniset_edc.mã§ç­‰ãƒ©ãƒ ãƒ€æ³•ã«ã‚ˆã‚Šæ±‚ã‚ãŸè¨ˆç”»å‡ºåŠ›ã‚’åˆæœŸå€¤ã¨ã™ã‚‹
  PG_INIT_WT=PMWD_SCHEDULE(1,29:31)';
 
  for i=1:2
-     MW0_WT(i) = max([L_MWD_WT(i), PG_INIT_WT(i)/GMW_WT(i)]);  % ‰Šúo—Í[pu]
+     MW0_WT(i) = max([L_MWD_WT(i), PG_INIT_WT(i)/GMW_WT(i)]);  % åˆæœŸå‡ºåŠ›[pu]
  end

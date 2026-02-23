@@ -1,75 +1,79 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% iniset.m ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“ŠÔ“™‚Ìİ’èA•W€ƒf[ƒ^A”­“dŒv‰æƒf[ƒ^‚Ì“Ç‚İ
-% y‚±‚ÌƒvƒƒOƒ‰ƒ€‚ÅÀ{‚·‚é‚±‚Æz
-%@EƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚İAƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‘ÎÛŠÔ‚Ìİ’è
-%@E•W€ƒf[ƒ^‚Ì“Ç‚İ(Simulink“ü—Íƒtƒ@ƒCƒ‹‚Ìì¬)
-%  E”­“dŒv‰æƒc[ƒ‹‚Å¶¬‚µ‚½—\‘ªƒf[ƒ^‚Ì“Ç‚İ(Simulink“ü—Íƒtƒ@ƒCƒ‹‚Ìì¬)
-%  E”­“dŒv‰æƒc[ƒ‹‚Å¶¬‚µ‚½”­“d‹@ƒXƒyƒbƒN‚Ì“Ç‚İ(Simulink“ü—Íƒtƒ@ƒCƒ‹‚Ìì¬)
-%  E”­“dŒv‰æƒc[ƒ‹‚Å¶¬‚µ‚½”­“d‹@ƒXƒyƒbƒN‚Ì“Ç‚İ(EDCŒvZ‚Ì‰Šú’lİ’è)
-%  E”­“dŒv‰æƒc[ƒ‹‚Å¶¬‚µ‚½”­“d‹@‚Ì‰^“]ó‹µ‚Ì“Ç‚İ(Simulink“ü—Íƒtƒ@ƒCƒ‹‚Ìì¬)
+% iniset.m ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³æ™‚é–“ç­‰ã®è¨­å®šã€æ¨™æº–ãƒ‡ãƒ¼ã‚¿ã€ç™ºé›»è¨ˆç”»ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿
+% ã€ã“ã®ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§å®Ÿæ–½ã™ã‚‹ã“ã¨ã€‘
+%ã€€ãƒ»ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³åˆ»ã¿ã€ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å¯¾è±¡æ™‚é–“ã®è¨­å®š
+%ã€€ãƒ»æ¨™æº–ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿(Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®ä½œæˆ)
+%  ãƒ»ç™ºé›»è¨ˆç”»ãƒ„ãƒ¼ãƒ«ã§ç”Ÿæˆã—ãŸäºˆæ¸¬ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿(Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®ä½œæˆ)
+%  ãƒ»ç™ºé›»è¨ˆç”»ãƒ„ãƒ¼ãƒ«ã§ç”Ÿæˆã—ãŸç™ºé›»æ©Ÿã‚¹ãƒšãƒƒã‚¯ã®èª­è¾¼ã¿(Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®ä½œæˆ)
+%  ãƒ»ç™ºé›»è¨ˆç”»ãƒ„ãƒ¼ãƒ«ã§ç”Ÿæˆã—ãŸç™ºé›»æ©Ÿã‚¹ãƒšãƒƒã‚¯ã®èª­è¾¼ã¿(EDCè¨ˆç®—ã®åˆæœŸå€¤è¨­å®š)
+%  ãƒ»ç™ºé›»è¨ˆç”»ãƒ„ãƒ¼ãƒ«ã§ç”Ÿæˆã—ãŸç™ºé›»æ©Ÿã®é‹è»¢çŠ¶æ³ã®èª­è¾¼ã¿(Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®ä½œæˆ)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚İ‚Ìİ’è
-  dtload = 0.1;                   %ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“ƒf[ƒ^‚İŠÔ(s)
+%% ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³åˆ»ã¿ã®è¨­å®š
+% ã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã¯ã€Simulinkãƒ¢ãƒ‡ãƒ«ã®å®Ÿè¡Œã«å¿…è¦ãªå„ç¨®æ™‚ç³»åˆ—ãƒ‡ãƒ¼ã‚¿ã€
+% ç™ºé›»è¨ˆç”»ãƒ‡ãƒ¼ã‚¿ã€ãŠã‚ˆã³ç™ºé›»æ©Ÿã‚¹ãƒšãƒƒã‚¯ã‚’èª­ã¿è¾¼ã¿ã€
+% SimulinkãŒå‚ç…§ã™ã‚‹.matå½¢å¼ã®å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã—ã¾ã™ã€‚
 
-%% ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‘ÎÛŠÔi0:00:00‚ğ1,23:59:59‚ğ86400‚Æ‚µ‚ÄŠ·Zj
-% ‰ğÍ—á‘è1-1‚¨‚æ‚Ñ‰ğÍ—á‘è4
-  %stime = 46801;                %ŠJn 13:00:00
-  %etime = 57601;                %I—¹ 16:00:00
+  dtload = 0.1;                   %ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿åˆ»ã¿æ™‚é–“(s)
 
-% ‰ğÍ—á‘è1-2,‰ğÍ—á‘è2‚¨‚æ‚Ñ‰ğÍ—á‘è3
-  stime = 1;                %ŠJn 00:00:00
-  etime = 86401;                %I—¹ 23:30:00
+%% ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å¯¾è±¡æ™‚é–“ï¼ˆ0:00:00ã‚’1,23:59:59ã‚’86400ã¨ã—ã¦æ›ç®—ï¼‰
+% è§£æä¾‹é¡Œ1-1ãŠã‚ˆã³è§£æä¾‹é¡Œ4
+  %stime = 46801;                %é–‹å§‹æ™‚åˆ» 13:00:00
+  %etime = 57601;                %çµ‚äº†æ™‚åˆ» 16:00:00
 
-%% “ü—Íƒtƒ@ƒCƒ‹“Ç‚İ‚İ‚Ì‚½‚ß‚ÌŠÔƒxƒNƒgƒ‹’è‹`
-  ttime = 0:1:88199;              %0`24‚Ì1•b‚İ‚ÌƒxƒNƒgƒ‹
-  ttimepre5m = (stime-299):1:(etime+1800-299); %EDC—\‘ª—p‚É5•ª‚¸‚ç‚µ‚½ƒxƒNƒgƒ‹
+% è§£æä¾‹é¡Œ1-2,è§£æä¾‹é¡Œ2ãŠã‚ˆã³è§£æä¾‹é¡Œ3
+  stime = 1;                %é–‹å§‹æ™‚åˆ» 00:00:00
+  etime = 86401;                %çµ‚äº†æ™‚åˆ» 23:30:00
 
-%ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“ŠÔ(3ŠÔ)‚ÌŒn—ñcƒxƒNƒgƒ‹ì¬
+%% å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿ã®ãŸã‚ã®æ™‚é–“ãƒ™ã‚¯ãƒˆãƒ«å®šç¾©
+  ttime = 0:1:88199;              %0ã€œ24æ™‚ã®1ç§’åˆ»ã¿ã®ãƒ™ã‚¯ãƒˆãƒ«
+  ttimepre5m = (stime-299):1:(etime+1800-299); %EDCäºˆæ¸¬ç”¨ã«5åˆ†ãšã‚‰ã—ãŸãƒ™ã‚¯ãƒˆãƒ«
+
+%ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³æ™‚é–“(3æ™‚é–“)ã®æ™‚ç³»åˆ—ç¸¦ãƒ™ã‚¯ãƒˆãƒ«ä½œæˆ
   simtimevector = stime:1:etime;
   simtimevector =simtimevector';
   simtime = size(simtimevector,1);
 
-%% ”­“dŒv‰æƒc[ƒ‹‚Åì¬‚µ‚½—\‘ªƒf[ƒ^‚ÉŠÖ‚·‚é“ü—Íƒtƒ@ƒCƒ‹‚Ì“Ç‚İ
+%% ç™ºé›»è¨ˆç”»ãƒ„ãƒ¼ãƒ«ã§ä½œæˆã—ãŸäºˆæ¸¬ãƒ‡ãƒ¼ã‚¿ã«é–¢ã™ã‚‹å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­è¾¼ã¿
 
-% ù—v—\‘ªƒf[ƒ^‚Ì“Ç‚İ
+% éœ€è¦äºˆæ¸¬ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿
  load_forecast_input = csvread('Load_Forecast.csv',1,1,[1,1,simtime,1]); 
  load_forecast_input = horzcat(simtimevector,load_forecast_input);
  load_forecast_input=load_forecast_input';
 
-% ‘¾—zŒõ”­“d—\‘ªƒf[ƒ^‚Ì“Ç‚İ
+% å¤ªé™½å…‰ç™ºé›»äºˆæ¸¬ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿
  PV_Forecast=csvread('PV_Forecast.csv',1,1,[1,1,simtime,1]);
  PV_Forecast = horzcat(simtimevector,PV_Forecast);
  PV_Forecast=PV_Forecast';
- save PV_Forecast.mat PV_Forecast  %Simulink“ü—Íƒtƒ@ƒCƒ‹(PV_Forecast.mat)‚Ìì¬
+ save PV_Forecast.mat PV_Forecast  %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(PV_Forecast.mat)ã®ä½œæˆ
 
 
-%% •W€ƒf[ƒ^iù—vE‘¾—zŒõE•——Íj‚Ì“Ç‚İ ¦1800•b’Ç‰Á‰ÓŠ
+%% æ¨™æº–ãƒ‡ãƒ¼ã‚¿ï¼ˆéœ€è¦ãƒ»å¤ªé™½å…‰ãƒ»é¢¨åŠ›ï¼‰ã®èª­è¾¼ã¿ â€»1800ç§’è¿½åŠ ç®‡æ‰€
 
-% ù—vƒf[ƒ^‚Ì“Ç‚İ
+% éœ€è¦ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿
  load_input=csvread('Load.csv',1,1);
-%  load_input=[load_forecast_input(2,1:1800).*ones(2,1800),load_input(1:end-1800,:)']; % 1800•b’Ç‰Á‰ÓŠ
- load_input=load_input'; % •ÏX‘O
+%  load_input=[load_forecast_input(2,1:1800).*ones(2,1800),load_input(1:end-1800,:)']; % 1800ç§’è¿½åŠ ç®‡æ‰€
+ load_input=load_input'; % å¤‰æ›´å‰
  load_input=[ttime;load_input];
  load_input=load_input(:,stime+1:etime+1);
- save load_input.mat load_input  %Simulink“ü—Íƒtƒ@ƒCƒ‹(load_input.mat)‚Ìì¬
+ save load_input.mat load_input  %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(load_input.mat)ã®ä½œæˆ
 
-% ‘¾—zŒõ”­“dƒf[ƒ^‚Ì“Ç‚İ
+% å¤ªé™½å…‰ç™ºé›»ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿
  PV_Out=csvread('PV_Out.csv',1,1);
-%  PV_Out=[PV_Forecast(2,1:1800),PV_Out(1:end-1800)']; % 1800•b’Ç‰Á‰ÓŠ
- PV_Out=PV_Out'; % •ÏX‘O
+%  PV_Out=[PV_Forecast(2,1:1800),PV_Out(1:end-1800)']; % 1800ç§’è¿½åŠ ç®‡æ‰€
+ PV_Out=PV_Out'; % å¤‰æ›´å‰
  PV_Out=[ttime;PV_Out];
  PV_Out=PV_Out(:,stime+1:etime+1);
- save PV_Out.mat PV_Out   %Simulink“ü—Íƒtƒ@ƒCƒ‹(PV_Out.mat)‚Ìì¬ 
+ save PV_Out.mat PV_Out   %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(PV_Out.mat)ã®ä½œæˆ 
  
-% •——Í”­“dƒf[ƒ^‚Ì“Ç‚İ
+% é¢¨åŠ›ç™ºé›»ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿
  WT_Out=csvread('WT_Out.csv',1,1);
  WT_Out=WT_Out';
  WT_Out=[ttime;WT_Out];
  WT_Out=WT_Out(:,stime+1:etime+1);
- save WT_Out.mat WT_Out   %Simulink“ü—Íƒtƒ@ƒCƒ‹(WT_Out.mat)‚Ìì¬
+ save WT_Out.mat WT_Out   %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(WT_Out.mat)ã®ä½œæˆ
  
- %% …‘f•‰‰×’Ç‰Á
+ %% æ°´ç´ è² è·è¿½åŠ 
 %  load('mode.mat')
 %  if mode == 3
 %      load('hydro_rate.mat')
@@ -92,108 +96,108 @@
 %      else
 %          hydro = 0;
 %      end
-%      save load_input.mat load_input  %Simulink“ü—Íƒtƒ@ƒCƒ‹(load_input.mat)‚Ìì¬
+%      save load_input.mat load_input  %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(load_input.mat)ã®ä½œæˆ
 %  else
 %      hydro = 0;
 %      save hydro.mat hydro
 %  end
  %%
 
-% •——Í”­“d—\‘ªƒf[ƒ^‚Ì“Ç‚İ
+% é¢¨åŠ›ç™ºé›»äºˆæ¸¬ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿
  WT_Forecast = csvread('WT_Forecast.csv',1,1,[1,1,simtime,1]);
  WT_Forecast = horzcat(simtimevector,WT_Forecast);
  WT_Forecast = WT_Forecast';
- save WT_Forecast.mat WT_Forecast  %Simulink“ü—Íƒtƒ@ƒCƒ‹(WT_Forecast.mat)‚Ìì¬
+ save WT_Forecast.mat WT_Forecast  %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(WT_Forecast.mat)ã®ä½œæˆ
 
-% ©ƒGƒŠƒA‚Íc—]ù—v‚Ì—\‘ªƒf[ƒ^‚ÉC³
+% è‡ªã‚¨ãƒªã‚¢ã¯æ®‹ä½™éœ€è¦ã®äºˆæ¸¬ãƒ‡ãƒ¼ã‚¿ã«ä¿®æ­£
  load_forecast_input(2,:) = load_forecast_input(2,:) - PV_Forecast(2,:) - WT_Forecast(2,:);
- save load_forecast_input.mat load_forecast_input  %Simulink“ü—Íƒtƒ@ƒCƒ‹(load_forecast_input.mat)‚Ìì¬
+ save load_forecast_input.mat load_forecast_input  %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(load_forecast_input.mat)ã®ä½œæˆ
 
-% ˜AŒnü’ª—¬Œv‰æ’lƒf[ƒ^‚Ì“Ç‚İ
+% é€£ç³»ç·šæ½®æµè¨ˆç”»å€¤ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿
  Tieline_Base = csvread('Tieline_Base.csv',1,1,[1,1,simtime,1]);
  Tieline_Base = horzcat(simtimevector,Tieline_Base);
  Tieline_Base = Tieline_Base';
- save Tieline_Base.mat Tieline_Base  %Simulink“ü—Íƒtƒ@ƒCƒ‹(load_forecast_input.mat)‚Ìì¬
+ save Tieline_Base.mat Tieline_Base  %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(load_forecast_input.mat)ã®ä½œæˆ
 
 
-%% EDC–Ú•Wo—Í‚Ìì¬(5•ªæ‚Ìù—vE©‘R•Ï“®“dŒ¹‚Ì—\‘ª’l)
+%% EDCç›®æ¨™å‡ºåŠ›ã®ä½œæˆ(5åˆ†å…ˆã®éœ€è¦ãƒ»è‡ªç„¶å¤‰å‹•é›»æºã®äºˆæ¸¬å€¤)
 
-% ù—v‚Ì—\‘ª’li5•ªæj‚Ì“Ç‚İ
+% éœ€è¦ã®äºˆæ¸¬å€¤ï¼ˆ5åˆ†å…ˆï¼‰ã®èª­è¾¼ã¿
  load_forecast_300s_input = csvread('Load_Forecast.csv',1,1,[1,1,simtime+1800,1]); 
  load_forecast_300s_input=load_forecast_300s_input';
  load_forecast_300s_input =[ttimepre5m;load_forecast_300s_input];
  load_forecast_300s_input=load_forecast_300s_input(:,300:simtime+299);
 
-% ‘¾—zŒõ”­“d‚Ì—\‘ª’li5•ªæj‚Ì“Ç‚İ
+% å¤ªé™½å…‰ç™ºé›»ã®äºˆæ¸¬å€¤ï¼ˆ5åˆ†å…ˆï¼‰ã®èª­è¾¼ã¿
  PV_forecast_300s_input = csvread('PV_Forecast.csv',1,1,[1,1,simtime+1800,1]);
  PV_forecast_300s_input=PV_forecast_300s_input';
  PV_forecast_300s_input =[ttimepre5m;PV_forecast_300s_input];
  PV_forecast_300s_input=PV_forecast_300s_input(:,300:simtime+299);
 
-% •——Í”­“d‚Ì—\‘ª’li5•ªæj‚Ì“Ç‚İ
+% é¢¨åŠ›ç™ºé›»ã®äºˆæ¸¬å€¤ï¼ˆ5åˆ†å…ˆï¼‰ã®èª­è¾¼ã¿
  WT_forecast_300s_input = csvread('WT_Forecast.csv',1,1,[1,1,simtime+1800,1]);
  WT_forecast_300s_input=WT_forecast_300s_input';
  WT_forecast_300s_input =[ttimepre5m;WT_forecast_300s_input];
  WT_forecast_300s_input=WT_forecast_300s_input(:,300:simtime+299);
 
-% ©ƒGƒŠƒA‚Íc—]ù—v‚Ì—\‘ªƒf[ƒ^i5•ªæj‚ÉC³
+% è‡ªã‚¨ãƒªã‚¢ã¯æ®‹ä½™éœ€è¦ã®äºˆæ¸¬ãƒ‡ãƒ¼ã‚¿ï¼ˆ5åˆ†å…ˆï¼‰ã«ä¿®æ­£
  load_forecast_300s_input(2,:) = load_forecast_300s_input(2,:) - PV_forecast_300s_input(2,:) - WT_forecast_300s_input(2,:); 
- save load_forecast_300s_input.mat load_forecast_300s_input  %Simulink“ü—Íƒtƒ@ƒCƒ‹(load_forecast_300s_input.mat)‚Ìì¬
+ save load_forecast_300s_input.mat load_forecast_300s_input  %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(load_forecast_300s_input.mat)ã®ä½œæˆ
 
-%% ”­“dŒv‰æƒc[ƒ‹‚Å’è‹`‚µ‚½”­“d‹@ƒXƒyƒbƒN‚ÉŠÖ‚·‚é“ü—Íƒtƒ@ƒCƒ‹‚Ì“Ç‚İ
+%% ç™ºé›»è¨ˆç”»ãƒ„ãƒ¼ãƒ«ã§å®šç¾©ã—ãŸç™ºé›»æ©Ÿã‚¹ãƒšãƒƒã‚¯ã«é–¢ã™ã‚‹å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­è¾¼ã¿
 
-% ”­“d‹@‚ÌŠµ«’è”ƒf[ƒ^‚Ì“Ç‚İ
+% ç™ºé›»æ©Ÿã®æ…£æ€§å®šæ•°ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿
  inertia_input=csvread('Inertia.csv',1,1,[1,1,simtime,2]);
  inertia_input = horzcat(simtimevector,inertia_input);
  inertia_input=inertia_input';
- save inertia_input.mat inertia_input %Simulink“ü—Íƒtƒ@ƒCƒ‹(inertia_input.mat)‚Ìì¬
+ save inertia_input.mat inertia_input %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(inertia_input.mat)ã®ä½œæˆ
 
-% ”­“d‹@(AGC30)‚Ì’èŠio—Í‚ÆÅ’áo—Í‚Ì“Ç‚İ 
+% ç™ºé›»æ©Ÿ(AGC30)ã®å®šæ ¼å‡ºåŠ›ã¨æœ€ä½å‡ºåŠ›ã®èª­è¾¼ã¿ 
  GMW = csvread('G_up_limit.csv',0,1);
  Gmin = csvread('G_down_limit.csv',0,1);
 
 
-% ”­“d‹@(AGC30)‚Ìo—Í•Ï‰»‘¬“xƒf[ƒ^‚Ì“Ç‚İ
+% ç™ºé›»æ©Ÿ(AGC30)ã®å‡ºåŠ›å¤‰åŒ–é€Ÿåº¦ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿
  G_speed = csvread('G_rate.csv',0,1);
- G_speed = G_speed(:,1);  % EDCŒvZ‚É‚¨‚¯‚é“ü—Íİ’è’l
+ G_speed = G_speed(:,1);  % EDCè¨ˆç®—ã«ãŠã‘ã‚‹å…¥åŠ›è¨­å®šå€¤
  
-% ”­“d‹@(AGC30)‚Ì‘•ª”R—¿”ï“Á«ƒf[ƒ^‚Ì“Ç‚İ
+% ç™ºé›»æ©Ÿ(AGC30)ã®å¢—åˆ†ç‡ƒæ–™è²»ç‰¹æ€§ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿
  Cost=csvread('Cost.csv',1,1,[1,1,30,3]);
  G_cost=[Cost(:,3);
         Cost(:,2);
-        Cost(:,1)];  % EDCŒvZ‚É‚¨‚¯‚é“ü—Íİ’è’l
+        Cost(:,1)];  % EDCè¨ˆç®—ã«ãŠã‘ã‚‹å…¥åŠ›è¨­å®šå€¤
 
-% ”­“d‹@(AGC30)‚ÌŒv‰æã‰ºŒÀ’l‚Ì“Ç‚İ
- G_up_limit=csvread('G_up_plan_limit.csv',0,1);     % EDCŒvZ‚É‚¨‚¯‚é“ü—Íİ’è’l
-%  G_down_limit=csvread('G_down_plan_limit_time.csv'); % EDCŒvZ‚É‚¨‚¯‚é“ü—Íİ’è’l
+% ç™ºé›»æ©Ÿ(AGC30)ã®è¨ˆç”»ä¸Šä¸‹é™å€¤ã®èª­è¾¼ã¿
+ G_up_limit=csvread('G_up_plan_limit.csv',0,1);     % EDCè¨ˆç®—ã«ãŠã‘ã‚‹å…¥åŠ›è¨­å®šå€¤
+%  G_down_limit=csvread('G_down_plan_limit_time.csv'); % EDCè¨ˆç®—ã«ãŠã‘ã‚‹å…¥åŠ›è¨­å®šå€¤
 %  save G_down_limit.mat G_down_limit
- G_down_limit=csvread('G_down_plan_limit.csv',0,1); % EDCŒvZ‚É‚¨‚¯‚é“ü—Íİ’è’l
+ G_down_limit=csvread('G_down_plan_limit.csv',0,1); % EDCè¨ˆç®—ã«ãŠã‘ã‚‹å…¥åŠ›è¨­å®šå€¤
     
  
-%% ”­“dŒv‰æƒc[ƒ‹‚Å’è‹`‚µ‚½”­“d‹@‚Ì‰^“]ó‹µ‚ÉŠÖ‚·‚é“ü—Íƒtƒ@ƒCƒ‹‚Ì“Ç‚İ
+%% ç™ºé›»è¨ˆç”»ãƒ„ãƒ¼ãƒ«ã§å®šç¾©ã—ãŸç™ºé›»æ©Ÿã®é‹è»¢çŠ¶æ³ã«é–¢ã™ã‚‹å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­è¾¼ã¿
 
-% ”­“d‹@(AGC30)‚ÌŒv‰æo—Í‚Ì“Ç‚İ
+% ç™ºé›»æ©Ÿ(AGC30)ã®è¨ˆç”»å‡ºåŠ›ã®èª­è¾¼ã¿
  g_out_input=csvread('G_Out.csv',1,1,[1,1,simtime,30]);
  g_out_input = horzcat(simtimevector,g_out_input);
  g_out_input=g_out_input';
- save g_out_input.mat g_out_input %Simulink“ü—Íƒtƒ@ƒCƒ‹(g_out_input.mat)‚Ìì¬
+ save g_out_input.mat g_out_input %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(g_out_input.mat)ã®ä½œæˆ
 
-% ŒÅ’è“dŒ¹o—Íƒf[ƒ^‚Ì“Ç‚İ 
+% å›ºå®šé›»æºå‡ºåŠ›ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿ 
  g_const_out_input=csvread('G_Const_Out.csv',1,1,[1,1,simtime,7]);
  g_const_out_input = horzcat(simtimevector,g_const_out_input);
  g_const_out_input=g_const_out_input';
- save g_const_out_input.mat g_const_out_input  %Simulink“ü—Íƒtƒ@ƒCƒ‹(g_const_out_input.mat)‚Ìì¬
+ save g_const_out_input.mat g_const_out_input  %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(g_const_out_input.mat)ã®ä½œæˆ
 
-% ŒÅ’è“dŒ¹o—Í‚Ì‡¬
+% å›ºå®šé›»æºå‡ºåŠ›ã®åˆæˆ
  g_const_out_sum=sum(g_const_out_input(2:8,:));
  g_const_out_sum=g_const_out_sum';
  g_const_out_sum = horzcat(simtimevector,g_const_out_sum);
  g_const_out_sum=g_const_out_sum';
- save g_const_out_sum.mat g_const_out_sum  %Simulink“ü—Íƒtƒ@ƒCƒ‹(g_const_out_sum.mat)‚Ìì¬
+ save g_const_out_sum.mat g_const_out_sum  %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(g_const_out_sum.mat)ã®ä½œæˆ
 
-% ”­“d‹@§Œäƒ‚[ƒhƒf[ƒ^‚Ì“Ç‚İ
+% ç™ºé›»æ©Ÿåˆ¶å¾¡ãƒ¢ãƒ¼ãƒ‰ãƒ‡ãƒ¼ã‚¿ã®èª­è¾¼ã¿
  g_mode_input=csvread('G_Mode.csv',1,1,[1,1,simtime,30]);
  g_mode_input = horzcat(simtimevector,g_mode_input);
  g_mode_input=g_mode_input';
- save g_mode_input.mat g_mode_input  %Simulink“ü—Íƒtƒ@ƒCƒ‹(g_mode_input.mat)‚Ìì¬
+ save g_mode_input.mat g_mode_input  %Simulinkå…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«(g_mode_input.mat)ã®ä½œæˆ
 

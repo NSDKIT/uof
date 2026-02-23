@@ -1,118 +1,118 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% init_thermals.m ‹D—Нѓvѓ‰ѓ“ѓgѓ‚ѓfѓ‹ЃEGTCCѓvѓ‰ѓ“ѓgѓ‚ѓfѓ‹‚МЏ‰Љъ’lЊvЋZ
-% Ѓy‚±‚МѓvѓЌѓOѓ‰ѓЂ‚ЕЋАЋ{‚·‚й‚±‚ЖЃz
-%Ѓ@ЃE‹D—Нѓvѓ‰ѓ“ѓgѓ‚ѓfѓ‹‚МЏ‰Љъ’lЊvЋZ
-%Ѓ@ЃEGTCCѓvѓ‰ѓ“ѓgѓ‚ѓfѓ‹‚МЏ‰Љъ’lЊvЋZ(ЊJ‚и•Ф‚µЊvЋZ)
+% init_thermals.m ж±ЅеЉ›гѓ—гѓ©гѓігѓ€гѓўгѓ‡гѓ«гѓ»GTCCгѓ—гѓ©гѓігѓ€гѓўгѓ‡гѓ«гЃ®е€ќжњџеЂ¤иЁ€з®—
+% гЂђгЃ“гЃ®гѓ—гѓ­г‚°гѓ©гѓ гЃ§е®џж–ЅгЃ™г‚‹гЃ“гЃЁгЂ‘
+%гЂЂгѓ»ж±ЅеЉ›гѓ—гѓ©гѓігѓ€гѓўгѓ‡гѓ«гЃ®е€ќжњџеЂ¤иЁ€з®—
+%гЂЂгѓ»GTCCгѓ—гѓ©гѓігѓ€гѓўгѓ‡гѓ«гЃ®е€ќжњџеЂ¤иЁ€з®—(з№°г‚Љиї”гЃ—иЁ€з®—)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% ‹D—Нѓvѓ‰ѓ“ѓgѓ‚ѓfѓ‹‚МЏ‰Љъ’lЊvЋZ
+%% ж±ЅеЉ›гѓ—гѓ©гѓігѓ€гѓўгѓ‡гѓ«гЃ®е€ќжњџеЂ¤иЁ€з®—
 
-% •Пђ”Џ‰Љъ‰»
- MW0_ST = zeros(1,17);   % Џ‰ЉъЏo—Н[MW]
- PTH0_ST = zeros(1,17);  % ЋеЏц‹C€і—Н‚МЏ‰Љъ’l[pu]
+% е¤‰ж•°е€ќжњџеЊ–
+ MW0_ST = zeros(1,17);   % е€ќжњџе‡єеЉ›[MW]
+ PTH0_ST = zeros(1,17);  % дё»и’ёж°—ењ§еЉ›гЃ®е€ќжњџеЂ¤[pu]
 
-% iniset_edc.m‚Е“™ѓ‰ѓЂѓ_–@‚Й‚ж‚и‹Ѓ‚Я‚ЅЊv‰жЏo—Н‚рЏ‰Љъ’l‚Ж‚·‚й
- PG_INIT_ST = PMWD_SCHEDULE(1,2:18)';  % ‹D—Нѓvѓ‰ѓ“ѓg‚МЏ‰ЉъЏo—Н[MW]
- PG_INIT_CC = PMWD_SCHEDULE(1,19:28)'; % GTCCѓvѓ‰ѓ“ѓg‚МЏ‰ЉъЏo—Н[MW]
+% iniset_edc.mгЃ§з­‰гѓ©гѓ гѓЂжі•гЃ«г‚€г‚Љж±‚г‚ЃгЃџиЁ€з”»е‡єеЉ›г‚’е€ќжњџеЂ¤гЃЁгЃ™г‚‹
+ PG_INIT_ST = PMWD_SCHEDULE(1,2:18)';  % ж±ЅеЉ›гѓ—гѓ©гѓігѓ€гЃ®е€ќжњџе‡єеЉ›[MW]
+ PG_INIT_CC = PMWD_SCHEDULE(1,19:28)'; % GTCCгѓ—гѓ©гѓігѓ€гЃ®е€ќжњџе‡єеЉ›[MW]
 
  for i=1:17
-     MW0_ST(i) = max([L_MWD_ST(i), PG_INIT_ST(i)/GMW_ST(i)]);  % Џ‰ЉъЏo—Н[pu]
-     PTH0_ST(i) = interp1(FX_PTHD_ST(:,i), FY_PTHD_ST(:,i), MW0_ST(i)); % ЋеЏц‹C€і—Н‚МЏ‰Љъ’l[pu]
+     MW0_ST(i) = max([L_MWD_ST(i), PG_INIT_ST(i)/GMW_ST(i)]);  % е€ќжњџе‡єеЉ›[pu]
+     PTH0_ST(i) = interp1(FX_PTHD_ST(:,i), FY_PTHD_ST(:,i), MW0_ST(i)); % дё»и’ёж°—ењ§еЉ›гЃ®е€ќжњџеЂ¤[pu]
  end
 
-%% •Пђ”Џ‰Љъ‰»ЃFѓRѓ“ѓoѓCѓ“ѓh
-TDR_CC    = TIR_CC.*(1+(PRC_CC.^((RC_CC-1)./RC_CC)-1)./HC_CC);              % €іЏk‹@ЏoЊы‰·“xЃi’иЉiЏo—НЋћЃj[K]
-PRT_CC    = PRC_CC.*(1-EP_CC);                                              % €і—Н‘№Ћё‚рЌl—¶‚µ‚Ѕѓ^Ѓ[ѓrѓ“€і—Н”дЃi’иЉiЏo—НЋћЃj
-TER_CC    = TFR_CC.*(1-(1-1./PRT_CC.^((RT_CC-1)./RT_CC)).*HT_CC);           % ’иЉiЏo—НЋћ‚МѓKѓXѓ^Ѓ[ѓrѓ“ЏoЊы‰·“xЃi”rѓKѓX‰·“xЃj
-KGT_CC = FGT_CC./((TFR_CC-TER_CC)-(TDR_CC-TIR_CC));                         % GTЏo—НЊWђ”
-KST_CC = (1.0-FGT_CC)./TER_CC;                                              % STЏo—НЊWђ”
-Td_min_cc  = TIR_CC.*(1+((PRC_CC.*L_IGV_CC).^((RC_CC-1)./RC_CC)-1)./HC_CC); % ‹у‹C—¬—КЌЕЏ¬’l‚М‚Ж‚«‚М€іЏk‹@ЏoЊы‰·“x
+%% е¤‰ж•°е€ќжњџеЊ–пјљг‚ігѓігѓђг‚¤гѓігѓ‰
+TDR_CC    = TIR_CC.*(1+(PRC_CC.^((RC_CC-1)./RC_CC)-1)./HC_CC);              % ењ§зё®ж©џе‡єеЏЈжё©еє¦пј€е®љж је‡єеЉ›ж™‚пј‰[K]
+PRT_CC    = PRC_CC.*(1-EP_CC);                                              % ењ§еЉ›жђЌе¤±г‚’иЂѓж…®гЃ—гЃџг‚їгѓјгѓ“гѓіењ§еЉ›жЇ”пј€е®љж је‡єеЉ›ж™‚пј‰
+TER_CC    = TFR_CC.*(1-(1-1./PRT_CC.^((RT_CC-1)./RT_CC)).*HT_CC);           % е®љж је‡єеЉ›ж™‚гЃ®г‚¬г‚№г‚їгѓјгѓ“гѓіе‡єеЏЈжё©еє¦пј€жЋ’г‚¬г‚№жё©еє¦пј‰
+KGT_CC = FGT_CC./((TFR_CC-TER_CC)-(TDR_CC-TIR_CC));                         % GTе‡єеЉ›дї‚ж•°
+KST_CC = (1.0-FGT_CC)./TER_CC;                                              % STе‡єеЉ›дї‚ж•°
+Td_min_cc  = TIR_CC.*(1+((PRC_CC.*L_IGV_CC).^((RC_CC-1)./RC_CC)-1)./HC_CC); % з©єж°—жµЃй‡ЏжњЂе°ЏеЂ¤гЃ®гЃЁгЃЌгЃ®ењ§зё®ж©џе‡єеЏЈжё©еє¦
 WF_MIN_CC = L_IGV_CC./(TFR_CC-TDR_CC).*((Td_min_cc-TIR_CC)...
-    ./((1-1./(PRT_CC.*L_IGV_CC).^((RT_CC-1)./RT_CC)).*HT_CC)-Td_min_cc);    % GT–і•‰‰ЧЋћ”R—ї—¬—К
+    ./((1-1./(PRT_CC.*L_IGV_CC).^((RT_CC-1)./RT_CC)).*HT_CC)-Td_min_cc);    % GTз„ЎиІ иЌ·ж™‚з‡ѓж–™жµЃй‡Џ
 
-WF0_CC   = 1.0*ones(1, 10);         % ”R—ї—¬—КЏ‰Љъ’l[pu]
-IGV0_CC  = WF0_CC;                  % IGVЉJ“xЏ‰Љъ’l[pu]
-TE0_CC   = zeros(1, 10);            % ”rѓKѓX‰·“xЏ‰Љъ’l[K]
-PMST0_CC = zeros(1, 10);            % STЏo—НЏ‰Љъ’l[pu]
-e_cc     = 1.0e-10;                 % Џ‰Љъ’lЊvЋZ‚МЋы‘©”»’ии‡’l
-k_cc     = 1.0;                     % Џ‰Љъ’lЊvЋZ‚МЏCђіЊWђ”
-iter_max = 100;                     % ЌЕ‘е”Ѕ•њ‰сђ”ЃiЏCђіЊWђ”‚Й‰ћ‚¶‚Д•ПЌX‚·‚йЃj
+WF0_CC   = 1.0*ones(1, 10);         % з‡ѓж–™жµЃй‡Џе€ќжњџеЂ¤[pu]
+IGV0_CC  = WF0_CC;                  % IGVй–‹еє¦е€ќжњџеЂ¤[pu]
+TE0_CC   = zeros(1, 10);            % жЋ’г‚¬г‚№жё©еє¦е€ќжњџеЂ¤[K]
+PMST0_CC = zeros(1, 10);            % STе‡єеЉ›е€ќжњџеЂ¤[pu]
+e_cc     = 1.0e-10;                 % е€ќжњџеЂ¤иЁ€з®—гЃ®еЏЋжќџе€¤е®љй–ѕеЂ¤
+k_cc     = 1.0;                     % е€ќжњџеЂ¤иЁ€з®—гЃ®дї®ж­Јдї‚ж•°
+iter_max = 100;                     % жњЂе¤§еЏЌеѕ©е›ћж•°пј€дї®ж­Јдї‚ж•°гЃ«еїњгЃгЃ¦е¤‰ж›ґгЃ™г‚‹пј‰
 
-% Ћы‘©ЊvЋZ
+% еЏЋжќџиЁ€з®—
 for i = 1:10
-    Pg_init_cc = max([L_MWD_CC(i), PG_INIT_CC(i)/GMW_CC(i)]);  % i”Ф–Ъ‚МGTCCЏo—НЏ‰Љъ’l[pu]
+    Pg_init_cc = max([L_MWD_CC(i), PG_INIT_CC(i)/GMW_CC(i)]);  % iз•Єз›®гЃ®GTCCе‡єеЉ›е€ќжњџеЂ¤[pu]
     for iter = 1:iter_max
-        W0_cc       = IGV0_CC(i)*TIR_CC(i)/TI_CC(i);                                % ‹у‹C—¬—К
-        xc0_cc      = (PRC_CC(i)*W0_cc)^((RC_CC(i)-1)/RC_CC(i));                    % €іЏk‹@ЏoЊы‰·“xЋZЏoЋћ‚М•Пђ”
-        xt0_cc      = (PRT_CC(i)*W0_cc)^((RT_CC(i)-1)/RT_CC(i));                    % ”rѓKѓX‰·“xЋZЏoЋћ‚М•Пђ”
-        Td0_cc      = TI_CC(i)*(1+(xc0_cc-1)/HC_CC(i));                             % €іЏk‹@ЏoЊы‰·“xЏ‰Љъ’l[K]
-        Tf0_cc      = Td0_cc+(TFR_CC(i)-TDR_CC(i))*WF0_CC(i)/W0_cc;                 % ѓKѓXѓ^Ѓ[ѓrѓ““ьЊы‰·“xЏ‰Љъ’l
-        TE0_CC(i)   = Tf0_cc*(1-(1-1/xt0_cc)*HT_CC(i));                             % ”rѓKѓX‰·“xЏ‰Љъ’l
-        Pmgt0_cc    = KGT_CC(i)*((Tf0_cc-TE0_CC(i))-(Td0_cc-TI_CC(i)))*W0_cc;       % GTЏo—НЏ‰Љъ’l
-        PMST0_CC(i) = KST_CC(i)*TE0_CC(i)*W0_cc;                                    % STЏo—НЏ‰Љъ’l
-        Pm0_cc      = Pmgt0_cc+PMST0_CC(i);                                         % ЋІЏo—НЏ‰Љъ’l
-        Te_ref_cc   = interp1(FX_TE2_CC(:,i), FY_TE2_CC(:,i), Pmgt0_cc/FGT_CC(i));  % ‹у‹C—¬—Кђ§Њд—p”rѓKѓX‰·“xђЭ’и’l
-        dPm_cc      = Pg_init_cc-Pm0_cc;                                            % Џo—Н•ОЌ·
-        dTe_cc      = Te_ref_cc-TE0_CC(i)/TER_CC(i);                                % ”rѓKѓX‰·“x•ОЌ·
+        W0_cc       = IGV0_CC(i)*TIR_CC(i)/TI_CC(i);                                % з©єж°—жµЃй‡Џ
+        xc0_cc      = (PRC_CC(i)*W0_cc)^((RC_CC(i)-1)/RC_CC(i));                    % ењ§зё®ж©џе‡єеЏЈжё©еє¦з®—е‡єж™‚гЃ®е¤‰ж•°
+        xt0_cc      = (PRT_CC(i)*W0_cc)^((RT_CC(i)-1)/RT_CC(i));                    % жЋ’г‚¬г‚№жё©еє¦з®—е‡єж™‚гЃ®е¤‰ж•°
+        Td0_cc      = TI_CC(i)*(1+(xc0_cc-1)/HC_CC(i));                             % ењ§зё®ж©џе‡єеЏЈжё©еє¦е€ќжњџеЂ¤[K]
+        Tf0_cc      = Td0_cc+(TFR_CC(i)-TDR_CC(i))*WF0_CC(i)/W0_cc;                 % г‚¬г‚№г‚їгѓјгѓ“гѓіе…ҐеЏЈжё©еє¦е€ќжњџеЂ¤
+        TE0_CC(i)   = Tf0_cc*(1-(1-1/xt0_cc)*HT_CC(i));                             % жЋ’г‚¬г‚№жё©еє¦е€ќжњџеЂ¤
+        Pmgt0_cc    = KGT_CC(i)*((Tf0_cc-TE0_CC(i))-(Td0_cc-TI_CC(i)))*W0_cc;       % GTе‡єеЉ›е€ќжњџеЂ¤
+        PMST0_CC(i) = KST_CC(i)*TE0_CC(i)*W0_cc;                                    % STе‡єеЉ›е€ќжњџеЂ¤
+        Pm0_cc      = Pmgt0_cc+PMST0_CC(i);                                         % и»ёе‡єеЉ›е€ќжњџеЂ¤
+        Te_ref_cc   = interp1(FX_TE2_CC(:,i), FY_TE2_CC(:,i), Pmgt0_cc/FGT_CC(i));  % з©єж°—жµЃй‡Џе€¶еѕЎз”ЁжЋ’г‚¬г‚№жё©еє¦иЁ­е®љеЂ¤
+        dPm_cc      = Pg_init_cc-Pm0_cc;                                            % е‡єеЉ›еЃЏе·®
+        dTe_cc      = Te_ref_cc-TE0_CC(i)/TER_CC(i);                                % жЋ’г‚¬г‚№жё©еє¦еЃЏе·®
         if abs(dPm_cc)<e_cc && abs(dTe_cc)<e_cc
             break
         else
-            WF0_CC(i)   = WF0_CC(i)+dPm_cc*k_cc;                              % ”R—ї—¬—К‚МЏCђі
-            IGV0_CC(i)  = IGV0_CC(i)-dTe_cc*k_cc;                             % IGVЉJ“x‚МЏCђі
+            WF0_CC(i)   = WF0_CC(i)+dPm_cc*k_cc;                              % з‡ѓж–™жµЃй‡ЏгЃ®дї®ж­Ј
+            IGV0_CC(i)  = IGV0_CC(i)-dTe_cc*k_cc;                             % IGVй–‹еє¦гЃ®дї®ж­Ј
         end
     end
     if iter == iter_max
-        error('Џ‰Љъ’lЊvЋZ‚ЄЋы‘©‚µ‚Ь‚№‚сЃBЃFGTCC_A');
+        error('е€ќжњџеЂ¤иЁ€з®—гЃЊеЏЋжќџгЃ—гЃѕгЃ›г‚“гЂ‚пјљGTCC_A');
     end
-    % ===== IGVЉJ“x‚ЄЏг‰єЊА’l‚р€н’E‚µ‚ЅЏкЌ‡ =====
+    % ===== IGVй–‹еє¦гЃЊдёЉдё‹й™ђеЂ¤г‚’йЂёи„±гЃ—гЃџе ґеђ€ =====
     if IGV0_CC(i) < L_IGV_CC(i) || IGV0_CC(i) > U_IGV_CC(i)
-        if IGV0_CC(i) < L_IGV_CC(i)   % IGVЉJ“x‚Є‰єЊА’l‚р‰є‰с‚Б‚ЅЏкЌ‡
-            IGV0_CC(i) = L_IGV_CC(i); % IGVЉJ“x‚р‰єЊА’l‚ЙЊЕ’и
-        else                          % IGVЉJ“x‚ЄЏгЊА’l‚рЏг‰с‚Б‚ЅЏкЌ‡
-            IGV0_CC(i) = U_IGV_CC(i); % IGVЉJ“x‚рЏгЊА’l‚ЙЊЕ’и
+        if IGV0_CC(i) < L_IGV_CC(i)   % IGVй–‹еє¦гЃЊдё‹й™ђеЂ¤г‚’дё‹е›ћгЃЈгЃџе ґеђ€
+            IGV0_CC(i) = L_IGV_CC(i); % IGVй–‹еє¦г‚’дё‹й™ђеЂ¤гЃ«е›єе®љ
+        else                          % IGVй–‹еє¦гЃЊдёЉй™ђеЂ¤г‚’дёЉе›ћгЃЈгЃџе ґеђ€
+            IGV0_CC(i) = U_IGV_CC(i); % IGVй–‹еє¦г‚’дёЉй™ђеЂ¤гЃ«е›єе®љ
         end
-        W0_cc  = IGV0_CC(i)*TIR_CC(i)/TI_CC(i);             % ‹у‹C—¬—К
-        xc0_cc = (PRC_CC(i)*W0_cc)^((RC_CC(i)-1)/RC_CC(i)); % €іЏk‹@ЏoЊы‰·“xЋZЏoЋћ‚М•Пђ”
-        xt0_cc = (PRT_CC(i)*W0_cc)^((RT_CC(i)-1)/RT_CC(i)); % ”rѓKѓX‰·“xЋZЏoЋћ‚М•Пђ”
-        Td0_cc = TI_CC(i)*(1+(xc0_cc-1)/HC_CC(i));          % €іЏk‹@ЏoЊы‰·“xЏ‰Љъ’l[K]
+        W0_cc  = IGV0_CC(i)*TIR_CC(i)/TI_CC(i);             % з©єж°—жµЃй‡Џ
+        xc0_cc = (PRC_CC(i)*W0_cc)^((RC_CC(i)-1)/RC_CC(i)); % ењ§зё®ж©џе‡єеЏЈжё©еє¦з®—е‡єж™‚гЃ®е¤‰ж•°
+        xt0_cc = (PRT_CC(i)*W0_cc)^((RT_CC(i)-1)/RT_CC(i)); % жЋ’г‚¬г‚№жё©еє¦з®—е‡єж™‚гЃ®е¤‰ж•°
+        Td0_cc = TI_CC(i)*(1+(xc0_cc-1)/HC_CC(i));          % ењ§зё®ж©џе‡єеЏЈжё©еє¦е€ќжњџеЂ¤[K]
         for iter = 1:iter_max
-            Tf0_cc      = Td0_cc+(TFR_CC(i)-TDR_CC(i))*WF0_CC(i)/W0_cc;           % ѓKѓXѓ^Ѓ[ѓrѓ““ьЊы‰·“xЏ‰Љъ’l
-            TE0_CC(i)   = Tf0_cc*(1-(1-1/xt0_cc)*HT_CC(i));                       % ”rѓKѓX‰·“xЏ‰Љъ’l
-            Pmgt0_cc    = KGT_CC(i)*((Tf0_cc-TE0_CC(i))-(Td0_cc-TI_CC(i)))*W0_cc; % GTЏo—НЏ‰Љъ’l
-            PMST0_CC(i) = KST_CC(i)*TE0_CC(i)*W0_cc;                              % STЏo—НЏ‰Љъ’l
-            Pm0_cc      = Pmgt0_cc+PMST0_CC(i);                                   % ЋІЏo—НЏ‰Љъ’l
-            dPm_cc      = Pg_init_cc-Pm0_cc;                                      % Џo—Н•ОЌ·
+            Tf0_cc      = Td0_cc+(TFR_CC(i)-TDR_CC(i))*WF0_CC(i)/W0_cc;           % г‚¬г‚№г‚їгѓјгѓ“гѓіе…ҐеЏЈжё©еє¦е€ќжњџеЂ¤
+            TE0_CC(i)   = Tf0_cc*(1-(1-1/xt0_cc)*HT_CC(i));                       % жЋ’г‚¬г‚№жё©еє¦е€ќжњџеЂ¤
+            Pmgt0_cc    = KGT_CC(i)*((Tf0_cc-TE0_CC(i))-(Td0_cc-TI_CC(i)))*W0_cc; % GTе‡єеЉ›е€ќжњџеЂ¤
+            PMST0_CC(i) = KST_CC(i)*TE0_CC(i)*W0_cc;                              % STе‡єеЉ›е€ќжњџеЂ¤
+            Pm0_cc      = Pmgt0_cc+PMST0_CC(i);                                   % и»ёе‡єеЉ›е€ќжњџеЂ¤
+            dPm_cc      = Pg_init_cc-Pm0_cc;                                      % е‡єеЉ›еЃЏе·®
             if abs(dPm_cc) < e_cc
                 break
             else
-                WF0_CC(i)   = WF0_CC(i)+dPm_cc*k_cc;                              % ”R—ї—¬—К‚МЏCђі
+                WF0_CC(i)   = WF0_CC(i)+dPm_cc*k_cc;                              % з‡ѓж–™жµЃй‡ЏгЃ®дї®ж­Ј
             end
         end
     end
     if iter == iter_max
-        error('Џ‰Љъ’lЊvЋZ‚ЄЋы‘©‚µ‚Ь‚№‚сЃBЃFGTCC_B');
+        error('е€ќжњџеЂ¤иЁ€з®—гЃЊеЏЋжќџгЃ—гЃѕгЃ›г‚“гЂ‚пјљGTCC_B');
     end
-    % ===== ”rѓKѓX‰·“x‚ЄђЭ’и’lЃi”R—ї—¬—Кђ§Њд—pЃj‚рЏг‰с‚Б‚ЅЏкЌ‡ =====
-    Te_ref_cc = interp1(FX_TE1_CC(:,i), FY_TE1_CC(:,i), Pmgt0_cc/FGT_CC(i));  % ”R—ї—¬—Кђ§Њд—p”rѓKѓX‰·“xђЭ’и’l
-    if Te_ref_cc < TE0_CC(i)/TER_CC(i) % ”rѓKѓX‰·“x‚ЄђЭ’и’l‚р’ґ‰Я‚µ‚ЅЏкЌ‡
+    % ===== жЋ’г‚¬г‚№жё©еє¦гЃЊиЁ­е®љеЂ¤пј€з‡ѓж–™жµЃй‡Џе€¶еѕЎз”Ёпј‰г‚’дёЉе›ћгЃЈгЃџе ґеђ€ =====
+    Te_ref_cc = interp1(FX_TE1_CC(:,i), FY_TE1_CC(:,i), Pmgt0_cc/FGT_CC(i));  % з‡ѓж–™жµЃй‡Џе€¶еѕЎз”ЁжЋ’г‚¬г‚№жё©еє¦иЁ­е®љеЂ¤
+    if Te_ref_cc < TE0_CC(i)/TER_CC(i) % жЋ’г‚¬г‚№жё©еє¦гЃЊиЁ­е®љеЂ¤г‚’и¶…йЃЋгЃ—гЃџе ґеђ€
         for iter = 1:iter_max
-            Tf0_cc      = Td0_cc+(TFR_CC(i)-TDR_CC(i))*WF0_CC(i)/W0_cc;                 % ѓKѓXѓ^Ѓ[ѓrѓ““ьЊы‰·“xЏ‰Љъ’l
-            TE0_CC(i)   = Tf0_cc*(1-(1-1/xt0_cc)*HT_CC(i));                             % ”rѓKѓX‰·“xЏ‰Љъ’l
-            Pmgt0_cc    = KGT_CC(i)*((Tf0_cc-TE0_CC(i))-(Td0_cc-TI_CC(i)))*W0_cc;       % GTЏo—НЏ‰Љъ’l
-            PMST0_CC(i) = KST_CC(i)*TE0_CC(i)*W0_cc;                                    % STЏo—НЏ‰Љъ’l
-            Pm0_cc      = Pmgt0_cc+PMST0_CC(i);                                         % ЋІЏo—НЏ‰Љъ’l
-            Te_ref_cc   = interp1(FX_TE1_CC(:,i), FY_TE1_CC(:,i), Pmgt0_cc/FGT_CC(i));  % ”R—ї—¬—Кђ§Њд—p”rѓKѓX‰·“xђЭ’и’l
-            dTe_cc      = Te_ref_cc-TE0_CC(i)/TER_CC(i);                                % ”rѓKѓX‰·“x•ОЌ·
+            Tf0_cc      = Td0_cc+(TFR_CC(i)-TDR_CC(i))*WF0_CC(i)/W0_cc;                 % г‚¬г‚№г‚їгѓјгѓ“гѓіе…ҐеЏЈжё©еє¦е€ќжњџеЂ¤
+            TE0_CC(i)   = Tf0_cc*(1-(1-1/xt0_cc)*HT_CC(i));                             % жЋ’г‚¬г‚№жё©еє¦е€ќжњџеЂ¤
+            Pmgt0_cc    = KGT_CC(i)*((Tf0_cc-TE0_CC(i))-(Td0_cc-TI_CC(i)))*W0_cc;       % GTе‡єеЉ›е€ќжњџеЂ¤
+            PMST0_CC(i) = KST_CC(i)*TE0_CC(i)*W0_cc;                                    % STе‡єеЉ›е€ќжњџеЂ¤
+            Pm0_cc      = Pmgt0_cc+PMST0_CC(i);                                         % и»ёе‡єеЉ›е€ќжњџеЂ¤
+            Te_ref_cc   = interp1(FX_TE1_CC(:,i), FY_TE1_CC(:,i), Pmgt0_cc/FGT_CC(i));  % з‡ѓж–™жµЃй‡Џе€¶еѕЎз”ЁжЋ’г‚¬г‚№жё©еє¦иЁ­е®љеЂ¤
+            dTe_cc      = Te_ref_cc-TE0_CC(i)/TER_CC(i);                                % жЋ’г‚¬г‚№жё©еє¦еЃЏе·®
             if abs(dTe_cc) < e_cc
                 break
             else
-                WF0_CC(i)   = WF0_CC(i)+dTe_cc*k_cc;                                    % ”R—ї—¬—К‚МЏCђі
+                WF0_CC(i)   = WF0_CC(i)+dTe_cc*k_cc;                                    % з‡ѓж–™жµЃй‡ЏгЃ®дї®ж­Ј
             end
         end
     end
     if iter == iter_max
-        error('Џ‰Љъ’lЊvЋZ‚ЄЋы‘©‚µ‚Ь‚№‚сЃBЃFGTCC_C');
+        error('е€ќжњџеЂ¤иЁ€з®—гЃЊеЏЋжќџгЃ—гЃѕгЃ›г‚“гЂ‚пјљGTCC_C');
     end
 end
 
-FFCS0_CC = (WF0_CC-WF_MIN_CC)./(1.0-WF_MIN_CC); % ”R—їђ§ЊдђMЌ†Џ‰Љъ’l
+FFCS0_CC = (WF0_CC-WF_MIN_CC)./(1.0-WF_MIN_CC); % з‡ѓж–™е€¶еѕЎдїЎеЏ·е€ќжњџеЂ¤

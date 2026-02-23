@@ -1,4 +1,4 @@
-%% 年月日を選択
+%% 蟷ｴ譛域律繧帝∈謚�
 if year == 2018
     E_D = [31,28,31,30,31,30,31,31,30,31,30,31];
 elseif year == 2019
@@ -21,30 +21,30 @@ if Month > 3
 else
     Year = year+1;
 end
-%% .binファイル取得
+%% .bin繝輔ぃ繧､繝ｫ蜿門ｾ�
 search1
-%% 各エリアの水平面全天日射量取得
+%% 蜷�繧ｨ繝ｪ繧｢縺ｮ豌ｴ蟷ｳ髱｢蜈ｨ螟ｩ譌･蟆�驥丞叙蠕�
 TDBTDB
 irr_forecast=irr_forecast(2:end,:);
 data = irr_forecast;
-%%%%%%%%%%%% ※ 研究会用 %%%%%%%%%%%%
+%%%%%%%%%%%% 窶ｻ 遐皮ｩｶ莨夂畑 %%%%%%%%%%%%
 for j = 1:2
-    AGC_kaisei          % ※
-%     if j == 1           % ※
-%         data=data_o;    % ※
-%     elseif j == 2       % ※
-%         data=data;      % ※
+    AGC_kaisei          % 窶ｻ
+%     if j == 1           % 窶ｻ
+%         data=data_o;    % 窶ｻ
+%     elseif j == 2       % 窶ｻ
+%         data=data;      % 窶ｻ
 %     end
-%% PV面日射量へ変換
+%% PV髱｢譌･蟆�驥上∈螟画鋤
 MSM_change_for_agc
-%% 既設PV容量
-load(['../基本データ/PV_base_',num2str(Year),'.mat'])
+%% 譌｢險ｭPV螳ｹ驥�
+load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/PV_base_',num2str(Year),'.mat'])
 PV_base=[PV_base(end-2:end,3)',PV_base(1:end-3,3)'];
-%% システム出力係数
-load(['../基本データ/PR_',num2str(Year),'.mat'])
-%% MSMの倍数係数
-load(['../基本データ/MSM_bai_',num2str(Year),'.mat'])
-%% PV面日射強度からPV予測出力へ変換
+%% 繧ｷ繧ｹ繝�繝�蜃ｺ蜉帑ｿよ焚
+load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/PR_',num2str(Year),'.mat'])
+%% MSM縺ｮ蛟肴焚菫よ焚
+load(['../蝓ｺ譛ｬ繝�繝ｼ繧ｿ/MSM_bai_',num2str(Year),'.mat'])
+%% PV髱｢譌･蟆�蠑ｷ蠎ｦ縺九ｉPV莠域ｸｬ蜃ｺ蜉帙∈螟画鋤
 l=size(IRR.sum);
 IRR.sum = [IRR.sum;zeros(2,l(2))];
 load('../PVC.mat')
@@ -70,15 +70,15 @@ if mode == 3
     PVF_30min=flip(PVF_30min);
 end
 save PVF_30min.mat PVF_30min
-if j ==1                          % ※
+if j ==1                          % 窶ｻ
     PVO_30min=PVF_30min*0.9;
-    save PVO_30min.mat PVO_30min; % ※
-elseif j == 2                     % ※
-    save PVF_30min.mat PVF_30min; % ※
+    save PVO_30min.mat PVO_30min; % 窶ｻ
+elseif j == 2                     % 窶ｻ
+    save PVF_30min.mat PVF_30min; % 窶ｻ
 end
 %%%%%%%%%%%%%%%%%% Sunny %%%%%%%%%%%%%%%%%%
 PVO_30min=PVF_30min;
 %%%%%%%%%%%%%%%%%% Ramp-down %%%%%%%%%%%%%%%%%%
 PVO_30min=[PVF_30min(1:25);PVO_30min(26:end)];
-save PVO_30min.mat PVO_30min; % ※
+save PVO_30min.mat PVO_30min; % 窶ｻ
 end

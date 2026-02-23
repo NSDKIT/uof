@@ -1,19 +1,19 @@
-%% Load.csv/PV_Out.csv‚Ìì¬i©ƒGƒŠƒAj
-%% ù—v
-Word=[0 0 0]; %[TIME ©ƒGƒŠƒA@‘¼ƒGƒŠƒA]=[0 0 0] ”z—ñì¬
-T=[1:88200]'; %24ŠÔ•ª‚ÌŠÔ”z—ñì¬
+%% Load.csv/PV_Out.csvã®ä½œæˆï¼ˆè‡ªã‚¨ãƒªã‚¢ï¼‰
+%% éœ€è¦
+Word=[0 0 0]; %[TIME è‡ªã‚¨ãƒªã‚¢ã€€ä»–ã‚¨ãƒªã‚¢]=[0 0 0] é…åˆ—ä½œæˆ
+T=[1:88200]'; %24æ™‚é–“åˆ†ã®æ™‚é–“é…åˆ—ä½œæˆ
 load('demand_1sec.mat')
-Load=[T demand_1sec(1:88200)' demand_1sec(901:89100)']; %[ŠÔ ©ƒGƒŠƒA‚Ìƒf[ƒ^]@”z—ñ‚ÌŒ‹‡
-% ??‘¼ƒGƒŠƒA??
-Load=[Word;Load]; %[ŠÔ ©ƒGƒŠƒA ‘¼ƒGƒŠƒA]@”z—ñ‚ÌŒ‹‡
-writematrix(Load,'Load.csv') %Load.csv‚Ö‚Ì‘‚«‚İ
+Load=[T demand_1sec(1:88200)' demand_1sec(901:89100)']; %[æ™‚é–“ è‡ªã‚¨ãƒªã‚¢ã®ãƒ‡ãƒ¼ã‚¿]ã€€é…åˆ—ã®çµåˆ
+% ??ä»–ã‚¨ãƒªã‚¢??
+Load=[Word;Load]; %[æ™‚é–“ è‡ªã‚¨ãƒªã‚¢ ä»–ã‚¨ãƒªã‚¢]ã€€é…åˆ—ã®çµåˆ
+writematrix(Load,'Load.csv') %Load.csvã¸ã®æ›¸ãè¾¼ã¿
 %% PV
 clear Word
 load('PV_1sec.mat')
-Word=[0 0]; %[TIME PVo—Í]=[0 0] ”z—ñì¬
+Word=[0 0]; %[TIME PVå‡ºåŠ›]=[0 0] é…åˆ—ä½œæˆ
 PV_1sec(isnan(PV_1sec))=0;
 PV_1sec=[PV_1sec;zeros(1798,1)];
-PV=[T,PV_1sec]; %[ŠÔ ©ƒGƒŠƒA‚Ìƒf[ƒ^]@”z—ñ‚ÌŒ‹‡
-PV=[Word;PV]; %[ŠÔ ©ƒGƒŠƒA ‘¼ƒGƒŠƒA]@”z—ñ‚ÌŒ‹‡
-writematrix(PV,'PV_Out.csv') %PV_Out.csv‚Ö‚Ì‘‚«‚İ
+PV=[T,PV_1sec]; %[æ™‚é–“ è‡ªã‚¨ãƒªã‚¢ã®ãƒ‡ãƒ¼ã‚¿]ã€€é…åˆ—ã®çµåˆ
+PV=[Word;PV]; %[æ™‚é–“ è‡ªã‚¨ãƒªã‚¢ ä»–ã‚¨ãƒªã‚¢]ã€€é…åˆ—ã®çµåˆ
+writematrix(PV,'PV_Out.csv') %PV_Out.csvã¸ã®æ›¸ãè¾¼ã¿
 clear sum

@@ -19,102 +19,102 @@ end
 
 %% 
 cd(['H:\NSD_MSM\dldata\',NAME_a])
-copyfile('00-15.bin','C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok')
-copyfile('16-33.bin','C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok')
-copyfile('34-39.bin','C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok')
+copyfile('00-15.bin','C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok')
+copyfile('16-33.bin','C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok')
+copyfile('34-39.bin','C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok')
 
 
 % cd C:\Users\PowerSystemLab\Downloads
 % A=dir(NAME_a);
-% TF = isempty(A); %‹ói‘¶İ‚µ‚È‚¢j‚È‚ç 1 ‚ğo—Í
-% if TF == 1 %‹ói‘¶İ‚µ‚È‚¢jê‡
-% %     cd ../Desktop/Œ¤‹†‘—¿/–k—¤“d—Í
+% TF = isempty(A); %ç©ºï¼ˆå­˜åœ¨ã—ãªã„ï¼‰ãªã‚‰ 1 ã‚’å‡ºåŠ›
+% if TF == 1 %ç©ºï¼ˆå­˜åœ¨ã—ãªã„ï¼‰å ´åˆ
+% %     cd ../Desktop/ç ”ç©¶è³‡æ–™/åŒ—é™¸é›»åŠ›
 % %     cd (NAME3)
 %     cd C:\Users\PowerSystemLab\Documents\msm\dldata
 %     A=dir(NAME_a);
-%     TF = isempty(A); %‹ói‘¶İ‚µ‚È‚¢j‚È‚ç 1 ‚ğo—Í
-%     if TF == 1 %‹ói‘¶İ‚µ‚È‚¢jê‡
-%         cd C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\03_“úË—Ê—\‘ª
+%     TF = isempty(A); %ç©ºï¼ˆå­˜åœ¨ã—ãªã„ï¼‰ãªã‚‰ 1 ã‚’å‡ºåŠ›
+%     if TF == 1 %ç©ºï¼ˆå­˜åœ¨ã—ãªã„ï¼‰å ´åˆ
+%         cd C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\03_æ—¥å°„é‡äºˆæ¸¬
 %         A=dir(NAME3);
 %         TF = isempty(A);
 %         if TF == 1
-%             cd 'C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok'
+%             cd 'C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok'
 %         else
 %             cd (NAME3)
 %             A=dir(NAME_a);
 %             TF = isempty(A);
 %             if TF == 1
 %             else
-%                copyfile(NAME_a,'C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok')
+%                copyfile(NAME_a,'C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok')
 %             end
 %         end
 %     else
-%         copyfile(NAME_a,'C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok')
+%         copyfile(NAME_a,'C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok')
 %     end
-% else %‘¶İ‚·‚é‚Ìê‡
-%     copyfile(NAME_a,'C:\Users\PowerSystemLab\Desktop\Œ¤‹†‘—¿\msm_wgirb2\wgrib2_ok')
+% else %å­˜åœ¨ã™ã‚‹ã®å ´åˆ
+%     copyfile(NAME_a,'C:\Users\PowerSystemLab\Desktop\ç ”ç©¶è³‡æ–™\msm_wgirb2\wgrib2_ok')
 % end
 % %% 
 % cd C:\Users\PowerSystemLab\Downloads
 % A=dir(NAME_b);
-% TF = isempty(A); %‹ói‘¶İ‚µ‚È‚¢j‚È‚ç 1 ‚ğo—Í
-% if TF == 1 %‹ói‘¶İ‚µ‚È‚¢jê‡
-% %     cd ../Desktop/Œ¤‹†‘—¿/–k—¤“d—Í
+% TF = isempty(A); %ç©ºï¼ˆå­˜åœ¨ã—ãªã„ï¼‰ãªã‚‰ 1 ã‚’å‡ºåŠ›
+% if TF == 1 %ç©ºï¼ˆå­˜åœ¨ã—ãªã„ï¼‰å ´åˆ
+% %     cd ../Desktop/ç ”ç©¶è³‡æ–™/åŒ—é™¸é›»åŠ›
 % %     cd (NAME3)
 %     cd C:\Users\PowerSystemLab\Documents\msm\dldata
 %     A=dir(NAME_b);
-%     TF = isempty(A); %‹ói‘¶İ‚µ‚È‚¢j‚È‚ç 1 ‚ğo—Í
-%     if TF == 1 %‹ói‘¶İ‚µ‚È‚¢jê‡
-%         cd C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\03_“úË—Ê—\‘ª
+%     TF = isempty(A); %ç©ºï¼ˆå­˜åœ¨ã—ãªã„ï¼‰ãªã‚‰ 1 ã‚’å‡ºåŠ›
+%     if TF == 1 %ç©ºï¼ˆå­˜åœ¨ã—ãªã„ï¼‰å ´åˆ
+%         cd C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\03_æ—¥å°„é‡äºˆæ¸¬
 %         A=dir(NAME3);
 %         TF = isempty(A);
 %         if TF == 1
-%             cd 'C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok'
+%             cd 'C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok'
 %         else
 %             cd (NAME3)
 %             A=dir(NAME_b);
 %             TF = isempty(A);
 %             if TF == 1
 %             else
-%                copyfile(NAME_b,'C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok')
+%                copyfile(NAME_b,'C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok')
 %             end
 %         end
 %     else
-%         copyfile(NAME_b,'C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok')
+%         copyfile(NAME_b,'C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok')
 %     end
-% else %‘¶İ‚·‚é‚Ìê‡
-%     copyfile(NAME_b,'C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok')
+% else %å­˜åœ¨ã™ã‚‹ã®å ´åˆ
+%     copyfile(NAME_b,'C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok')
 % end
 % %% 
 % cd C:\Users\PowerSystemLab\Downloads
 % A=dir(NAME_c);
-% TF = isempty(A); %‹ói‘¶İ‚µ‚È‚¢j‚È‚ç 1 ‚ğo—Í
-% if TF == 1 %‹ói‘¶İ‚µ‚È‚¢jê‡
-% %     cd ../Desktop/Œ¤‹†‘—¿/–k—¤“d—Í
+% TF = isempty(A); %ç©ºï¼ˆå­˜åœ¨ã—ãªã„ï¼‰ãªã‚‰ 1 ã‚’å‡ºåŠ›
+% if TF == 1 %ç©ºï¼ˆå­˜åœ¨ã—ãªã„ï¼‰å ´åˆ
+% %     cd ../Desktop/ç ”ç©¶è³‡æ–™/åŒ—é™¸é›»åŠ›
 % %     cd (NAME3)
 %     cd C:\Users\PowerSystemLab\Documents\msm\dldata
 %     A=dir(NAME_c);
-%     TF = isempty(A); %‹ói‘¶İ‚µ‚È‚¢j‚È‚ç 1 ‚ğo—Í
-%     if TF == 1 %‹ói‘¶İ‚µ‚È‚¢jê‡
-%         cd C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\03_“úË—Ê—\‘ª
+%     TF = isempty(A); %ç©ºï¼ˆå­˜åœ¨ã—ãªã„ï¼‰ãªã‚‰ 1 ã‚’å‡ºåŠ›
+%     if TF == 1 %ç©ºï¼ˆå­˜åœ¨ã—ãªã„ï¼‰å ´åˆ
+%         cd C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\03_æ—¥å°„é‡äºˆæ¸¬
 %         A=dir(NAME3);
 %         TF = isempty(A);
 %         if TF == 1
-%             cd 'C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok'
+%             cd 'C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok'
 %         else
 %             cd (NAME3)
 %             A=dir(NAME_c);
 %             TF = isempty(A);
 %             if TF == 1
 %             else
-%                copyfile(NAME_c,'C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok')
+%                copyfile(NAME_c,'C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok')
 %             end
 %         end
 %     else
-%         copyfile(NAME_c,'C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok')
+%         copyfile(NAME_c,'C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok')
 %     end
-% else %‘¶İ‚·‚é‚Ìê‡
-%     copyfile(NAME_c,'C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok')
+% else %å­˜åœ¨ã™ã‚‹ã®å ´åˆ
+%     copyfile(NAME_c,'C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok')
 % end
 %% 
-cd('C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\05_Àsƒtƒ@ƒCƒ‹\program\‘S‘ÌÀs\—\‘ªPVo—Íì¬')
+cd('C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\05_å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«\program\å…¨ä½“å®Ÿè¡Œ\äºˆæ¸¬PVå‡ºåŠ›ä½œæˆ')

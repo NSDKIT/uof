@@ -1,2 +1,22 @@
 基本データ/D_1sec.mat
 基本データ/irr_mea_data.mat
+
+# MATLAB auto-generated files
+*.asv
+
+# Simulink auto-generated files
+slprj/
+*.slxc
+
+# OS auto-generated files
+.DS_Store
+Thumbs.db
+
+# Data files
+*.mat
+*.csv
+*.xlsx
+!/運用/定数.xlsx
+
+# Results
+results/

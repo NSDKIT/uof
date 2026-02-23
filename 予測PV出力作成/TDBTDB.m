@@ -1,15 +1,15 @@
-%% Šm”F–€
-% ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚ğ‚µ‚½‚¢”NŒ“ú‚ÌuZ__CEEEvƒtƒ@ƒCƒ‹‚ª16ŒÂ(‰ŠúŠÔF8‚Â ~ —\•ñŠÔF2‚Â = 16)‚ ‚é‚©Šm”F
-% ”NŒ“úEˆÊ’u‚Ì‘I‘ğE•ÏX
+%% ç¢ºèªäº‹é …
+% ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã—ãŸã„å¹´æœˆæ—¥ã®ã€ŒZ__Cãƒ»ãƒ»ãƒ»ã€ãƒ•ã‚¡ã‚¤ãƒ«ãŒ16å€‹(åˆæœŸæ™‚é–“ï¼š8ã¤ Ã— äºˆå ±æ™‚é–“ï¼š2ã¤ = 16)ã‚ã‚‹ã‹ç¢ºèª
+% å¹´æœˆæ—¥ãƒ»ä½ç½®ã®é¸æŠãƒ»å¤‰æ›´
 % IK = get_ido_keido('ido_keido.xlsx');
 load('ido_keido.mat')
-cd C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\02_msm_wgirb2\wgrib2_ok
-disp('“úË—Ê—\‘ªZo')
+cd C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\02_msm_wgirb2\wgrib2_ok
+disp('æ—¥å°„é‡äºˆæ¸¬ç®—å‡º')
 % load('xyz.mat')
 cd ../wgrib2_ok
-%% ŠJn
-%% ƒRƒ}ƒ“ƒh‚Ìì¬('wgrib2.exe -match "DSWRF:surface:" Z__C_RJTD_yyyymmdd060000_MSM_GPV_Rjp_Lsurf_FH16-33_grib2.bin -lon 135.13 36.04 -last grib.csv -nl_out grib.csv')
-%% ©“®
+%% é–‹å§‹
+%% ã‚³ãƒãƒ³ãƒ‰ã®ä½œæˆ('wgrib2.exe -match "DSWRF:surface:" Z__C_RJTD_yyyymmdd060000_MSM_GPV_Rjp_Lsurf_FH16-33_grib2.bin -lon 135.13 36.04 -last grib.csv -nl_out grib.csv')
+%% è‡ªå‹•
 if Month<10
     if Month < 4
         file_a = ['wgrib2.exe -match "DSWRF:surface:" ',num2str(Year+1),'-0',num2str(month)];
@@ -45,23 +45,23 @@ irr_forecast=[];
 for area = 1:17
     loc1 =['area',num2str(area)];
     location1 = [' -lon ',num2str(KEIDO(area)),' ',num2str(IDO(area))];
-    %% ©“®igrib~.csvj
-    %% ˆÊ’u1
+    %% è‡ªå‹•ï¼ˆgrib~.csvï¼‰
+    %% ä½ç½®1
     file_d1 = [file_c,location1,' -last '];
     file_x1 = [file_z,location1,' -last '];
     file_y1 = [file_l,location1,' -last '];
-    %% ƒRƒ}ƒ“ƒh‚ÌŒ‹‡
+    %% ã‚³ãƒãƒ³ãƒ‰ã®çµåˆ
     file_g = [file_ff,num2str(T1),'_00-15.csv'];
     file_h = [file_ff,num2str(T1),'_16-33.csv'];
     file_m = [file_ff,num2str(T1),'_34-39.csv'];
     file_i1 = [file_d1,loc1,'_',file_g,' -nl_out ',loc1,'_',file_g];
     file_j1 = [file_x1,loc1,'_',file_h,' -nl_out ',loc1,'_',file_h];
     file_o1 = [file_y1,loc1,'_',file_m,' -nl_out ',loc1,'_',file_m];
-    %% ƒRƒ}ƒ“ƒhÀs
+    %% ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œ
     system(file_i1);
     system(file_j1);
     system(file_o1);
-	%% “úË—Ê—\‘ªƒf[ƒ^‚ÌZo
+	%% æ—¥å°„é‡äºˆæ¸¬ãƒ‡ãƒ¼ã‚¿ã®ç®—å‡º
     if Month<10
         file_k1 = [loc1,'_grib0',num2str(Month)];
     else
@@ -85,11 +85,11 @@ for area = 1:17
     DATA_d1 = DATA_d1';
     data_all1 = [DATA_b1 DATA_c1 DATA_d1];
     delete(filename_b1);delete(filename_c1);delete(filename_d1)
-    %% ì¬E“úË—Ê—\‘ªƒf[ƒ^‚Æ‚ÌŒ‹‡
+    %% æ™‚åˆ»ä½œæˆãƒ»æ—¥å°„é‡äºˆæ¸¬ãƒ‡ãƒ¼ã‚¿ã¨ã®çµåˆ
     if T1 == '00'
         data_all1 = data_all1(15:39);
     elseif T1 == '06'
-        data_all1 = data_all1(10:34); %ˆÊ’u1‚Ì‰Šú T1‚©‚ç—\‘ªƒf[ƒ^
+        data_all1 = data_all1(10:34); %ä½ç½®1ã®åˆæœŸæ™‚åˆ» T1ã‹ã‚‰äºˆæ¸¬ãƒ‡ãƒ¼ã‚¿
     end
     irr_forecast=[irr_forecast,data_all1'];
 end
@@ -100,19 +100,19 @@ data = irr_forecast;
 % else
 %     NAME = [filename_a,num2str(Day+1),'_use.csv'];
 % end
-% %% ‘Sƒf[ƒ^‚ÌˆÚ“®
+% %% å…¨ãƒ‡ãƒ¼ã‚¿ã®ç§»å‹•
 % mkdir GRIBPV
 % % copyfile *csv GRIBPV
 % copyfile(file_c(end-19:end),'GRIBPV')
 % copyfile(file_z(end-19:end),'GRIBPV')
 % copyfile(file_l(end-19:end),'GRIBPV')
 % cd GRIBPV
-% %% GRIBPV‚Ö‚Ìƒf[ƒ^‚Ì•Û‘¶
+% %% GRIBPVã¸ã®ãƒ‡ãƒ¼ã‚¿ã®ä¿å­˜
 % csvwrite(NAME,data) %ave
 % save PVdata.mat data %ave
 % cd ..
 save PVdata.mat data %ave
-% %% ƒtƒ@ƒCƒ‹–¼‚Ì•ÏX
+% %% ãƒ•ã‚¡ã‚¤ãƒ«åã®å¤‰æ›´
 % tmp=dir("*PV");
 % filename = {tmp.name};
 % 
@@ -136,12 +136,12 @@ save PVdata.mat data %ave
 % for k=1:length(filename)
 %     movefile(filename{k}, newfilename{k});
 % end
-%% ƒtƒ@ƒCƒ‹‚ÌˆÚ“®
-copyfile PVdata.mat ../../05_Àsƒtƒ@ƒCƒ‹
+%% ãƒ•ã‚¡ã‚¤ãƒ«ã®ç§»å‹•
+copyfile PVdata.mat ../../05_å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«
 cd ../../02_msm_wgirb2/wgrib2_ok
-% movefile *PV ../../03_“úË—Ê—\‘ª
+% movefile *PV ../../03_æ—¥å°„é‡äºˆæ¸¬
 delete(file_c(end-8:end))
 delete(file_z(end-8:end))
 delete(file_l(end-8:end))
-cd('C:\Users\PowerSystemLab\Desktop\01_Œ¤‹†‘—¿\05_Àsƒtƒ@ƒCƒ‹\program\‘S‘ÌÀs\—\‘ªPVo—Íì¬')
+cd('C:\Users\PowerSystemLab\Desktop\01_ç ”ç©¶è³‡æ–™\05_å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«\program\å…¨ä½“å®Ÿè¡Œ\äºˆæ¸¬PVå‡ºåŠ›ä½œæˆ')
 clearvars -except Year Month Day MSM_max PV_base PR irr_forecast

@@ -1,45 +1,45 @@
 function idokeido = get_ido_keido(workbookFile, sheetName, dataLines)
-%IMPORTFILE1 スプレッドシートからデータをインポート
-%  IDOKEIDO = IMPORTFILE1(FILE) は、FILE という名前の Microsoft Excel スプレッドシート
-%  ファイルの最初のワークシートからデータを読み取ります。  数値データを返します。
+%IMPORTFILE1 繧ｹ繝励Ξ繝�繝峨す繝ｼ繝医°繧峨ョ繝ｼ繧ｿ繧偵う繝ｳ繝昴�ｼ繝�
+%  IDOKEIDO = IMPORTFILE1(FILE) 縺ｯ縲：ILE 縺ｨ縺�縺�蜷榊燕縺ｮ Microsoft Excel 繧ｹ繝励Ξ繝�繝峨す繝ｼ繝�
+%  繝輔ぃ繧､繝ｫ縺ｮ譛�蛻昴�ｮ繝ｯ繝ｼ繧ｯ繧ｷ繝ｼ繝医°繧峨ョ繝ｼ繧ｿ繧定ｪｭ縺ｿ蜿悶ｊ縺ｾ縺吶��  謨ｰ蛟､繝�繝ｼ繧ｿ繧定ｿ斐＠縺ｾ縺吶��
 %
-%  IDOKEIDO = IMPORTFILE1(FILE, SHEET) は、指定されたワークシートから読み取ります。
+%  IDOKEIDO = IMPORTFILE1(FILE, SHEET) 縺ｯ縲∵欠螳壹＆繧後◆繝ｯ繝ｼ繧ｯ繧ｷ繝ｼ繝医°繧芽ｪｭ縺ｿ蜿悶ｊ縺ｾ縺吶��
 %
 %  IDOKEIDO = IMPORTFILE1(FILE, SHEET, DATALINES)
-%  は、指定されたワークシートから指定された行区間を読み取ります。DATALINES
-%  を正の整数スカラーとして指定するか、行区間が不連続の場合は正の整数スカラーからなる N 行 2 列の配列として指定します。
+%  縺ｯ縲∵欠螳壹＆繧後◆繝ｯ繝ｼ繧ｯ繧ｷ繝ｼ繝医°繧画欠螳壹＆繧後◆陦悟玄髢薙ｒ隱ｭ縺ｿ蜿悶ｊ縺ｾ縺吶��DATALINES
+%  繧呈ｭ｣縺ｮ謨ｴ謨ｰ繧ｹ繧ｫ繝ｩ繝ｼ縺ｨ縺励※謖�螳壹☆繧九°縲∬｡悟玄髢薙′荳埼�｣邯壹�ｮ蝣ｴ蜷医�ｯ豁｣縺ｮ謨ｴ謨ｰ繧ｹ繧ｫ繝ｩ繝ｼ縺九ｉ縺ｪ繧� N 陦� 2 蛻励�ｮ驟榊�励→縺励※謖�螳壹＠縺ｾ縺吶��
 %
-%  例:
-%  idokeido = importfile1("C:\Users\PowerSystemLab\Desktop\01_研究資料\05_実行ファイル\program\一軸追尾\ido_keido.xlsx", "Sheet1", [2, 20]);
+%  萓�:
+%  idokeido = importfile1("C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔05_螳溯｡後ヵ繧｡繧､繝ｫ\program\荳�霆ｸ霑ｽ蟆ｾ\ido_keido.xlsx", "Sheet1", [2, 20]);
 %
-%  READTABLE も参照してください。
+%  READTABLE 繧ょ盾辣ｧ縺励※縺上□縺輔＞縲�
 %
-% MATLAB からの自動生成日: 2022/07/13 12:55:38
+% MATLAB 縺九ｉ縺ｮ閾ｪ蜍慕函謌先律: 2022/07/13 12:55:38
 
-%% 入力の取り扱い
+%% 蜈･蜉帙�ｮ蜿悶ｊ謇ｱ縺�
 
-% シートが指定されていない場合、最初のシートを読み取ります
+% 繧ｷ繝ｼ繝医′謖�螳壹＆繧後※縺�縺ｪ縺�蝣ｴ蜷医�∵怙蛻昴�ｮ繧ｷ繝ｼ繝医ｒ隱ｭ縺ｿ蜿悶ｊ縺ｾ縺�
 if nargin == 1 || isempty(sheetName)
     sheetName = 1;
 end
 
-% 行の始点と終点が指定されていない場合、既定値を定義します
+% 陦後�ｮ蟋狗せ縺ｨ邨らせ縺梧欠螳壹＆繧後※縺�縺ｪ縺�蝣ｴ蜷医�∵里螳壼�､繧貞ｮ夂ｾｩ縺励∪縺�
 if nargin <= 2
     dataLines = [2, 20];
 end
 
-%% インポート オプションの設定およびデータのインポート
+%% 繧､繝ｳ繝昴�ｼ繝� 繧ｪ繝励す繝ｧ繝ｳ縺ｮ險ｭ螳壹♀繧医�ｳ繝�繝ｼ繧ｿ縺ｮ繧､繝ｳ繝昴�ｼ繝�
 opts = spreadsheetImportOptions("NumVariables", 2);
 
-% シートと範囲の指定
+% 繧ｷ繝ｼ繝医→遽�蝗ｲ縺ｮ謖�螳�
 opts.Sheet = sheetName;
 opts.DataRange = "B" + dataLines(1, 1) + ":C" + dataLines(1, 2);
 
-% 列名と型の指定
+% 蛻怜錐縺ｨ蝙九�ｮ謖�螳�
 opts.VariableNames = ["VarName2", "VarName3"];
 opts.VariableTypes = ["double", "double"];
 
-% データのインポート
+% 繝�繝ｼ繧ｿ縺ｮ繧､繝ｳ繝昴�ｼ繝�
 idokeido = readtable(workbookFile, opts, "UseExcel", false);
 
 for idx = 2:size(dataLines, 1)
@@ -48,6 +48,6 @@ for idx = 2:size(dataLines, 1)
     idokeido = [idokeido; tb]; %#ok<AGROW>
 end
 
-%% 出力型への変換
+%% 蜃ｺ蜉帛梛縺ｸ縺ｮ螟画鋤
 idokeido = table2array(idokeido);
 end

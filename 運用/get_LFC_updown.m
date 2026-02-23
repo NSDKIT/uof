@@ -1,49 +1,49 @@
 function Gupplanlimit = get_LFC_uodown(filename, dataLines)
-%IMPORTFILE1 テキスト ファイルからデータをインポート
-%  GUPPLANLIMIT = IMPORTFILE1(FILENAME) は既定の選択に関してテキスト ファイル FILENAME
-%  からデータを読み取ります。  数値データを返します。
+%IMPORTFILE1 繝�繧ｭ繧ｹ繝� 繝輔ぃ繧､繝ｫ縺九ｉ繝�繝ｼ繧ｿ繧偵う繝ｳ繝昴�ｼ繝�
+%  GUPPLANLIMIT = IMPORTFILE1(FILENAME) 縺ｯ譌｢螳壹�ｮ驕ｸ謚槭↓髢｢縺励※繝�繧ｭ繧ｹ繝� 繝輔ぃ繧､繝ｫ FILENAME
+%  縺九ｉ繝�繝ｼ繧ｿ繧定ｪｭ縺ｿ蜿悶ｊ縺ｾ縺吶��  謨ｰ蛟､繝�繝ｼ繧ｿ繧定ｿ斐＠縺ｾ縺吶��
 %
-%  GUPPLANLIMIT = IMPORTFILE1(FILE, DATALINES) はテキスト ファイル FILENAME
-%  の指定された行区間のデータを読み取ります。DATALINES
-%  を正の整数スカラーとして指定するか、行区間が不連続の場合は正の整数スカラーからなる N 行 2 列の配列として指定します。
+%  GUPPLANLIMIT = IMPORTFILE1(FILE, DATALINES) 縺ｯ繝�繧ｭ繧ｹ繝� 繝輔ぃ繧､繝ｫ FILENAME
+%  縺ｮ謖�螳壹＆繧後◆陦悟玄髢薙�ｮ繝�繝ｼ繧ｿ繧定ｪｭ縺ｿ蜿悶ｊ縺ｾ縺吶��DATALINES
+%  繧呈ｭ｣縺ｮ謨ｴ謨ｰ繧ｹ繧ｫ繝ｩ繝ｼ縺ｨ縺励※謖�螳壹☆繧九°縲∬｡悟玄髢薙′荳埼�｣邯壹�ｮ蝣ｴ蜷医�ｯ豁｣縺ｮ謨ｴ謨ｰ繧ｹ繧ｫ繝ｩ繝ｼ縺九ｉ縺ｪ繧� N 陦� 2 蛻励�ｮ驟榊�励→縺励※謖�螳壹＠縺ｾ縺吶��
 %
-%  例:
-%  Gupplanlimit = importfile1("C:\Users\PowerSystemLab\Desktop\01_研究資料\05_実行ファイル\G_up_plan_limit.csv", [1, Inf]);
+%  萓�:
+%  Gupplanlimit = importfile1("C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔05_螳溯｡後ヵ繧｡繧､繝ｫ\G_up_plan_limit.csv", [1, Inf]);
 %
-%  READTABLE も参照してください。
+%  READTABLE 繧ょ盾辣ｧ縺励※縺上□縺輔＞縲�
 %
-% MATLAB からの自動生成日: 2022/03/21 23:44:37
+% MATLAB 縺九ｉ縺ｮ閾ｪ蜍慕函謌先律: 2022/03/21 23:44:37
 
-%% 入力の取り扱い
+%% 蜈･蜉帙�ｮ蜿悶ｊ謇ｱ縺�
 
-% dataLines が指定されていない場合、既定値を定義します
+% dataLines 縺梧欠螳壹＆繧後※縺�縺ｪ縺�蝣ｴ蜷医�∵里螳壼�､繧貞ｮ夂ｾｩ縺励∪縺�
 if nargin < 2
     dataLines = [1, Inf];
 end
 
-%% インポート オプションの設定およびデータのインポート
+%% 繧､繝ｳ繝昴�ｼ繝� 繧ｪ繝励す繝ｧ繝ｳ縺ｮ險ｭ螳壹♀繧医�ｳ繝�繝ｼ繧ｿ縺ｮ繧､繝ｳ繝昴�ｼ繝�
 opts = delimitedTextImportOptions("NumVariables", 2);
 
-% 範囲と区切り記号の指定
+% 遽�蝗ｲ縺ｨ蛹ｺ蛻�繧願ｨ伜捷縺ｮ謖�螳�
 opts.DataLines = dataLines;
 opts.Delimiter = ",";
 
-% 列名と型の指定
+% 蛻怜錐縺ｨ蝙九�ｮ謖�螳�
 opts.VariableNames = ["Var1", "VarName2"];
 opts.SelectedVariableNames = "VarName2";
 opts.VariableTypes = ["string", "double"];
 
-% ファイル レベルのプロパティを指定
+% 繝輔ぃ繧､繝ｫ 繝ｬ繝吶Ν縺ｮ繝励Ο繝代ユ繧｣繧呈欠螳�
 opts.ExtraColumnsRule = "ignore";
 opts.EmptyLineRule = "read";
 
-% 変数プロパティを指定
+% 螟画焚繝励Ο繝代ユ繧｣繧呈欠螳�
 opts = setvaropts(opts, "Var1", "WhitespaceRule", "preserve");
 opts = setvaropts(opts, "Var1", "EmptyFieldRule", "auto");
 
-% データのインポート
+% 繝�繝ｼ繧ｿ縺ｮ繧､繝ｳ繝昴�ｼ繝�
 Gupplanlimit = readtable(filename, opts);
 
-%% 出力型への変換
+%% 蜃ｺ蜉帛梛縺ｸ縺ｮ螟画鋤
 Gupplanlimit = table2array(Gupplanlimit);
 end

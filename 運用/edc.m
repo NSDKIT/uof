@@ -1,10 +1,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%EDCƒ‚ƒfƒ‹
-% y‚±‚ÌƒvƒƒOƒ‰ƒ€‚ÅÀ{‚·‚é‚±‚Æz
-%@EAGC30ƒ‚ƒfƒ‹‚É‚¨‚¯‚éEDCŒvZ(ŒoÏ•‰‰×”z•ªŒvZ)
+%EDCãƒ¢ãƒ‡ãƒ«
+% ã€ã“ã®ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§å®Ÿæ–½ã™ã‚‹ã“ã¨ã€‘
+%ã€€ãƒ»AGC30ãƒ¢ãƒ‡ãƒ«ã«ãŠã‘ã‚‹EDCè¨ˆç®—(çµŒæ¸ˆè² è·é…åˆ†è¨ˆç®—)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% ƒtƒ‰ƒOƒiƒ“ƒo[‚É‚æ‚éê‡•ª‚¯
+%% ãƒ•ãƒ©ã‚°ãƒŠãƒ³ãƒãƒ¼ã«ã‚ˆã‚‹å ´åˆåˆ†ã‘
 function [sys,x0,str,ts]=edc(t,x,u,flag) 
 switch flag
     case 0
@@ -16,84 +16,84 @@ switch flag
         error(['unhandled flag = ',num2str(flag)]);
 end
 
-%% •Ï”ƒTƒCƒY‚Ì‰Šúİ’è
+%% å¤‰æ•°ã‚µã‚¤ã‚ºã®åˆæœŸè¨­å®š
 function [sys,x0,str,ts] = mdlinitializesizes()
 sizes = simsizes;
 sizes.NumContStates = 0;
 sizes.NumDiscStates = 0;
-sizes.NumOutputs = 103; %o—Íƒ|[ƒg”‚Ìw’è
-sizes.NumInputs = 279; %“ü—Íƒ|[ƒg”‚Ìw’è
+sizes.NumOutputs = 103; %å‡ºåŠ›ãƒãƒ¼ãƒˆæ•°ã®æŒ‡å®š
+sizes.NumInputs = 279; %å…¥åŠ›ãƒãƒ¼ãƒˆæ•°ã®æŒ‡å®š
 sizes.DirFeedthrough = 1;
 sizes.NumSampleTimes = 1;
 sys = simsizes(sizes);
 str = [];
 x0 = [];
-ts = [300 1]; %ƒXƒeƒbƒv‚Ì‚İ• 300sec’PˆÊ‚ÅŒvZ(ƒTƒ“ƒvƒ‹ŠÔƒIƒtƒZƒbƒg)
+ts = [300 1]; %ã‚¹ãƒ†ãƒƒãƒ—ã®åˆ»ã¿å¹… 300secå˜ä½ã§è¨ˆç®—(ã‚µãƒ³ãƒ—ãƒ«æ™‚é–“ã‚ªãƒ•ã‚»ãƒƒãƒˆ)
 
-%% EDCŒvZ
+%% EDCè¨ˆç®—
  function sys =mdloutputs(t,x,u)
-%% Simulink‚©‚ç‚Ìƒf[ƒ^“Ç‚İ‚İ
-time = strcat(sprintf('%d',floor(t/3600)),':',sprintf('%d',floor(rem(t,3600)/60))); % ‰ğÍŠÔ•\¦
+%% Simulinkã‹ã‚‰ã®ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
+time = strcat(sprintf('%d',floor(t/3600)),':',sprintf('%d',floor(rem(t,3600)/60))); % è§£ææ™‚é–“è¡¨ç¤º
 
-L_C =u(1,1);                  % EDC—\‘ª‹@”\‚Å•â³‚µ‚½ÅV‚Ìù—v—\‘ª’l
-P0 = u(2,1);                  % ˜AŒnü—˜—pŒv‰æ’l
-PMWD_SCHEDULE = u(3:32,1);    % ”­“dŒv‰æo—ÍiAGC30j
-P_CONSTANT= u(33:39,1);       % ”­“dŒv‰æo—ÍiŒÅ’è“dŒ¹o—Íj
-G_MODE  = u(40:69,1);         % ”­“d‹@§Œäƒ‚[ƒh
+L_C =u(1,1);                  % EDCäºˆæ¸¬æ©Ÿèƒ½ã§è£œæ­£ã—ãŸæœ€æ–°ã®éœ€è¦äºˆæ¸¬å€¤
+P0 = u(2,1);                  % é€£ç³»ç·šåˆ©ç”¨è¨ˆç”»å€¤
+PMWD_SCHEDULE = u(3:32,1);    % ç™ºé›»è¨ˆç”»å‡ºåŠ›ï¼ˆAGC30ï¼‰
+P_CONSTANT= u(33:39,1);       % ç™ºé›»è¨ˆç”»å‡ºåŠ›ï¼ˆå›ºå®šé›»æºå‡ºåŠ›ï¼‰
+G_MODE  = u(40:69,1);         % ç™ºé›»æ©Ÿåˆ¶å¾¡ãƒ¢ãƒ¼ãƒ‰
 
-cP2= u(70:99,1);              % ”R—¿”ï“Á«ŒW”@cP2F”R—¿”ï2æ‚Ì€
-bP1= u(100:129,1);            % ”R—¿”ï“Á«ŒW”@bP1F”R—¿”ï1æ‚Ì€
-aP0= u(130:159,1);            % ”R—¿”ï“Á«ŒW”@aP0F”R—¿”ï0æ‚Ì€
-cP2div=cP2*2;                 % ”R—¿”ï‚Ì2æ‚Ì€‚Ì”÷•ªŒW”
-bP1div=bP1;                   % ”R—¿”ï‚Ì1æ‚Ì€‚Ì”÷•ªŒW”  
-G_up_limit = u(160:189,1);    % Œv‰æ’lãŒÀo—Í
-G_down_limit = u(190:219,1);  % Œv‰æ’l‰ºŒÀo—Í
+cP2= u(70:99,1);              % ç‡ƒæ–™è²»ç‰¹æ€§ä¿‚æ•°ã€€cP2ï¼šç‡ƒæ–™è²»2ä¹—ã®é …
+bP1= u(100:129,1);            % ç‡ƒæ–™è²»ç‰¹æ€§ä¿‚æ•°ã€€bP1ï¼šç‡ƒæ–™è²»1ä¹—ã®é …
+aP0= u(130:159,1);            % ç‡ƒæ–™è²»ç‰¹æ€§ä¿‚æ•°ã€€aP0ï¼šç‡ƒæ–™è²»0ä¹—ã®é …
+cP2div=cP2*2;                 % ç‡ƒæ–™è²»ã®2ä¹—ã®é …ã®å¾®åˆ†ä¿‚æ•°
+bP1div=bP1;                   % ç‡ƒæ–™è²»ã®1ä¹—ã®é …ã®å¾®åˆ†ä¿‚æ•°  
+G_up_limit = u(160:189,1);    % è¨ˆç”»å€¤ä¸Šé™å‡ºåŠ›
+G_down_limit = u(190:219,1);  % è¨ˆç”»å€¤ä¸‹é™å‡ºåŠ›
 
-% GULT=csvread('G_up_plan_limit_time.csv'); % EDCŒvZ‚É‚¨‚¯‚é“ü—Íİ’è’l
-% GDLT=csvread('G_down_plan_limit_time.csv'); % EDCŒvZ‚É‚¨‚¯‚é“ü—Íİ’è’l
+% GULT=csvread('G_up_plan_limit_time.csv'); % EDCè¨ˆç®—ã«ãŠã‘ã‚‹å…¥åŠ›è¨­å®šå€¤
+% GDLT=csvread('G_down_plan_limit_time.csv'); % EDCè¨ˆç®—ã«ãŠã‘ã‚‹å…¥åŠ›è¨­å®šå€¤
 % G_up_limit = GULT(t,:);
 % G_down_limit = min(GULT(t,:),GDLT(t,:));
-G_speed = u(220:249,1);       % o—Í•Ï‰»‘¬“x
-G_out_pre = u(250:279,1);     % ‘O‰ñEDC‰‰Z‚Ì”­“do—Í
+G_speed = u(220:249,1);       % å‡ºåŠ›å¤‰åŒ–é€Ÿåº¦
+G_out_pre = u(250:279,1);     % å‰å›EDCæ¼”ç®—æ™‚ã®ç™ºé›»å‡ºåŠ›
 
-%% EDCŒvZ‚Ì‰Šúİ’è
-% o—Í•Ï‰»‘¬“x‚ğl—¶‚µ‚ÄEDCã‰ºŒÀ’l‚ğİ’è
+%% EDCè¨ˆç®—ã®åˆæœŸè¨­å®š
+% å‡ºåŠ›å¤‰åŒ–é€Ÿåº¦ã‚’è€ƒæ…®ã—ã¦EDCä¸Šä¸‹é™å€¤ã‚’è¨­å®š
 G_up_limit = min(G_up_limit, G_out_pre + G_speed*5);
 G_down_limit = max(G_down_limit, G_out_pre - G_speed*5);
 
-% ”­“d‹@‚ÌŒvZó‘Ô‚ğ–¢Šm’è‚Éİ’è[–¢Šm’èF1CãŒÀ‰¼Šm’è:3C‰ºŒÀ‰¼Šm’è:5CŠm’èF0]
+% ç™ºé›»æ©Ÿã®è¨ˆç®—çŠ¶æ…‹ã‚’æœªç¢ºå®šã«è¨­å®š[æœªç¢ºå®šï¼š1ï¼Œä¸Šé™ä»®ç¢ºå®š:3ï¼Œä¸‹é™ä»®ç¢ºå®š:5ï¼Œç¢ºå®šï¼š0]
 G_out_status(1:size(cP2,1),1) = 1;
-% ”­“d‹@o—Í‚Ì‰Šú’l‚ğ0‚Éİ’è
+% ç™ºé›»æ©Ÿå‡ºåŠ›ã®åˆæœŸå€¤ã‚’0ã«è¨­å®š
 G_out_put(1:size(cP2,1),1) = 0;
 
-% EDC‘ÎÛŠOƒ†ƒjƒbƒg‚Ìo—Í‚ğƒXƒPƒWƒ…[ƒ‹’l‚Éİ’è‚µ‚ÄŠm’è
+% EDCå¯¾è±¡å¤–ãƒ¦ãƒ‹ãƒƒãƒˆã®å‡ºåŠ›ã‚’ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«å€¤ã«è¨­å®šã—ã¦ç¢ºå®š
 Glock_no = find (G_MODE == 0 | G_MODE == 2);
 G_out_status(Glock_no) = 0;
 G_out_put(Glock_no) = PMWD_SCHEDULE(Glock_no);
 
-% ƒXƒPƒWƒ…[ƒ‹‰^“]ƒ†ƒjƒbƒg‚Ì”­“d’P‰¿‚ğ0‚Éİ’è
+% ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«é‹è»¢ãƒ¦ãƒ‹ãƒƒãƒˆã®ç™ºé›»å˜ä¾¡ã‚’0ã«è¨­å®š
 P_cost(Glock_no,1) = 0;
 
-%% EDC‘”z•ª—Ê‚ÌŒvZ
+%% EDCç·é…åˆ†é‡ã®è¨ˆç®—
 
-% disp('EDC‘”z•ª—Ê')
-P_S = sum(G_out_put); % ‰Î—ÍE—g…”­“dŒv‰æ‡Œv’l  
-P_C = sum(P_CONSTANT);  % ”­“dŒv‰æŒÅ’è‡Œv
-% ù—v‘z’è•â³Œ‹‰Ê -iƒXƒPƒWƒ…[ƒ‹‰^“]Œv‰æ’l + ŒÅ’è“dŒ¹Œv‰æ’l + ˜AŒnü—˜—pŒv‰æió‚¯‘¤{j)
-P_L = L_C - (P_S + P_C + P0);   % EDC‘”z•ª—Ê
+% disp('EDCç·é…åˆ†é‡')
+P_S = sum(G_out_put); % ç«åŠ›ãƒ»æšæ°´ç™ºé›»è¨ˆç”»åˆè¨ˆå€¤  
+P_C = sum(P_CONSTANT);  % ç™ºé›»è¨ˆç”»å›ºå®šåˆè¨ˆ
+% éœ€è¦æƒ³å®šè£œæ­£çµæœ -ï¼ˆã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«é‹è»¢è¨ˆç”»å€¤ + å›ºå®šé›»æºè¨ˆç”»å€¤ + é€£ç³»ç·šåˆ©ç”¨è¨ˆç”»ï¼ˆå—ã‘å´ï¼‹ï¼‰)
+P_L = L_C - (P_S + P_C + P0);   % EDCç·é…åˆ†é‡
 PL_calc = P_L;
 
-%% ŒoÏ•‰‰×”z•ªŒvZ
+%% çµŒæ¸ˆè² è·é…åˆ†è¨ˆç®—
 P_fix = 0;
 
-while sum(G_out_status) > 0; % ‘Sƒ†ƒjƒbƒgo—ÍŠm’èiG_out_status = 0j‚Åƒ‹[ƒvƒAƒEƒg
+while sum(G_out_status) > 0; % å…¨ãƒ¦ãƒ‹ãƒƒãƒˆå‡ºåŠ›ç¢ºå®šï¼ˆG_out_status = 0ï¼‰ã§ãƒ«ãƒ¼ãƒ—ã‚¢ã‚¦ãƒˆ
     clear G_choice
     clear G_No_up
     clear G_No_down
     clear G_choice_L
     clear G_choice_H
 
-    % o—Í–¢Šm’è”­“d‹@‚Ì‘I‘ğ
+    % å‡ºåŠ›æœªç¢ºå®šç™ºé›»æ©Ÿã®é¸æŠ
     G_choice = find(G_out_status > 0);
 
     cP2dive = cP2div(G_choice);
@@ -101,64 +101,64 @@ while sum(G_out_status) > 0; % ‘Sƒ†ƒjƒbƒgo—ÍŠm’èiG_out_status = 0j‚Åƒ‹[ƒvƒAƒ
     P_max = G_up_limit(G_choice);
     P_min = G_down_limit(G_choice);
 
-    % EDC‘”z•ª—Ê‚ğ“™ƒÉŒvZŒJ‚è•Ô‚µ—p‚Ì•Ï”‚É‘ã“ü
+    % EDCç·é…åˆ†é‡ã‚’ç­‰Î»è¨ˆç®—ç¹°ã‚Šè¿”ã—ç”¨ã®å¤‰æ•°ã«ä»£å…¥
     PL_calc = PL_calc - P_fix;
     
-    % ”z•ª—ÊŒvZ
+    % é…åˆ†é‡è¨ˆç®—
     Pr = 1./cP2dive;
     Pc = bP1dive./cP2dive;
-    lambda = (PL_calc + sum(Pc) ) / sum(Pr); % n‰ñ–Ú‚Ìƒ‰ƒ€ƒ_
-    P_calc = (lambda - bP1dive )./cP2dive ; % •‰‰×”z•ªŒ‹‰Ê
+    lambda = (PL_calc + sum(Pc) ) / sum(Pr); % nå›ç›®ã®ãƒ©ãƒ ãƒ€
+    P_calc = (lambda - bP1dive )./cP2dive ; % è² è·é…åˆ†çµæœ
 
     G_out_put(G_choice) = P_calc;
 
-    % o—Íã‰ºŒÀ”ÍˆÍŠO‚Æ‚È‚é”­“d‹@‚Ìo—Í‚ğã‰ºŒÀ’l‚É’uŠ·‚¦
-    G_No_up = find(P_max < P_calc);    % ãŒÀ‚ğ’´‚¦‚Ä‚¢‚é”­“d‹@‚ğŒŸõ
-    G_out_put(G_choice(G_No_up)) = P_max(G_No_up);    % o—Í‚ğãŒÀ‚Éİ’è
-    G_out_status(G_choice(G_No_up)) = 3;     % o—ÍãŒÀ‚Å‰¼Šm’è
+    % å‡ºåŠ›ä¸Šä¸‹é™ç¯„å›²å¤–ã¨ãªã‚‹ç™ºé›»æ©Ÿã®å‡ºåŠ›ã‚’ä¸Šä¸‹é™å€¤ã«ç½®æ›ãˆ
+    G_No_up = find(P_max < P_calc);    % ä¸Šé™ã‚’è¶…ãˆã¦ã„ã‚‹ç™ºé›»æ©Ÿã‚’æ¤œç´¢
+    G_out_put(G_choice(G_No_up)) = P_max(G_No_up);    % å‡ºåŠ›ã‚’ä¸Šé™ã«è¨­å®š
+    G_out_status(G_choice(G_No_up)) = 3;     % å‡ºåŠ›ä¸Šé™ã§ä»®ç¢ºå®š
 
-    G_No_down = find(P_min > P_calc);    % ‰ºŒÀ‚ğ‰º‚Ü‚í‚Á‚Ä‚¢‚é”­“d‹@‚ğŒŸõ
-    G_out_put(G_choice(G_No_down)) = P_min(G_No_down);  % o—Í‚ğ‰ºŒÀ‚Éİ’è
-    G_out_status(G_choice(G_No_down)) = 5;  %  o—Í‰ºŒÀ‚Å‰¼Šm’è
+    G_No_down = find(P_min > P_calc);    % ä¸‹é™ã‚’ä¸‹ã¾ã‚ã£ã¦ã„ã‚‹ç™ºé›»æ©Ÿã‚’æ¤œç´¢
+    G_out_put(G_choice(G_No_down)) = P_min(G_No_down);  % å‡ºåŠ›ã‚’ä¸‹é™ã«è¨­å®š
+    G_out_status(G_choice(G_No_down)) = 5;  %  å‡ºåŠ›ä¸‹é™ã§ä»®ç¢ºå®š
 
-    % P_L = ƒ°P(i)‚Ìê‡C‘S‚Ä‚Ì”­“d‹@‚ÌŒvZŒ‹‰Ê‚ğŠm’è‚µ‚ÄÅ“K”z•ªI—¹
-    % ¬”“_ˆÈ‰º‚Ìc·‚É‚æ‚é–³ŒÀƒ‹[ƒv‘ÎôBè‡’l:1[MW]
+    % P_L = Î£P(i)ã®å ´åˆï¼Œå…¨ã¦ã®ç™ºé›»æ©Ÿã®è¨ˆç®—çµæœã‚’ç¢ºå®šã—ã¦æœ€é©é…åˆ†çµ‚äº†
+    % å°æ•°ç‚¹ä»¥ä¸‹ã®æ®‹å·®ã«ã‚ˆã‚‹ç„¡é™ãƒ«ãƒ¼ãƒ—å¯¾ç­–ã€‚é–¾å€¤:1[MW]
     if abs(sum(G_out_put(G_choice)) - PL_calc) < 1;
-%         disp('Å“K”z•ªI—¹')
+%         disp('æœ€é©é…åˆ†çµ‚äº†')
         G_out_status(G_choice)=0;
         sum(G_out_put(G_choice));
         
-    % P_L < ƒ°P(i)>Dj‚Ìê‡Co—Í‰ºŒÀ‚Æ‚È‚Á‚½”­“d‹@‚Ìo—Í‚ğŠm’è
+    % P_L < Î£P(i)>Dï¼‰ã®å ´åˆï¼Œå‡ºåŠ›ä¸‹é™ã¨ãªã£ãŸç™ºé›»æ©Ÿã®å‡ºåŠ›ã‚’ç¢ºå®š
     elseif PL_calc < sum(G_out_put(G_choice));
-%         disp('‰ºŒÀo—ÍŠm’è')
+%         disp('ä¸‹é™å‡ºåŠ›ç¢ºå®š')
         G_choice_L = find(G_out_status == 5);
         G_out_status(G_choice_L) = 0;
         P_fix = sum(G_out_put(G_choice_L));
         
-    % P_L > ƒ°P(i)<D‚Ìê‡Co—ÍãŒÀ‚Æ‚È‚Á‚½”­“d‹@‚Ìo—Í‚ğŠm’è
+    % P_L > Î£P(i)<Dã®å ´åˆï¼Œå‡ºåŠ›ä¸Šé™ã¨ãªã£ãŸç™ºé›»æ©Ÿã®å‡ºåŠ›ã‚’ç¢ºå®š
     else PL_calc > sum(G_out_put(G_choice));
-%         disp('ãŒÀo—ÍŠm’è')
+%         disp('ä¸Šé™å‡ºåŠ›ç¢ºå®š')
         G_choice_H = find(G_out_status == 3);
         G_out_status(G_choice_H) = 0;
         P_fix = sum(G_out_put(G_choice_H));
         
     end
     
-    %%%%%   –¢Šm’è”­“d‹@‚Ìo—Í‚ğƒŠƒZƒbƒg
+    %%%%%   æœªç¢ºå®šç™ºé›»æ©Ÿã®å‡ºåŠ›ã‚’ãƒªã‚»ãƒƒãƒˆ
     G_out_put(find(G_out_status>0)) = 0;
     G_out_status(find(G_out_status>0)) = 1;
 
-    %%%%%@”­“d’P‰¿
+    %%%%%ã€€ç™ºé›»å˜ä¾¡
     P_cost = ((G_out_put.*G_out_put).*cP2+G_out_put.*bP1+aP0)./G_out_put;
 
 end
 
-PMWD_EDC = G_out_put;   % ‰Î—ÍE—g…”­“d‹@o—Í‡Œv
-EDC_ERR =(P_L+P_S) - sum(G_out_put);    % EDC”z•ªc
-P_OUT = sum(G_out_put) + P_C + P0;  % ”­“d‹@o—Í‡Œv+P0
-P_plan = sum(PMWD_SCHEDULE) + P_C;  % ”­“d‹@Œv‰æ‡Œv’l
+PMWD_EDC = G_out_put;   % ç«åŠ›ãƒ»æšæ°´ç™ºé›»æ©Ÿå‡ºåŠ›åˆè¨ˆ
+EDC_ERR =(P_L+P_S) - sum(G_out_put);    % EDCé…åˆ†æ®‹
+P_OUT = sum(G_out_put) + P_C + P0;  % ç™ºé›»æ©Ÿå‡ºåŠ›åˆè¨ˆ+P0
+P_plan = sum(PMWD_SCHEDULE) + P_C;  % ç™ºé›»æ©Ÿè¨ˆç”»åˆè¨ˆå€¤
 
-% disp('”z•ªc')
+% disp('é…åˆ†æ®‹')
 disp(EDC_ERR);
 % EDC.nokori(t)=EDC_ERR;
 
