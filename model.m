@@ -1,7 +1,5 @@
 clear
-cd C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔05_螳溯｡後ヵ繧｡繧､繝ｫ\program\蜈ｨ菴灘ｮ溯｡�
 % 蠢�隕√↑繝代せ繧定ｿｽ蜉�
-addpath(genpath('C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔01_matlab_mytool'))
 %% 2018蟷ｴ蠎ｦ譌｢險ｭPV螳ｹ驥�
 start_date = datetime(2019, 4, 1);
 end_date = datetime(2020, 3, 31);
@@ -204,7 +202,7 @@ sigma=2;
 
                 if DN == 91
                     % 蠢懈�･蜃ｦ鄂ｮ
-                    load(['H:\隗｣譫千ｵ先棡\IEEJ_B\data\20190630\method1\PV_',num2str(PVC),'.mat'],'load_input','PVF','PV_real_Output')
+                    load(fullfile(results_dir, ['PV_',num2str(PVC),'.mat']),'load_input','PVF','PV_real_Output')
                     
                     demand_1sec = [load_input,load_input(end)*ones(1,3599)];
                     save demand_1sec.mat demand_1sec
@@ -390,19 +388,19 @@ sigma=2;
                     end
                     LFC = load('UC遶区｡�\LFC.mat');
                     % cd E:\02_繝�繝ｼ繧ｿ菫晏ｭ�
-                    cd H:\NSD_results
+                    cd(results_dir)
                     inertia_input = inertia_input(2,:);
                     load_forecast_input = load_forecast_input(2,:);
                     load_input = load_input(2,:);
                     PV_Forecast = PV_Forecast(2,:);
                     PV_Out = PV_Out(2,:);
-                    load('C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔05_螳溯｡後ヵ繧｡繧､繝ｫ\program\蜈ｨ菴灘ｮ溯｡圭UC遶区｡�\MATLAB\譛�驕ｩ蛹悶ョ繝ｼ繧ｿ繝舌ャ繧ｯ繧｢繝�繝� (譖ｴ譁ｰ)\data_time50.mat')
+                    load(fullfile(ROOT_DIR, 'UC立案', 'MATLAB', '最適化データバックアップ (更新)', 'data_time50.mat'))
                     %% 菫晏ｭ�
     %                 dfout(1:300)=0;
                     % AGC30_PVcut model: add PV_real_Output, PV_Surplus
                     save(filename,'PV_CUR','LFC_t','Reserved_power','PV_real_Output','LFC_up','LFC_down','PV_MAX','G_Out_UC','g_const_out_sum','load_forecast_input','PV_Forecast','Oil_Output','Coal_Output','Combine_Output','LOF','PVF','dpout','load_input','dfout','TieLineLoadout','LFC_Output','EDC_Output','PV_Out','LFC','inertia_input')
                     % save(filename,'PV_CUR','LFC_t','Reserved_power','PV_real_Output','PV_Surplus','LFC_up','LFC_down','PV_MAX','G_Out_UC','g_const_out_sum','load_forecast_input','PV_Forecast','Oil_Output','Coal_Output','Combine_Output','LOF','PVF','dpout','load_input','dfout','TieLineLoadout','LFC_Output','EDC_Output','PV_Out','LFC','inertia_input')
-                    cd C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔05_螳溯｡後ヵ繧｡繧､繝ｫ\program\蜈ｨ菴灘ｮ溯｡�
+                    cd(ROOT_DIR)
     %                 dfout = round((dfout),2);
     %                 F_stay(dfout(3600*4:3600*20))
     %                 global aaa aaaa
@@ -429,10 +427,10 @@ sigma=2;
                             filename = ['T_V_Sigma_',num2str(sigma),'_Method_',num2str(meth_num),'_PVcapacity_',num2str(PVC),'_',num2str(year_l),'-',num2str(month_l),'-',num2str(day_l),'.mat'];
                         end
                         % cd E:\02_繝�繝ｼ繧ｿ菫晏ｭ�
-                        cd H:\NSD_results
+                        cd(results_dir)
                         % save(filename,'time_out','ME','UC_planning','Balancing_EDC_LFC','EDC_reserved_plus','EDC_reserved_minus','LFC_reserved_up','LFC_reserved_down','PV_CUR','L_C_t')
                         save(filename,'time_out','ME','UC_planning','Balancing_EDC_LFC','EDC_reserved_plus','LFC_reserved_up','LFC_reserved_up','EDC_reserved_plus')
-                        cd C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔05_螳溯｡後ヵ繧｡繧､繝ｫ\program\蜈ｨ菴灘ｮ溯｡�
+                        cd(ROOT_DIR)
                     end
                     clear
                     % end

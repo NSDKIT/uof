@@ -2,10 +2,8 @@
 clear; clc;
 
 % 菴懈･ｭ繝�繧｣繝ｬ繧ｯ繝医Μ縺ｫ遘ｻ蜍�
-cd('C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔05_螳溯｡後ヵ繧｡繧､繝ｫ\program\蜈ｨ菴灘ｮ溯｡�')
 
 % 蠢�隕√↑繝代せ繧定ｿｽ蜉�
-addpath(genpath('C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔01_matlab_mytool'))
 fprintf('MATLAB繝代せ縺ｫ01_matlab_mytool繧定ｿｽ蜉�縺励∪縺励◆\n');
 
 % 譌･莉倩ｨｭ螳�

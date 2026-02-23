@@ -1,4 +1,3 @@
-cd F:\NSD_MSM\dldata
 
 loc = [' -lon ',num2str(KEIDO(area)),' ',num2str(IDO(area))];
 
@@ -7,12 +6,11 @@ file2='16-33.bin';
 file3='34-39.bin';
 
 copyfile(fullfile(GRIB_F,file1),...
-    'C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔02_msm_wgirb2\wgrib2_ok');
+    WGRIB2_DIR);
 copyfile(fullfile(GRIB_F,file2),...
-    'C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔02_msm_wgirb2\wgrib2_ok');
+    WGRIB2_DIR);
 copyfile(fullfile(GRIB_F,file3),...
-    'C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔02_msm_wgirb2\wgrib2_ok');
-cd 'C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔02_msm_wgirb2\wgrib2_ok'
+    WGRIB2_DIR);
 file1=['wgrib2.exe ',file1,' ',loc,' -last grib.csv -nl_out grib.csv'];
 file2=['wgrib2.exe ',file2,' ',loc,' -last grib.csv -nl_out grib.csv'];
 file3=['wgrib2.exe ',file3,' ',loc,' -last grib.csv -nl_out grib.csv'];

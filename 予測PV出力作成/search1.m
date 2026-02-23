@@ -18,10 +18,10 @@ else
 end
 
 %% 
-cd(['H:\NSD_MSM\dldata\',NAME_a])
-copyfile('00-15.bin','C:\Users\PowerSystemLab\Desktop\01_研究資料\02_msm_wgirb2\wgrib2_ok')
-copyfile('16-33.bin','C:\Users\PowerSystemLab\Desktop\01_研究資料\02_msm_wgirb2\wgrib2_ok')
-copyfile('34-39.bin','C:\Users\PowerSystemLab\Desktop\01_研究資料\02_msm_wgirb2\wgrib2_ok')
+cd(fullfile(MSM_DATA_DIR, NAME_a))
+copyfile('00-15.bin', WGRIB2_DIR)
+copyfile('16-33.bin', WGRIB2_DIR)
+copyfile('34-39.bin', WGRIB2_DIR)
 
 
 % cd C:\Users\PowerSystemLab\Downloads
@@ -117,4 +117,4 @@ copyfile('34-39.bin','C:\Users\PowerSystemLab\Desktop\01_研究資料\02_msm_wgi
 %     copyfile(NAME_c,'C:\Users\PowerSystemLab\Desktop\01_研究資料\02_msm_wgirb2\wgrib2_ok')
 % end
 %% 
-cd('C:\Users\PowerSystemLab\Desktop\01_研究資料\05_実行ファイル\program\全体実行\予測PV出力作成')
+cd(ROOT_DIR)

@@ -6,7 +6,7 @@ for i=1:19
     if i==10
         X(i,m)=nan;
     else
-        load(fullfile(results_dir, 'E_Sigma_2_LFC_',num2str(i),'_PVcapacity_',num2str(ii),'_201965.mat'])
+        load(['F:\NSD_results\E_Sigma_2_LFC_',num2str(i),'_PVcapacity_',num2str(ii),'_201965.mat'])
         dfout=dfout(3600*5:3600*19);
         X(i,m)=sum(abs(dfout)>.2);
         figure(17);hold on;plot(dfout)

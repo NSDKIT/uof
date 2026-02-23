@@ -1,6 +1,6 @@
 %%%%%%% AGC30逕ｨ %%%%%%%%%%%%
 AGC_kaisei
-load('C:\Users\PowerSystemLab\Desktop\01_遐皮ｩｶ雉�譁兔05_螳溯｡後ヵ繧｡繧､繝ｫ\program\蜈ｨ菴灘ｮ溯｡圭莠域ｸｬPV蜃ｺ蜉帑ｽ懈�申PVO_30min.mat')
+load(fullfile(ROOT_DIR, 'PV実出力作成', 'PVO_30min.mat'))
 inter_86400(PVO_30min(1:48))
 data=data+PV(:,2)';
 % data=[zeros(1,1800),data(1:end-1800)];

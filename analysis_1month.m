@@ -8,7 +8,7 @@ X_Combine=nan(86401,1);
 X_dfout=nan(86401,1);
 D_FRE=[];
 for dd=1:30
-    load(['F:\NSD_results\Sigma_1_LFC_8_PVcapacity_5100_20196',num2str(dd),'.mat'])
+    load(fullfile(results_dir, 'Sigma_1_LFC_8_PVcapacity_5100_20196',num2str(dd),'.mat'])
     
     PV_real=PV_real_Output(2,:);
 

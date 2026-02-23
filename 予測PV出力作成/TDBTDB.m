@@ -3,7 +3,6 @@
 % 年月日・位置の選択・変更
 % IK = get_ido_keido('ido_keido.xlsx');
 load('ido_keido.mat')
-cd C:\Users\PowerSystemLab\Desktop\01_研究資料\02_msm_wgirb2\wgrib2_ok
 disp('日射量予測算出')
 % load('xyz.mat')
 cd ../wgrib2_ok
@@ -143,5 +142,5 @@ cd ../../02_msm_wgirb2/wgrib2_ok
 delete(file_c(end-8:end))
 delete(file_z(end-8:end))
 delete(file_l(end-8:end))
-cd('C:\Users\PowerSystemLab\Desktop\01_研究資料\05_実行ファイル\program\全体実行\予測PV出力作成')
+cd(ROOT_DIR)
 clearvars -except Year Month Day MSM_max PV_base PR irr_forecast
