@@ -9,7 +9,7 @@
 
 ```
 deploy/
-├── run_simulation.m        ← ★ これを実行するだけでOK（メインスクリプト）
+├── model.m                 ← ★ これを実行するだけでOK（メインスクリプト）
 ├── README.md               ← このファイル
 ├── 基本データ/              ← PV・需要の入力データ（.mat）※別途配置が必要
 │   ├── PV_base_2019.mat
@@ -54,15 +54,16 @@ deploy/
 
 ### 2. シミュレーション条件を設定する
 
-`run_simulation.m` をテキストエディタまたは MATLAB エディタで開き、
+`model.m` をテキストエディタまたは MATLAB エディタで開き、
 「シミュレーション条件設定」セクションの以下の変数を変更してください。
 
 ```matlab
-YYYYMMDD = ['20190828'];   % 対象日付（YYYYMMDD 形式）
+YYYYMMDD = [\'20190828\'];   % 対象日付（YYYYMMDD 形式）
 PVC_list = [5300];         % PV 導入容量 [MW]
 meth_num = 2;              % 解析手法番号（1〜4）
 mode     = 1;              % PV パネル設置モード（1〜5）
 sigma    = 2;              % 予測誤差の標準偏差パラメータ
+lfc      = 8;              % LFC 制御パラメータ
 ```
 
 ### 3. MATLAB で実行する
@@ -72,7 +73,7 @@ sigma    = 2;              % 予測誤差の標準偏差パラメータ
 3. コマンドウィンドウで以下を入力して Enter を押す
 
 ```matlab
-run_simulation
+model
 ```
 
 ### 4. 結果を確認する
