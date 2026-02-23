@@ -2,7 +2,7 @@ pl_ox = 0; % プロット有無係数
 Year = year;Month = month;Day = day;
 clear day
 % %% 北陸エリアPV出力実測値の抽出
-Demand_real=csv_tieline_PV2019('北陸山元2019');
+Demand_real=csv_tieline_PV2019(fullfile(ROOT_DIR, '需要実績・予測作成', '北陸山元2019.xlsx'));
 Demand_real=table2array(Demand_real(2:end,3));
 Demand_real(isnan(Demand_real))=[];
 %% 日付番号の取得

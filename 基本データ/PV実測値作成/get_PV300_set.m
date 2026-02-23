@@ -35,7 +35,7 @@ for DD = 1:length(date_strings)
     for area = 1:17
         %% PV300縺ｮ蜿門ｾ�
         data = zeros(1,86401);
-        pv300 = get_PV300_1sec(['1遘貞�､\area',num2str(area),'\',num2str(str2double(year_l)),'_',num2str(str2double(month_l)),'\day',num2str(str2double(day_l)),'.csv']);
+        pv300 = get_PV300_1sec(fullfile(ROOT_DIR, '基本データ', 'PV実測値作成', '1秒値', ['area',num2str(area)], [num2str(str2double(year_l)),'_',num2str(str2double(month_l))], ['day',num2str(str2double(day_l)),'.csv']));
         data(1:length(pv300))=pv300; % W竍談W竍談Wh
         % 蜑�15蛻�蠕�15蛻�蟷ｳ蝮�蛟､
         irr_data=[0,mean(reshape(data(1800+1:end-1801),3600,[]))];
