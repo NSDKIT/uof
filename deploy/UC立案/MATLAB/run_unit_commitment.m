@@ -18,7 +18,7 @@ load(fullfile(ROOT_DIR, 'demand_30min.mat')) % demand_30min  % 機械学習（GP
 load(fullfile(ROOT_DIR, 'PVF_30min.mat')) % PVF_30min8888  % 機械学習（GPR）用に冒頭でload（ループ内はload_uc_input_dataで再load）
 
 %% 機械学習
-PVF_data  = PVF_30min';cd(fullfile(\'二次調整力算定手法\', \'機械学習\', \'ガウス過程回帰モデル\'));% 説明可能でないAI %%%
+PVF_data  = PVF_30min';cd(fullfile('二次調整力算定手法', '機械学習', 'ガウス過程回帰モデル'));% 説明可能でないAI %%%
 if DN == 91
     DEMF_data = demand_30min';
     load('MSM_30X.mat')
@@ -135,7 +135,7 @@ while time < hour
     %     keyboard
     % end
     if time~=1
-    load(fullfile(uc_backup_dir, [\'data_time\', num2str(time-1), \'.mat\']));    else
+    load(fullfile(uc_backup_dir, ['data_time', num2str(time-1), '.mat']));    else
         on_time=zeros(1,11);
         off_time=zeros(1,11);
     end
@@ -146,7 +146,7 @@ while time < hour
     %%%%% 組み合わせ作成 %%%%%
     gen_unit_combinations
     if kk ~= 0
-      load(fullfile(uc_backup_dir, [\'out_time\', num2str(time_out), \'.mat\']));      
+      load(fullfile(uc_backup_dir, ['out_time', num2str(time_out), '.mat']));      
 %         L_C_t(time,:)=[];
 %         UC_planning(time,:)=[];
 %         Balancing_EDC_LFC(time,:)=[];
@@ -375,7 +375,7 @@ while time < hour
         
         kk=kk+1;
         
-        save(fullfile(uc_backup_dir, [\'out_time\', num2str(time_out), \'.mat\']), \'out\', \'time_out\', \'G_r_ox\', \'G_on\');rvars -except time_out PV_CUR kk a on_time off_time hour time EDC_reserved_plus EDC_reserved_minus LFC_reserved_up LFC_reserved_down ...
+        save(fullfile(uc_backup_dir, ['out_time', num2str(time_out), '.mat']), 'out', 'time_out', 'G_r_ox', 'G_on');rvars -except time_out PV_CUR kk a on_time off_time hour time EDC_reserved_plus EDC_reserved_minus LFC_reserved_up LFC_reserved_down ...
             PV_CUR TieLine_Output Balancing_EDC_LFC L_C_t UC_planning on_time off_time a Const_Out
 %         imbalance=(beq-sum(P')-PV_cur);
 %         BC_imb=(balancing_EDC_LFC(:,3)-balancing_EDC_LFC(:,4));
@@ -411,7 +411,7 @@ while time < hour
             [balancing_EDC_LFC(opt_num,:),error]];
         
         clear kk g_r
-      save(fullfile(uc_backup_dir, [\'data_time\', num2str(time), \".mat\']), ...          'PV_CUR','TieLine_Output','Balancing_EDC_LFC','L_C_t','UC_planning','on_time','off_time','a','Const_Out')
+      save(fullfile(uc_backup_dir, ['data_time', num2str(time), ".mat']), ...          'PV_CUR','TieLine_Output','Balancing_EDC_LFC','L_C_t','UC_planning','on_time','off_time','a','Const_Out')
         clearvars -except hour time EDC_reserved_plus EDC_reserved_minus LFC_reserved_up LFC_reserved_down
         kk=0;aaa=1;
     end

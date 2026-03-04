@@ -45,7 +45,7 @@ PV_1sec=data;
 % data = zeros(86400,17);
 % for area = 1:17
 %     %% PV300縺ｮ蜿門ｾ�
-%     pv300 = import_pv300_1sec(['area',num2str(area),'\',num2str(Year),'_',num2str(Month),'\day',num2str(Day),'.csv']);
+%     pv300 = import_pv300_1sec(['area',num2str(area),'',num2str(Year),'_',num2str(Month),'\day',num2str(Day),'.csv']);
 %     data(1:length(pv300),area)=pv300;
 % end
 % data = sum(data')/1000; % W竍談W
@@ -62,7 +62,7 @@ PV_1sec=data;
 % for area = 1:17
 %     %% PV300縺ｮ蜿門ｾ�
 %     data = zeros(1,86400);
-%     pv300 = import_pv300_1sec(['area',num2str(area),'\',num2str(Year),'_',num2str(Month),'\day',num2str(Day),'.csv']);
+%     pv300 = import_pv300_1sec(['area',num2str(area),'',num2str(Year),'_',num2str(Month),'\day',num2str(Day),'.csv']);
 %     data(1:length(pv300))=pv300*24/1000; % W竍談W竍談Wh
 %     data=data(1:86400);
 %     irr = [];
